@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIB · Ranganpassung</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0e17;
+    --ink-2:#0e1422;
+    --panel:rgba(255,255,255,0.035);
+    --panel-strong:rgba(255,255,255,0.06);
+    --border:rgba(201,162,39,0.16);
+    --border-soft:rgba(255,255,255,0.08);
+    --gold:#c9a227;
+    --gold-soft:#d9be63;
+    --text:#e9ecf3;
+    --muted:#8a93a6;
+    --muted-2:#646d80;
+    --warn:#e3683f;
+    --warn-bg:rgba(227,104,63,0.10);
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:
+      radial-gradient(1100px 600px at 78% -8%, rgba(201,162,39,0.10), transparent 60%),
+      radial-gradient(900px 500px at -5% 110%, rgba(70,90,140,0.12), transparent 55%),
+      var(--ink);
+    color:var(--text);
+    min-height:100vh;
+    padding:40px 22px 64px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto}
+
+  /* Header */
+  header{display:flex;align-items:center;gap:18px;margin-bottom:34px}
+  .seal{
+    width:54px;height:54px;flex:none;border-radius:50%;
+    border:1.5px solid var(--gold);
+    display:grid;place-items:center;
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;letter-spacing:1px;
+    color:var(--gold-soft);
+    background:radial-gradient(circle at 30% 25%, rgba(201,162,39,0.22), transparent 70%);
+    box-shadow:0 0 0 4px rgba(201,162,39,0.06), inset 0 0 14px rgba(201,162,39,0.08);
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;
+    text-transform:uppercase;color:var(--gold);margin:0 0 4px;
+  }
+  h1{
+    font-family:'Space Grotesk',sans-serif;font-weight:600;
+    font-size:30px;margin:0;letter-spacing:-0.5px;line-height:1;
+  }
+  .sub{color:var(--muted);font-size:13px;margin:6px 0 0}
+
+  /* Grid */
+  .grid{display:grid;grid-template-columns:1fr 1.05fr;gap:22px;align-items:start}
+  @media(max-width:840px){.grid{grid-template-columns:1fr}}
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--border-soft);
+    border-radius:var(--radius);
+    padding:24px;
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+  }
+  .card-label{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2.5px;
+    text-transform:uppercase;color:var(--muted-2);margin:0 0 18px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .card-label::after{content:"";flex:1;height:1px;background:var(--border-soft)}
+
+  .field{margin-bottom:20px}
+  .field:last-child{margin-bottom:0}
+  label.l{display:block;font-size:12.5px;font-weight:500;color:var(--muted);margin-bottom:8px;letter-spacing:.2px}
+
+  select,input[type=text]{
+    width:100%;font-family:'Inter',sans-serif;font-size:14px;color:var(--text);
+    background:var(--ink-2);
+    border:1px solid var(--border-soft);
+    border-radius:10px;padding:12px 13px;outline:none;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  select{
+    appearance:none;cursor:pointer;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238a93a6' stroke-width='2.2'><path d='M6 9l6 6 6-6'/></svg>");
+    background-repeat:no-repeat;background-position:right 13px center;padding-right:38px;
+  }
+  select option{background:#10172a;color:var(--text)}
+  select:focus,input[type=text]:focus{
+    border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,0.14);
+  }
+  .mono-opt{font-family:'JetBrains Mono',monospace}
+  input[readonly]{
+    color:var(--gold-soft);font-weight:500;cursor:default;
+    background:rgba(201,162,39,0.05);border-color:var(--border);
+  }
+  input[readonly]:focus{box-shadow:none}
+  .auto-note{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;
+    color:var(--muted-2);margin:8px 0 0;text-transform:uppercase}
+
+  /* Checkboxes */
+  .checks{display:flex;flex-direction:column;gap:10px}
+  .check{
+    display:flex;align-items:center;gap:12px;cursor:pointer;
+    background:var(--ink-2);border:1px solid var(--border-soft);
+    border-radius:10px;padding:12px 13px;transition:border-color .15s, background .15s;
+  }
+  .check:hover{border-color:rgba(201,162,39,0.35)}
+  .check input{appearance:none;width:18px;height:18px;flex:none;border-radius:5px;
+    border:1.5px solid var(--muted-2);background:transparent;cursor:pointer;
+    display:grid;place-items:center;transition:.15s}
+  .check input:checked{background:var(--gold);border-color:var(--gold)}
+  .check input:checked::after{content:"";width:5px;height:9px;border:solid #0a0e17;
+    border-width:0 2px 2px 0;transform:rotate(45deg) translateY(-1px)}
+  .check span{font-size:14px}
+  .check .num{font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:12.5px}
+  .check.on{border-color:rgba(201,162,39,0.45);background:rgba(201,162,39,0.05)}
+
+  /* Preview */
+  .preview-card{position:sticky;top:24px}
+  .discord{
+    background:#1a1d24;border:1px solid var(--border-soft);border-radius:10px;
+    padding:18px 18px 20px;font-size:14.5px;line-height:1.55;color:#dbdee1;
+    white-space:pre-wrap;word-break:break-word;min-height:120px;
+  }
+  .discord strong{font-weight:700;color:#fff}
+  .discord .smol{font-size:11.5px;color:#949ba4;display:block;margin-top:2px}
+  .discord .warn{
+    display:block;background:var(--warn-bg);border-left:3px solid var(--warn);
+    padding:10px 12px;border-radius:0 8px 8px 0;margin:4px 0;color:#f3c9b8;font-weight:700;
+  }
+  .discord .warn strong{color:#fff}
+
+  .copy-row{display:flex;gap:12px;margin-top:16px}
+  button.copy{
+    flex:1;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px;
+    color:#0a0e17;background:linear-gradient(180deg,var(--gold-soft),var(--gold));
+    border:none;border-radius:10px;padding:14px;cursor:pointer;letter-spacing:.3px;
+    transition:transform .08s, filter .15s;
+    display:flex;align-items:center;justify-content:center;gap:9px;
+  }
+  button.copy:hover{filter:brightness(1.07)}
+  button.copy:active{transform:translateY(1px)}
+  button.copy.done{background:linear-gradient(180deg,#3fae6e,#2f9a5c);color:#fff}
+  button.copy svg{width:17px;height:17px}
+
+  .hint{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted-2);
+    margin:14px 0 0;letter-spacing:.4px;line-height:1.6}
+  footer{margin-top:40px;text-align:center;color:var(--muted-2);font-size:11.5px;
+    font-family:'JetBrains Mono',monospace;letter-spacing:1px}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="seal">FIB</div>
+    <div>
+      <p class="eyebrow">Federal Investigation Bureau · Personalverwaltung</p>
+      <h1>Ranganpassung</h1>
+      <p class="sub">Nachricht generieren, prüfen, kopieren.</p>
+    </div>
+  </header>
+
+  <div class="grid">
+    <!-- FORM -->
+    <section class="card">
+      <p class="card-label">Eingabe</p>
+
+      <div class="field">
+        <label class="l" for="rank">Zielrang</label>
+        <select id="rank"></select>
+      </div>
+
+      <div class="field">
+        <label class="l">Fehlende Prüfungen</label>
+        <div class="checks">
+          <label class="check" id="c-grund-wrap">
+            <input type="checkbox" id="c-grund">
+            <span>Grundausbildung</span>
+          </label>
+          <label class="check" id="c-event-wrap">
+            <input type="checkbox" id="c-event">
+            <span>Eventschulung</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="l" for="name">Eigener Name</label>
+        <select id="name"></select>
+        <input type="text" id="nameFree" placeholder="Name eingeben…" autocomplete="off" spellcheck="false" style="display:none;margin-top:10px">
+      </div>
+
+      <div class="field">
+        <label class="l" for="ownrank">Eigener Rang</label>
+        <input type="text" id="ownrank" readonly>
+        <p class="auto-note" id="ownrankNote">automatisch aus Mitarbeiterliste (Spalte D)</p>
+      </div>
+    </section>
+
+    <!-- PREVIEW -->
+    <section class="card preview-card">
+      <p class="card-label">Vorschau</p>
+      <div class="discord" id="preview"></div>
+      <div class="copy-row">
+        <button class="copy" id="copyBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span id="copyLabel">Nachricht kopieren</span>
+        </button>
+      </div>
+      <p class="hint">Kopiert wird der Discord-Rohtext inkl. ** und -# Formatierung.</p>
+    </section>
+  </div>
+
+  <footer>GrandRP DE01 · FIB Tools</footer>
+</div>
+
+<script>
+const RANKS = [
+  "25. Supervisory Head Agent",
+  "24. Supervisory Agent",
+  "23. Special Agent in Charge",
+  "19. Tactical Operator",
+  "18. Department Specialist",
+  "17. Commander",
+  "16. Federal Operations Agent",
+  "15. Principal Field Agent",
+  "14. Executive Agent",
+  "13. Enforcement Agent",
+  "12. Senior Agent",
+  "10. Agent First Class",
+  "09. Field Agent",
+  "08. Agent"
+];
+
+// Mitarbeiter aus Tab "Mitarbeiter": Spalte B (Name) + Spalte D (Rang) — Stand 21.06.2026
+const ROSTER = [
+  { name:"Felix Mccalley",          rank:"Inspector of the FIB" },
+  { name:"Nils Brandenburger",      rank:"Chief Curator of HR" },
+  { name:"Joachim vonWanze",        rank:"Curator of HR" },
+  { name:"Fabi Astro",              rank:"Division Chief of HR" },
+  { name:"Raffi Yane",              rank:"Deputy Chief of HR" },
+  { name:"Jonas Rak",               rank:"Deputy Chief of HR" },
+  { name:"Vaun Deberg",             rank:"Deputy Chief of HR" },
+  { name:"Harleen Bama",            rank:"Administration of HR" },
+  { name:"Noah Raiin",              rank:"HR Senior" },
+  { name:"Marcel Fero",             rank:"HR Senior" },
+  { name:"Anton Moluda",            rank:"HR Senior" },
+  { name:"Felix Cunningham",        rank:"HR Senior" },
+  { name:"Josephine Brandenburger", rank:"HR Member" },
+  { name:"Kai Herzog",              rank:"HR Member" },
+  { name:"Kevin Herzberg",          rank:"HR Member" },
+  { name:"Tyler Cortex",            rank:"HR Member" },
+  { name:"Lenni Luluman",           rank:"HR Member" },
+  { name:"Bora Yagami",             rank:"HR Member" },
+  { name:"Lilly Astro",             rank:"HR Member" },
+  { name:"Chris Paranoid",          rank:"HR Member" }
+];
+const RANK_BY_NAME = Object.fromEntries(ROSTER.map(p => [p.name, p.rank]));
+
+const rankSel = document.getElementById('rank');
+const ownInput = document.getElementById('ownrank');
+const ownNote  = document.getElementById('ownrankNote');
+RANKS.forEach(r=>{
+  const o=document.createElement('option'); o.value=r; o.textContent=r; o.className='mono-opt'; rankSel.appendChild(o);
+});
+rankSel.selectedIndex = 10;  // 12. Senior Agent als sinnvoller Default
+
+const nameSel  = document.getElementById('name');
+const nameFree = document.getElementById('nameFree');
+ROSTER.forEach(p=>{
+  const o=document.createElement('option'); o.value=p.name; o.textContent=p.name; nameSel.appendChild(o);
+});
+const freeOpt=document.createElement('option');
+freeOpt.value='__free__'; freeOpt.textContent='— Freie Eingabe —';
+nameSel.appendChild(freeOpt);
+nameSel.selectedIndex = 0;
+
+function currentName(){
+  if(nameSel.value === '__free__') return nameFree.value.trim() || "[Eigener Name]";
+  return nameSel.value;
+}
+
+// Eigenen Rang automatisch aus Spalte D setzen
+function syncOwnRank(){
+  if(nameSel.value === '__free__'){
+    ownInput.readOnly = false;
+    ownInput.placeholder = "Rang eingeben…";
+    ownNote.textContent = "freie Eingabe";
+  }else{
+    ownInput.readOnly = true;
+    ownInput.value = RANK_BY_NAME[nameSel.value] || "";
+    ownInput.placeholder = "";
+    ownNote.textContent = "automatisch aus Mitarbeiterliste (Spalte D)";
+  }
+}
+
+function ownRankValue(){
+  return ownInput.value.trim() || "[Eigener Rang]";
+}
+
+const cGrund = document.getElementById('c-grund');
+const cEvent = document.getElementById('c-event');
+const preview = document.getElementById('preview');
+
+function missingText(){
+  const g = cGrund.checked, e = cEvent.checked;
+  if(g && e) return "Grundausbildung und Eventschulung";
+  if(g) return "Grundausbildung";
+  if(e) return "Eventschulung";
+  return null;
+}
+
+function buildMessage(){
+  const rank = rankSel.value;
+  const name = currentName();
+  const own  = ownRankValue();
+  const miss = missingText();
+
+  let lines = [];
+  lines.push("Servus,");
+  lines.push("");
+  lines.push("du erhältst eine Ranganpassung auf Rang " + rank + ".");
+  lines.push("");
+  if(miss){
+    lines.push("**WICHTIG: Du hast 3 Tage Zeit um folgende Prüfung/en nachzuholen: "
+      + miss + ". Solltest du dem nicht nachkommen wirst du wieder auf den Rang 07. New Agent Trainee gesetzt.**");
+    lines.push("");
+  }
+  lines.push("Mit besten Grüßen,");
+  lines.push("**" + name + "**");
+  lines.push("-# " + own);
+  return lines.join("\n");
+}
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function render(){
+  const raw = buildMessage();
+  // toggle visual state on checkboxes
+  document.getElementById('c-grund-wrap').classList.toggle('on', cGrund.checked);
+  document.getElementById('c-event-wrap').classList.toggle('on', cEvent.checked);
+
+  const html = raw.split("\n").map(line=>{
+    let l = esc(line);
+    // bold
+    l = l.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    if(line.startsWith("-# ")){
+      return '<span class="smol">'+ esc(line.slice(3)) +'</span>';
+    }
+    if(line.includes("WICHTIG:")){
+      return '<span class="warn">'+ l.replace(/^<strong>|<\/strong>$/g,'') +'</span>';
+    }
+    return l === "" ? "" : l;
+  }).join("\n");
+  preview.innerHTML = html;
+}
+
+[rankSel, ownInput, nameSel, nameFree, cGrund, cEvent].forEach(el=>{
+  el.addEventListener('input', render);
+  el.addEventListener('change', render);
+});
+nameSel.addEventListener('change', ()=>{
+  nameFree.style.display = nameSel.value === '__free__' ? 'block' : 'none';
+  syncOwnRank();
+  if(nameSel.value === '__free__'){ ownInput.value=''; nameFree.focus(); }
+  render();
+});
+syncOwnRank();
+render();
+
+// Copy
+const btn = document.getElementById('copyBtn');
+const lbl = document.getElementById('copyLabel');
+btn.addEventListener('click', async ()=>{
+  const text = buildMessage();
+  let ok = false;
+  try{
+    await navigator.clipboard.writeText(text);
+    ok = true;
+  }catch(e){
+    // Fallback für eingeschränkte Umgebungen
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ ok = document.execCommand('copy'); }catch(_){ ok = false; }
+    document.body.removeChild(ta);
+  }
+  if(ok){
+    btn.classList.add('done'); lbl.textContent = "Kopiert!";
+    setTimeout(()=>{ btn.classList.remove('done'); lbl.textContent = "Nachricht kopieren"; }, 1600);
+  }else{
+    lbl.textContent = "Manuell kopieren (Strg+C)";
+    setTimeout(()=>{ lbl.textContent = "Nachricht kopieren"; }, 2200);
+  }
+});
+</script>
+</body>
+</html>
