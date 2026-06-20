@@ -108,6 +108,16 @@
   .auto-note{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;
     color:var(--muted-2);margin:8px 0 0;text-transform:uppercase}
 
+  /* Segmented control */
+  .seg{display:flex;gap:6px;background:var(--ink-2);border:1px solid var(--border-soft);
+    border-radius:11px;padding:5px}
+  .seg-btn{flex:1;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;
+    color:var(--muted);background:transparent;border:none;border-radius:8px;padding:10px 8px;
+    cursor:pointer;transition:color .15s, background .15s, box-shadow .15s}
+  .seg-btn:hover{color:var(--text)}
+  .seg-btn.active{background:rgba(201,162,39,0.13);color:var(--gold-soft);
+    box-shadow:inset 0 0 0 1px rgba(201,162,39,0.32)}
+
   /* Checkboxes */
   .checks{display:flex;flex-direction:column;gap:10px}
   .check{
@@ -180,13 +190,23 @@
       <p class="card-label">Eingabe</p>
 
       <div class="field">
-        <label class="l" for="rank">Zielrang</label>
-        <select id="rank"></select>
+        <label class="l">Nachrichtentyp</label>
+        <div class="seg" id="modeSeg">
+          <button type="button" class="seg-btn active" data-mode="rankup">Ranganpassung</button>
+          <button type="button" class="seg-btn" data-mode="none">Keine Ranganpassung</button>
+        </div>
       </div>
 
-      <div class="field">
-        <label class="l">Fehlende Prüfungen</label>
-        <div class="checks" id="examChecks"></div>
+      <div id="rankupFields">
+        <div class="field">
+          <label class="l" for="rank">Zielrang</label>
+          <select id="rank"></select>
+        </div>
+
+        <div class="field">
+          <label class="l">Fehlende Prüfungen</label>
+          <div class="checks" id="examChecks"></div>
+        </div>
       </div>
 
       <div class="field">
@@ -224,8 +244,6 @@ const RANKS = [
   "25. Supervisory Head Agent",
   "24. Supervisory Agent",
   "23. Special Agent in Charge",
-  "19. Tactical Operator",
-  "18. Department Specialist",
   "17. Commander",
   "16. Federal Operations Agent",
   "15. Principal Field Agent",
@@ -327,22 +345,42 @@ function missingText(){
   return joinGerman(selectedExams());
 }
 
+// Nachrichtentyp
+let mode = 'rankup';
+const modeSeg = document.getElementById('modeSeg');
+const rankupFields = document.getElementById('rankupFields');
+modeSeg.querySelectorAll('.seg-btn').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    mode = b.dataset.mode;
+    modeSeg.querySelectorAll('.seg-btn').forEach(x=>x.classList.toggle('active', x===b));
+    rankupFields.style.display = (mode === 'none') ? 'none' : '';
+    render();
+  });
+});
+
 function buildMessage(){
-  const rank = rankSel.value;
   const name = currentName();
   const own  = ownRankValue();
-  const miss = missingText();
 
   let lines = [];
   lines.push("Servus,");
   lines.push("");
-  lines.push("du erhältst eine Ranganpassung auf Rang " + rank + ".");
-  lines.push("");
-  if(miss){
-    lines.push("**WICHTIG: Du hast 3 Tage Zeit um folgende Prüfung/en nachzuholen: "
-      + miss + ". Solltest du dem nicht nachkommen wirst du wieder auf den Rang 07. New Agent Trainee gesetzt.**");
+
+  if(mode === 'none'){
+    lines.push("nach Überprüfung wurde der Entschluss gefasst, dass es für dich keine Ranganpassung gibt.");
     lines.push("");
+  }else{
+    const rank = rankSel.value;
+    const miss = missingText();
+    lines.push("du erhältst eine Ranganpassung auf Rang " + rank + ".");
+    lines.push("");
+    if(miss){
+      lines.push("**WICHTIG: Du hast 3 Tage Zeit um folgende Prüfung/en nachzuholen: "
+        + miss + ". Solltest du dem nicht nachkommen wirst du wieder auf den Rang 07. New Agent Trainee gesetzt.**");
+      lines.push("");
+    }
   }
+
   lines.push("Mit besten Grüßen,");
   lines.push("**" + name + "**");
   lines.push("-# " + own);
