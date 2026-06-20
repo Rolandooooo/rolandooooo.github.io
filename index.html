@@ -123,6 +123,7 @@
   .check input:checked::after{content:"";width:5px;height:9px;border:solid #0a0e17;
     border-width:0 2px 2px 0;transform:rotate(45deg) translateY(-1px)}
   .check span{font-size:14px}
+  .check span.code{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.5px}
   .check .num{font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:12.5px}
   .check.on{border-color:rgba(201,162,39,0.45);background:rgba(201,162,39,0.05)}
 
@@ -185,16 +186,7 @@
 
       <div class="field">
         <label class="l">Fehlende Prüfungen</label>
-        <div class="checks">
-          <label class="check" id="c-grund-wrap">
-            <input type="checkbox" id="c-grund">
-            <span>Grundausbildung</span>
-          </label>
-          <label class="check" id="c-event-wrap">
-            <input type="checkbox" id="c-event">
-            <span>Eventschulung</span>
-          </label>
-        </div>
+        <div class="checks" id="examChecks"></div>
       </div>
 
       <div class="field">
@@ -248,8 +240,8 @@ const RANKS = [
 // Mitarbeiter aus Tab "Mitarbeiter": Spalte B (Name) + Spalte D (Rang) — Stand 21.06.2026
 const ROSTER = [
   { name:"Felix Mccalley",          rank:"Inspector of the FIB" },
-  { name:"Nils Brandenburger",      rank:"Chief Curator of HR" },
-  { name:"Joachim vonWanze",        rank:"Curator of HR" },
+  { name:"Nils Brandenburger",      rank:"Director of Bureau Administration" },
+  { name:"Joachim vonWanze",        rank:"Divisional Director of HR" },
   { name:"Fabi Astro",              rank:"Division Chief of HR" },
   { name:"Raffi Yane",              rank:"Deputy Chief of HR" },
   { name:"Jonas Rak",               rank:"Deputy Chief of HR" },
@@ -311,16 +303,28 @@ function ownRankValue(){
   return ownInput.value.trim() || "[Eigener Rang]";
 }
 
-const cGrund = document.getElementById('c-grund');
-const cEvent = document.getElementById('c-event');
+const EXAMS = ["GA","EVS","TST","JUR","VHF/EL"];
+const examWrap = document.getElementById('examChecks');
+const examBoxes = EXAMS.map(code=>{
+  const label=document.createElement('label'); label.className='check';
+  const input=document.createElement('input'); input.type='checkbox'; input.value=code;
+  const span=document.createElement('span'); span.className='code'; span.textContent=code;
+  label.appendChild(input); label.appendChild(span);
+  examWrap.appendChild(label);
+  return { code, input, label };
+});
 const preview = document.getElementById('preview');
 
+function selectedExams(){
+  return examBoxes.filter(e=>e.input.checked).map(e=>e.code);
+}
+function joinGerman(arr){
+  if(arr.length === 0) return null;
+  if(arr.length === 1) return arr[0];
+  return arr.slice(0,-1).join(", ") + " und " + arr[arr.length-1];
+}
 function missingText(){
-  const g = cGrund.checked, e = cEvent.checked;
-  if(g && e) return "Grundausbildung und Eventschulung";
-  if(g) return "Grundausbildung";
-  if(e) return "Eventschulung";
-  return null;
+  return joinGerman(selectedExams());
 }
 
 function buildMessage(){
@@ -350,8 +354,7 @@ function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g
 function render(){
   const raw = buildMessage();
   // toggle visual state on checkboxes
-  document.getElementById('c-grund-wrap').classList.toggle('on', cGrund.checked);
-  document.getElementById('c-event-wrap').classList.toggle('on', cEvent.checked);
+  examBoxes.forEach(e=> e.label.classList.toggle('on', e.input.checked));
 
   const html = raw.split("\n").map(line=>{
     let l = esc(line);
@@ -368,7 +371,7 @@ function render(){
   preview.innerHTML = html;
 }
 
-[rankSel, ownInput, nameSel, nameFree, cGrund, cEvent].forEach(el=>{
+[rankSel, ownInput, nameSel, nameFree, ...examBoxes.map(e=>e.input)].forEach(el=>{
   el.addEventListener('input', render);
   el.addEventListener('change', render);
 });
