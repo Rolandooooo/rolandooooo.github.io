@@ -417,6 +417,132 @@
     </div>
   </section>
 
+  <!-- TOOL: EINSTELLUNG -->
+  <section id="hire" class="screen" hidden>
+    <button class="back" data-back type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Menü
+    </button>
+    <header>
+      <div class="seal">FIB</div>
+      <div>
+        <p class="eyebrow">Federal Investigation Bureau · Personalverwaltung</p>
+        <h1>Einstellung</h1>
+        <p class="sub">Einstellungs-Eintrag erstellen, prüfen, kopieren.</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <p class="card-label">Eingabe</p>
+
+        <div class="field">
+          <label class="l" for="hireId">ID</label>
+          <input type="text" id="hireId" placeholder="z. B. 295473" autocomplete="off">
+        </div>
+        <div class="field">
+          <label class="l" for="hireName">Name</label>
+          <input type="text" id="hireName" placeholder="Vor- und Nachname" autocomplete="off">
+        </div>
+        <div class="field">
+          <label class="l" for="hireRank">Rang</label>
+          <select id="hireRank"></select>
+        </div>
+        <div class="field">
+          <label class="l" for="hireGrund">Grund</label>
+          <select id="hireGrund">
+            <option value="WE">WE</option>
+            <option value="EP">EP</option>
+            <option value="OW">OW</option>
+            <option value="__free__">Eigener Grund</option>
+          </select>
+          <input type="text" id="hireGrundFree" placeholder="Grund eingeben…" autocomplete="off" style="display:none;margin-top:10px">
+        </div>
+        <div class="field">
+          <label class="l">Tag vom Invite</label>
+          <div class="seg" id="hireTagSeg">
+            <button type="button" class="seg-btn active" data-tag="today">Aktueller Tag</button>
+            <button type="button" class="seg-btn" data-tag="custom">Eigener Tag</button>
+          </div>
+          <input type="text" id="hireTagFree" placeholder="TT.MM.JJJJ" autocomplete="off" style="display:none;margin-top:10px">
+        </div>
+      </section>
+
+      <section class="card preview-card">
+        <p class="card-label">Vorschau</p>
+        <div class="discord" id="hirePreview"></div>
+        <div class="copy-row">
+          <button class="copy" id="hireCopyBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span id="hireCopyLabel">Nachricht kopieren</span>
+          </button>
+        </div>
+        <p class="hint">„Aktueller Tag" nutzt das heutige Datum (TT.MM.JJJJ).</p>
+      </section>
+    </div>
+  </section>
+
+  <!-- TOOL: KÜNDIGUNG -->
+  <section id="termination" class="screen" hidden>
+    <button class="back" data-back type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Menü
+    </button>
+    <header>
+      <div class="seal">FIB</div>
+      <div>
+        <p class="eyebrow">Federal Investigation Bureau · Personalverwaltung</p>
+        <h1>Kündigung</h1>
+        <p class="sub">Kündigungs-Eintrag erstellen, prüfen, kopieren.</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <p class="card-label">Eingabe</p>
+
+        <div class="field">
+          <label class="l" for="termName">Name</label>
+          <input type="text" id="termName" placeholder="Vor- und Nachname" autocomplete="off">
+        </div>
+        <div class="field">
+          <label class="l" for="termId">ID</label>
+          <input type="text" id="termId" placeholder="z. B. 295473" autocomplete="off">
+        </div>
+        <div class="field">
+          <label class="l" for="termRank">Rang</label>
+          <select id="termRank"></select>
+        </div>
+        <div class="field">
+          <label class="l" for="termAbt">Abteilung</label>
+          <select id="termAbt"></select>
+        </div>
+        <div class="field">
+          <label class="l" for="termGrund">Grund</label>
+          <select id="termGrund">
+            <option value="EW">EW</option>
+            <option value="OW">OW</option>
+            <option value="PL">PL</option>
+            <option value="__free__">Eigener Grund</option>
+          </select>
+          <input type="text" id="termGrundFree" placeholder="Grund eingeben…" autocomplete="off" style="display:none;margin-top:10px">
+        </div>
+      </section>
+
+      <section class="card preview-card">
+        <p class="card-label">Vorschau</p>
+        <div class="discord" id="termPreview"></div>
+        <div class="copy-row">
+          <button class="copy" id="termCopyBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span id="termCopyLabel">Nachricht kopieren</span>
+          </button>
+        </div>
+        <p class="hint">Abteilung fügt automatisch den Rollen-Ping ein. Die Ping-Zeile ist fest.</p>
+      </section>
+    </div>
+  </section>
+
   <footer>GrandRP DE01 · FIB Tools</footer>
 </div>
 
@@ -452,15 +578,15 @@ const TOOLS = [
     icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg>'
   },
   {
-    id:'hire', available:false,
+    id:'hire', available:true, screen:'hire',
     title:'Einstellung',
-    desc:'Demnächst verfügbar.',
+    desc:'Einstellungs-Eintrag mit ID, Rang, Grund und Invite-Datum erzeugen.',
     icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>'
   },
   {
-    id:'termination', available:false,
+    id:'termination', available:true, screen:'termination',
     title:'Kündigung',
-    desc:'Demnächst verfügbar.',
+    desc:'Kündigungs-Eintrag mit Abteilung, Grund und Ping erzeugen.',
     icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" y1="8" x2="22" y2="13"/><line x1="22" y1="8" x2="17" y2="13"/></svg>'
   },
   {
@@ -783,7 +909,7 @@ function buildAzMessage(){
   lines.push("Guten Tag,");
   lines.push("");
   lines.push("Folgende Ausbildungen werden dir anerkannt:");
-    lines.push("");
+  lines.push("");
   AZ_TRAININGS.forEach((t, i)=>{
     lines.push(t + " - " + (azState[i] ? "✅" : "❌"));
   });
@@ -816,6 +942,158 @@ azNameSel.addEventListener('change', ()=>{
 azSyncOwnRank();
 renderAz();
 wireCopy(document.getElementById('azCopyBtn'), document.getElementById('azCopyLabel'), buildAzMessage);
+
+
+/* ---------- Einstellung ---------- */
+function todayDE(){
+  const d = new Date();
+  const p = n => String(n).padStart(2,'0');
+  return p(d.getDate()) + "." + p(d.getMonth()+1) + "." + d.getFullYear();
+}
+
+// Vollständige Rangliste (für Einstellung & Kündigung)
+const FULL_RANKS = [
+  "30. Director of FIB",
+  "29. Deputy Director of FIB",
+  "28. Assistant Director of FIB",
+  "27. Divisional Director",
+  "26. Inspector of the FIB",
+  "25. Supervisory Head Agent",
+  "24. Supervisory Agent",
+  "23. Special Agent in Charge",
+  "22. Division Chief",
+  "20. Deputy Division Chief",
+  "19. Tactical Operator",
+  "18. Department Specialist",
+  "17. Commander",
+  "16. Federal Operations Agent",
+  "15. Principal Field Agent",
+  "14. Executive Agent",
+  "13. Enforcement Agent",
+  "12. Senior Agent",
+  "10. Agent First Class",
+  "09. Field Agent",
+  "08. Agent",
+  "07. New Agent Trainee",
+  "06. Praktikant",
+  "04. Facility Manager",
+  "03. Vacation",
+  "02. Suspended",
+  "01. Visitor"
+];
+function fillRankSelect(sel){
+  const ph=document.createElement('option');
+  ph.value=''; ph.textContent='— Rang wählen —'; sel.appendChild(ph);
+  FULL_RANKS.forEach(r=>{
+    const o=document.createElement('option'); o.value=r; o.textContent=r; o.className='mono-opt'; sel.appendChild(o);
+  });
+  sel.selectedIndex = 0;
+}
+
+const hireId    = document.getElementById('hireId');
+const hireName  = document.getElementById('hireName');
+const hireRank  = document.getElementById('hireRank');
+const hireGrund = document.getElementById('hireGrund');
+const hireGrundFree = document.getElementById('hireGrundFree');
+const hireTagSeg  = document.getElementById('hireTagSeg');
+const hireTagFree = document.getElementById('hireTagFree');
+const hirePreview = document.getElementById('hirePreview');
+let hireTagMode = 'today';
+fillRankSelect(hireRank);
+
+function hireGrundValue(){
+  return hireGrund.value === '__free__' ? (hireGrundFree.value.trim() || "[Grund]") : hireGrund.value;
+}
+function hireTagValue(){
+  return hireTagMode === 'custom' ? (hireTagFree.value.trim() || "[Tag]") : todayDE();
+}
+function buildHireMessage(){
+  return [
+    ("ID: " + hireId.value.trim()).trimEnd(),
+    ("Name: " + hireName.value.trim()).trimEnd(),
+    ("Rang: " + hireRank.value.trim()).trimEnd(),
+    "Grund: " + hireGrundValue(),
+    "Tag vom Invite: " + hireTagValue()
+  ].join("\n");
+}
+function renderHire(){ hirePreview.innerHTML = mdToHtml(buildHireMessage()); }
+
+hireGrund.addEventListener('change', ()=>{
+  hireGrundFree.style.display = hireGrund.value === '__free__' ? 'block' : 'none';
+  if(hireGrund.value === '__free__') hireGrundFree.focus();
+  renderHire();
+});
+hireTagSeg.querySelectorAll('.seg-btn').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    hireTagMode = b.dataset.tag;
+    hireTagSeg.querySelectorAll('.seg-btn').forEach(x=>x.classList.toggle('active', x===b));
+    hireTagFree.style.display = hireTagMode === 'custom' ? 'block' : 'none';
+    if(hireTagMode === 'custom') hireTagFree.focus();
+    renderHire();
+  });
+});
+[hireId, hireName, hireRank, hireGrundFree, hireTagFree].forEach(el=>{
+  el.addEventListener('input', renderHire);
+  el.addEventListener('change', renderHire);
+});
+renderHire();
+wireCopy(document.getElementById('hireCopyBtn'), document.getElementById('hireCopyLabel'), buildHireMessage);
+
+
+/* ---------- Kündigung ---------- */
+const ABTEILUNGEN = [
+  { label:"HR",              value:"<@&1358249302488518777>" },
+  { label:"CIRG",            value:"<@&1358249184171655270>" },
+  { label:"CID",             value:"<@&1358249253822267493>" },
+  { label:"FIBCO",           value:"<@&1358249386752344074>" },
+  { label:"PR",              value:"<@&1358249435196424354>" },
+  { label:"TD",              value:"<@&1383405989046390836>" },
+  { label:"LAW",             value:"<@&1383840268456951878>" },
+  { label:"IA",              value:"<@&1508833981213315082>" },
+  { label:"Keine Abteilung", value:"/" }
+];
+const TERM_PING = "<@764207282048991263> <@1226929673309655112>";
+
+const termName  = document.getElementById('termName');
+const termId    = document.getElementById('termId');
+const termRank  = document.getElementById('termRank');
+const termAbt   = document.getElementById('termAbt');
+const termGrund = document.getElementById('termGrund');
+const termGrundFree = document.getElementById('termGrundFree');
+const termPreview   = document.getElementById('termPreview');
+
+ABTEILUNGEN.forEach(a=>{
+  const o=document.createElement('option'); o.value=a.value; o.textContent=a.label; termAbt.appendChild(o);
+});
+termAbt.selectedIndex = 0;
+fillRankSelect(termRank);
+
+function termGrundValue(){
+  return termGrund.value === '__free__' ? (termGrundFree.value.trim() || "[Grund]") : termGrund.value;
+}
+function buildTermMessage(){
+  return [
+    ("Name: " + termName.value.trim()).trimEnd(),
+    ("ID: " + termId.value.trim()).trimEnd(),
+    ("Rang: " + termRank.value.trim()).trimEnd(),
+    "Abteilung: " + termAbt.value,
+    "Grund: " + termGrundValue(),
+    "Ping: " + TERM_PING
+  ].join("\n");
+}
+function renderTerm(){ termPreview.innerHTML = mdToHtml(buildTermMessage()); }
+
+termGrund.addEventListener('change', ()=>{
+  termGrundFree.style.display = termGrund.value === '__free__' ? 'block' : 'none';
+  if(termGrund.value === '__free__') termGrundFree.focus();
+  renderTerm();
+});
+[termName, termId, termRank, termAbt, termGrundFree].forEach(el=>{
+  el.addEventListener('input', renderTerm);
+  el.addEventListener('change', renderTerm);
+});
+renderTerm();
+wireCopy(document.getElementById('termCopyBtn'), document.getElementById('termCopyLabel'), buildTermMessage);
 </script>
 </body>
 </html>
