@@ -13,31 +13,120 @@
     --ink-2:#0e1422;
     --panel:rgba(255,255,255,0.035);
     --panel-strong:rgba(255,255,255,0.06);
-    --border:rgba(201,162,39,0.16);
+    --accent-rgb:31,181,173;
+    --border:rgba(var(--accent-rgb),0.16);
     --border-soft:rgba(255,255,255,0.08);
-    --gold:#c9a227;
-    --gold-soft:#d9be63;
+    --gold:#1fb5ad;
+    --gold-soft:#5fd4cd;
     --text:#e9ecf3;
     --muted:#8a93a6;
     --muted-2:#646d80;
     --warn:#e3683f;
     --warn-bg:rgba(227,104,63,0.10);
     --radius:14px;
+
+    /* CRM-Dashboard Akzentfarben */
+    --crm-pink:#d946ef;
+    --crm-pink-2:#a855f7;
+    --crm-cyan:#22d3ee;
+    --crm-blue:#3b82f6;
+    --crm-magenta:#ec4899;
+    --crm-violet:#8b5cf6;
+    --crm-card:#11142099;
+    --crm-card-border:rgba(255,255,255,0.07);
   }
   *{box-sizing:border-box}
   html,body{margin:0}
   body{
     font-family:'Inter',system-ui,sans-serif;
     background:
-      radial-gradient(1100px 600px at 78% -8%, rgba(201,162,39,0.10), transparent 60%),
+      radial-gradient(1100px 600px at 78% -8%, rgba(var(--accent-rgb),0.10), transparent 60%),
       radial-gradient(900px 500px at -5% 110%, rgba(70,90,140,0.12), transparent 55%),
       var(--ink);
     color:var(--text);
     min-height:100vh;
-    padding:28px 32px 48px;
     -webkit-font-smoothing:antialiased;
+    position:relative;
   }
-  .wrap{max-width:100%;margin:0 auto;position:relative;z-index:1}
+  #customBgLayer{
+    position:fixed;inset:-60px;z-index:0;pointer-events:none;
+    background-size:cover;background-position:center;background-repeat:no-repeat;
+    opacity:0;transition:opacity .4s ease, filter .15s ease;
+    filter:blur(var(--bg-blur, 0px));
+  }
+  #customBgLayer.on{opacity:1}
+  #customBgLayer::after{
+    content:"";position:absolute;inset:0;background:rgba(10,14,23,0.72);
+  }
+  .wrap{max-width:100%;margin:0 auto;position:relative;z-index:1;padding:28px 32px 48px;min-width:0;flex:1 1 0%}
+
+  /* App shell: Sidebar + Content */
+  .app-shell{display:flex;min-height:100vh;align-items:stretch;position:relative;z-index:1}
+  .sidebar{
+    flex:none;width:248px;min-height:100vh;position:sticky;top:0;align-self:flex-start;
+    background:rgba(255,255,255,0.025);border-right:1px solid var(--border-soft);
+    padding:24px 16px;display:flex;flex-direction:column;gap:3px;
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:5;
+  }
+  @media(max-width:900px){
+    .app-shell{flex-direction:column}
+    .sidebar{
+      width:100%;min-height:0;position:relative;flex-direction:row;flex-wrap:wrap;
+      gap:6px;border-right:none;border-bottom:1px solid var(--border-soft);
+    }
+    .sb-brand{width:100%}
+    .sb-group{width:100%}
+  }
+  .sb-brand{display:flex;align-items:center;gap:12px;padding:4px 10px 20px}
+  .sb-seal{width:38px;height:38px}
+  .sb-brand-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;margin:0;letter-spacing:.3px}
+  .sb-brand-sub{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted-2);margin:2px 0 0}
+  .sb-group{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2px;
+    text-transform:uppercase;color:var(--muted-2);margin:18px 10px 8px}
+  .sb-link{
+    display:flex;align-items:center;gap:11px;width:100%;font:inherit;text-align:left;
+    background:transparent;border:none;border-radius:10px;padding:11px 12px;cursor:pointer;
+    color:var(--muted);font-size:13.5px;transition:background .15s, color .15s;
+  }
+  .sb-link svg{width:17px;height:17px;flex:none;opacity:.85}
+  .sb-link:hover{background:rgba(255,255,255,0.05);color:var(--text)}
+  .sb-link.active{background:rgba(var(--accent-rgb),0.16);color:#fff;box-shadow:inset 0 0 0 1px rgba(var(--accent-rgb),0.4)}
+  .sb-link.active svg{color:var(--gold-soft);opacity:1}
+  .sb-home{margin-bottom:6px}
+
+  /* Settings screen */
+  .settings-row{display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:13px 2px;border-bottom:1px solid var(--border-soft)}
+  .settings-row:last-child{border-bottom:none}
+  .settings-row-title{font-size:13.5px;color:var(--text);margin:0}
+  .settings-row-sub{font-size:12px;color:var(--muted);margin:4px 0 0;line-height:1.5}
+  .settings-pill{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;
+    text-transform:uppercase;padding:5px 10px;border-radius:7px;flex:none}
+  .settings-pill.ok{color:#3fae6e;background:rgba(63,174,110,0.10);border:1px solid rgba(63,174,110,0.3)}
+
+  /* Schieberegler (z.B. Hintergrund-Unschärfe) */
+  .vol-slider{width:100%;margin-top:8px;accent-color:var(--gold);cursor:pointer}
+
+  /* Color picker */
+  .color-controls{display:flex;align-items:center;gap:10px;flex:none}
+  .color-swatch{width:38px;height:38px;border-radius:9px;border:1px solid var(--border-soft);
+    background:transparent;cursor:pointer;padding:0}
+  .mini-btn{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted);background:var(--ink-2);
+    border:1px solid var(--border-soft);border-radius:7px;padding:9px 12px;cursor:pointer;
+    transition:border-color .15s, color .15s}
+  .mini-btn:hover{border-color:var(--gold);color:var(--gold-soft)}
+  .file-btn{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1px;
+    text-transform:uppercase;color:var(--gold-soft);background:rgba(var(--accent-rgb),0.10);
+    border:1px solid var(--border);border-radius:7px;padding:9px 13px;cursor:pointer;
+    transition:background .15s;display:inline-flex;align-items:center}
+  .file-btn:hover{background:rgba(var(--accent-rgb),0.18)}
+  .swatch-row{display:flex;gap:10px;padding:4px 2px 14px;flex-wrap:wrap}
+  .preset-swatch{width:26px;height:26px;border-radius:50%;border:2px solid transparent;
+    cursor:pointer;padding:0;transition:transform .15s, border-color .15s;box-shadow:0 0 0 1px rgba(255,255,255,0.12)}
+  .preset-swatch:hover{transform:scale(1.12)}
+  .preset-swatch.active{border-color:#fff}
 
   /* Header */
   header{display:flex;align-items:center;gap:18px;margin-bottom:34px}
@@ -47,8 +136,8 @@
     display:grid;place-items:center;
     font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;letter-spacing:1px;
     color:var(--gold-soft);
-    background:radial-gradient(circle at 30% 25%, rgba(201,162,39,0.22), transparent 70%);
-    box-shadow:0 0 0 4px rgba(201,162,39,0.06), inset 0 0 14px rgba(201,162,39,0.08);
+    background:radial-gradient(circle at 30% 25%, rgba(var(--accent-rgb),0.22), transparent 70%);
+    box-shadow:0 0 0 4px rgba(var(--accent-rgb),0.06), inset 0 0 14px rgba(var(--accent-rgb),0.08);
   }
   .eyebrow{
     font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;
@@ -87,26 +176,27 @@
   .field:last-child{margin-bottom:0}
   label.l{display:block;font-size:12.5px;font-weight:500;color:var(--muted);margin-bottom:8px;letter-spacing:.2px}
 
-  select,input[type=text]{
+  select,input[type=text],textarea{
     width:100%;font-family:'Inter',sans-serif;font-size:14px;color:var(--text);
     background:var(--ink-2);
     border:1px solid var(--border-soft);
     border-radius:10px;padding:12px 13px;outline:none;
     transition:border-color .15s, box-shadow .15s;
   }
+  textarea{resize:vertical;line-height:1.5}
   select{
     appearance:none;cursor:pointer;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238a93a6' stroke-width='2.2'><path d='M6 9l6 6 6-6'/></svg>");
     background-repeat:no-repeat;background-position:right 13px center;padding-right:38px;
   }
   select option{background:#10172a;color:var(--text)}
-  select:focus,input[type=text]:focus{
-    border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,0.14);
+  select:focus,input[type=text]:focus,textarea:focus{
+    border-color:var(--gold);box-shadow:0 0 0 3px rgba(var(--accent-rgb),0.14);
   }
   .mono-opt{font-family:'JetBrains Mono',monospace}
   input[readonly]{
     color:var(--gold-soft);font-weight:500;cursor:default;
-    background:rgba(201,162,39,0.05);border-color:var(--border);
+    background:rgba(var(--accent-rgb),0.05);border-color:var(--border);
   }
   input[readonly]:focus{box-shadow:none}
   .auto-note{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;
@@ -119,8 +209,8 @@
     color:var(--muted);background:transparent;border:none;border-radius:8px;padding:10px 8px;
     cursor:pointer;transition:color .15s, background .15s, box-shadow .15s}
   .seg-btn:hover{color:var(--text)}
-  .seg-btn.active{background:rgba(201,162,39,0.13);color:var(--gold-soft);
-    box-shadow:inset 0 0 0 1px rgba(201,162,39,0.32)}
+  .seg-btn.active{background:rgba(var(--accent-rgb),0.13);color:var(--gold-soft);
+    box-shadow:inset 0 0 0 1px rgba(var(--accent-rgb),0.32)}
 
   /* Checkboxes */
   .checks{display:flex;flex-direction:column;gap:10px}
@@ -129,7 +219,7 @@
     background:var(--ink-2);border:1px solid var(--border-soft);
     border-radius:10px;padding:12px 13px;transition:border-color .15s, background .15s;
   }
-  .check:hover{border-color:rgba(201,162,39,0.35)}
+  .check:hover{border-color:rgba(var(--accent-rgb),0.35)}
   .check input{appearance:none;width:18px;height:18px;flex:none;border-radius:5px;
     border:1.5px solid var(--muted-2);background:transparent;cursor:pointer;
     display:grid;place-items:center;transition:.15s}
@@ -139,7 +229,7 @@
   .check span{font-size:14px}
   .check span.code{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.5px}
   .check .num{font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:12.5px}
-  .check.on{border-color:rgba(201,162,39,0.45);background:rgba(201,162,39,0.05)}
+  .check.on{border-color:rgba(var(--accent-rgb),0.45);background:rgba(var(--accent-rgb),0.05)}
 
   /* AZ toggle rows */
   .az-row{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;
@@ -196,9 +286,9 @@
     padding:22px;min-height:158px;display:flex;flex-direction:column;gap:14px;
     backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
     transition:transform .18s, border-color .18s, background .18s}
-  .tile:hover{transform:translateY(-3px);border-color:rgba(201,162,39,0.45);background:var(--panel-strong)}
+  .tile:hover{transform:translateY(-3px);border-color:rgba(var(--accent-rgb),0.45);background:var(--panel-strong)}
   .tile-ico{width:44px;height:44px;border-radius:11px;display:grid;place-items:center;
-    border:1px solid var(--border);color:var(--gold-soft);background:rgba(201,162,39,0.06)}
+    border:1px solid var(--border);color:var(--gold-soft);background:rgba(var(--accent-rgb),0.06)}
   .tile-ico svg{width:22px;height:22px}
   .tile h3{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin:0;letter-spacing:-0.2px}
   .tile p{font-size:12.5px;color:var(--muted);margin:0;line-height:1.5}
@@ -221,17 +311,17 @@
   /* Splash */
   #splash{position:fixed;inset:0;z-index:100;display:grid;place-items:center;
     background:
-      radial-gradient(800px 500px at 50% 30%, rgba(201,162,39,0.08), transparent 60%),
+      radial-gradient(800px 500px at 50% 30%, rgba(var(--accent-rgb),0.08), transparent 60%),
       var(--ink);
     transition:opacity .55s ease;cursor:pointer}
   #splash.hide{opacity:0;pointer-events:none}
   .splash-inner{display:flex;flex-direction:column;align-items:center;text-align:center;padding:24px}
   .splash-seal{position:relative;width:112px;height:112px;border-radius:50%;overflow:hidden;
     border:2px solid var(--gold);display:grid;place-items:center;
-    background:radial-gradient(circle at 32% 26%, rgba(201,162,39,0.25), transparent 70%);
+    background:radial-gradient(circle at 32% 26%, rgba(var(--accent-rgb),0.25), transparent 70%);
     animation:sealIn .85s cubic-bezier(.2,.8,.2,1) both, ring 1.7s ease-out .85s 1}
   .sweep{position:absolute;inset:-25%;z-index:1;
-    background:conic-gradient(from 0deg, rgba(201,162,39,0.40), transparent 26%);
+    background:conic-gradient(from 0deg, rgba(var(--accent-rgb),0.40), transparent 26%);
     animation:sweep 1.4s linear infinite}
   .splash-title{margin-top:26px;font-family:'Space Grotesk',sans-serif;font-weight:600;
     font-size:21px;letter-spacing:.5px;color:var(--text);opacity:0;
@@ -253,7 +343,7 @@
 
   @keyframes sealIn{0%{transform:scale(.6) rotate(-14deg);opacity:0}60%{opacity:1}100%{transform:scale(1) rotate(0);opacity:1}}
   @keyframes sweep{to{transform:rotate(360deg)}}
-  @keyframes ring{0%{box-shadow:0 0 0 0 rgba(201,162,39,0.40)}100%{box-shadow:0 0 0 24px rgba(201,162,39,0)}}
+  @keyframes ring{0%{box-shadow:0 0 0 0 rgba(var(--accent-rgb),0.40)}100%{box-shadow:0 0 0 24px rgba(var(--accent-rgb),0)}}
   @keyframes bootIn{to{opacity:1;transform:translateY(0)}}
   @keyframes barFill{to{width:100%}}
 
@@ -270,15 +360,15 @@
   .ambient::before{
     content:"";position:absolute;inset:-2px;
     background-image:
-      linear-gradient(rgba(201,162,39,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(201,162,39,0.05) 1px, transparent 1px);
+      linear-gradient(rgba(var(--accent-rgb),0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(var(--accent-rgb),0.05) 1px, transparent 1px);
     background-size:64px 64px;
     -webkit-mask-image:radial-gradient(1000px 700px at 65% 0%, #000 0%, transparent 75%);
     mask-image:radial-gradient(1000px 700px at 65% 0%, #000 0%, transparent 75%);
   }
   .ambient-scan{
     position:absolute;left:-10%;right:-10%;height:240px;top:-240px;
-    background:linear-gradient(180deg, transparent, rgba(201,162,39,0.075), transparent);
+    background:linear-gradient(180deg, transparent, rgba(var(--accent-rgb),0.075), transparent);
     mix-blend-mode:screen;
     animation:scanMove 15s ease-in-out infinite;
   }
@@ -328,18 +418,24 @@
   .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
   @media(max-width:840px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:460px){.kpi-grid{grid-template-columns:1fr}}
-  .kpi{position:relative;background:var(--panel);border:1px solid var(--border-soft);
-    border-radius:var(--radius);padding:18px 20px;backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);overflow:hidden}
-  .kpi-num{font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:600;
-    line-height:1;letter-spacing:-1.2px;color:var(--text)}
-  .kpi-num small{font-size:14px;font-weight:500;color:var(--muted-2);margin-left:5px;letter-spacing:0}
-  .kpi-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;
-    text-transform:uppercase;color:var(--muted-2);margin-top:11px}
-  .kpi-accent{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:9px;
-    display:grid;place-items:center;border:1px solid var(--border);color:var(--gold-soft);
-    background:rgba(201,162,39,0.06)}
-  .kpi-accent svg{width:17px;height:17px}
+  .kpi{position:relative;border-radius:18px;padding:20px 22px;overflow:hidden;
+    color:#fff;box-shadow:0 14px 30px -14px rgba(0,0,0,.55)}
+  .kpi.kpi-0{background:linear-gradient(135deg,var(--crm-pink-2),var(--crm-pink) 60%,var(--crm-magenta))}
+  .kpi.kpi-1{background:linear-gradient(135deg,var(--crm-cyan),var(--crm-blue) 70%)}
+  .kpi.kpi-2{background:linear-gradient(135deg,#312e81,#1e1b4b);border:1px solid rgba(255,255,255,0.08)}
+  .kpi.kpi-3{background:linear-gradient(135deg,#1e293b,#0f172a);border:1px solid rgba(255,255,255,0.08)}
+  .kpi-num{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;
+    line-height:1;letter-spacing:-1px;color:#fff}
+  .kpi-num small{font-size:14px;font-weight:500;color:rgba(255,255,255,.72);margin-left:5px;letter-spacing:0}
+  .kpi-label{font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;
+    color:rgba(255,255,255,.82);margin-top:12px;letter-spacing:0;text-transform:none}
+  .kpi-accent{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;
+    display:grid;place-items:center;color:rgba(255,255,255,.92);
+    background:rgba(255,255,255,0.16)}
+  .kpi-accent svg{width:16px;height:16px}
+  .kpi-trend{position:absolute;bottom:16px;right:18px;font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;letter-spacing:.5px;color:rgba(255,255,255,.78);
+    display:flex;align-items:center;gap:4px}
 
   .dash-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:22px;align-items:start;margin-bottom:22px}
   @media(max-width:840px){.dash-grid{grid-template-columns:1fr}}
@@ -352,16 +448,9 @@
   .bar-track{height:9px;border-radius:6px;background:var(--ink-2);
     border:1px solid var(--border-soft);overflow:hidden}
   .bar-fill{display:block;height:100%;border-radius:6px;width:0;
-    background:linear-gradient(90deg,var(--gold),var(--gold-soft));
+    background:linear-gradient(90deg,var(--crm-pink-2),var(--crm-cyan));
     transition:width 1s cubic-bezier(.2,.8,.2,1)}
-  .bar-val{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold-soft);text-align:right}
-
-  /* Trainingsdivision */
-  .td-list{display:flex;flex-direction:column;gap:10px}
-  .td-item{display:flex;align-items:center;justify-content:space-between;gap:10px;
-    background:var(--ink-2);border:1px solid var(--border-soft);border-radius:10px;padding:11px 13px}
-  .td-name{font-size:13.5px}
-  .td-rank{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.5px;color:var(--muted)}
+  .bar-val{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--crm-cyan);text-align:right}
 
   /* Personalübersicht */
   .roster{display:grid;grid-template-columns:repeat(2,1fr);gap:0 28px}
@@ -375,6 +464,53 @@
     .r-name{flex:0 0 auto}
     .r-rank{white-space:normal;min-width:0}
   }
+
+  /* FIB Gesamtstärke — Donut */
+  .org-status{display:flex;align-items:center;gap:9px;margin:0 0 18px}
+  .org-dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto;background:var(--muted-2)}
+  .org-dot.loading{background:var(--crm-pink);animation:rosterPulse 1.1s ease-in-out infinite}
+  .org-dot.live{background:#3fae6e;box-shadow:0 0 0 3px rgba(63,174,110,.18)}
+  .org-dot.fallback{background:var(--warn);box-shadow:0 0 0 3px var(--warn-bg)}
+  .org-status-text{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.4px;
+    color:var(--muted-2);flex:1 1 auto;min-width:0}
+  .org-donut-wrap{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+  .org-donut{position:relative;width:128px;height:128px;flex:none}
+  .org-donut svg{width:100%;height:100%;transform:rotate(-90deg)}
+  .org-donut-center{position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center}
+  .org-donut-num{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--text);line-height:1}
+  .org-donut-lbl{font-family:'Inter',sans-serif;font-size:9.5px;color:var(--muted);margin-top:3px;max-width:70px;line-height:1.25}
+  .org-legend{display:flex;flex-direction:column;gap:12px;flex:1 1 120px;min-width:120px}
+  .org-legend-item{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--text)}
+  .org-legend-dot{width:9px;height:9px;border-radius:50%;flex:none}
+  .org-legend-pct{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-left:auto}
+  .org-stats{display:none}
+  .org-stat{flex:1 1 0}
+  .org-stat-num{font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:600;
+    line-height:1;letter-spacing:-1.2px;color:var(--text)}
+  .org-stat-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted-2);margin-top:6px}
+
+
+  /* Live-Status (Personalübersicht) */
+  .roster-status{display:flex;align-items:center;gap:9px;margin:0 0 16px}
+  .roster-dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto;background:var(--muted-2)}
+  .roster-dot.loading{background:var(--crm-pink);animation:rosterPulse 1.1s ease-in-out infinite}
+  .roster-dot.live{background:#3fae6e;box-shadow:0 0 0 3px rgba(63,174,110,.18)}
+  .roster-dot.fallback{background:var(--warn);box-shadow:0 0 0 3px var(--warn-bg)}
+  @keyframes rosterPulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .roster-status-text{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.4px;
+    color:var(--muted-2);flex:1 1 auto;min-width:0}
+  .roster-refresh{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1px;
+    text-transform:uppercase;color:var(--crm-cyan);background:rgba(34,211,238,0.10);
+    border:1px solid rgba(34,211,238,0.25);border-radius:7px;padding:6px 10px;cursor:pointer;
+    transition:background .15s, transform .08s;flex:0 0 auto;display:flex;align-items:center;gap:6px}
+  .roster-refresh:hover{background:rgba(34,211,238,0.18)}
+  .roster-refresh:active{transform:translateY(1px)}
+  .roster-refresh:disabled{opacity:.55;cursor:default}
+  .roster-refresh svg{width:12px;height:12px}
+  .roster-refresh.spin svg{animation:rosterSpin .9s linear infinite}
+  @keyframes rosterSpin{to{transform:rotate(360deg)}}
 
   .section-head{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2.5px;
     text-transform:uppercase;color:var(--muted-2);margin:30px 0 16px;
@@ -405,13 +541,13 @@
     cursor:pointer;transition:transform .18s, border-color .18s, background .18s;
     text-align:left;font:inherit;color:inherit;min-height:88px;
   }
-  .quick-card:hover:not(.quick-empty){transform:translateY(-2px);border-color:rgba(201,162,39,0.45);background:var(--panel-strong)}
+  .quick-card:hover:not(.quick-empty){transform:translateY(-2px);border-color:rgba(var(--accent-rgb),0.45);background:var(--panel-strong)}
   .quick-card.quick-empty{
     border-style:dashed;cursor:pointer;
     border-color:rgba(255,255,255,0.12);
     display:grid;place-items:center;
   }
-  .quick-card.quick-empty:hover{border-color:rgba(201,162,39,0.4);background:rgba(201,162,39,0.04)}
+  .quick-card.quick-empty:hover{border-color:rgba(var(--accent-rgb),0.4);background:rgba(var(--accent-rgb),0.04)}
   .quick-empty-inner{display:flex;flex-direction:column;align-items:center;gap:6px}
   .quick-empty-ico{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;
     border:1.5px dashed var(--muted-2);color:var(--muted-2)}
@@ -419,7 +555,7 @@
   .quick-empty-lbl{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2px;
     text-transform:uppercase;color:var(--muted-2)}
   .quick-ico{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
-    border:1px solid var(--border);color:var(--gold-soft);background:rgba(201,162,39,0.07);flex:none}
+    border:1px solid var(--border);color:var(--gold-soft);background:rgba(var(--accent-rgb),0.07);flex:none}
   .quick-ico svg{width:17px;height:17px}
   .quick-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;letter-spacing:-.1px;line-height:1.2}
   .quick-sub{font-size:11px;color:var(--muted);line-height:1.4}
@@ -430,7 +566,7 @@
   }
   .quick-edit-btn svg{width:12px;height:12px}
   .quick-card:hover .quick-edit-btn{opacity:1}
-  .quick-edit-btn:hover{background:rgba(201,162,39,0.12);color:var(--gold-soft)}
+  .quick-edit-btn:hover{background:rgba(var(--accent-rgb),0.12);color:var(--gold-soft)}
 
   /* Quick modal */
   .quick-modal-bg{
@@ -454,10 +590,10 @@
     background:var(--panel);border:1px solid var(--border-soft);border-radius:10px;
     cursor:pointer;transition:.15s;font:inherit;color:inherit;text-align:left;width:100%;
   }
-  .qm-opt:hover{border-color:rgba(201,162,39,0.4);background:var(--panel-strong)}
-  .qm-opt.selected{border-color:rgba(201,162,39,0.55);background:rgba(201,162,39,0.07)}
+  .qm-opt:hover{border-color:rgba(var(--accent-rgb),0.4);background:var(--panel-strong)}
+  .qm-opt.selected{border-color:rgba(var(--accent-rgb),0.55);background:rgba(var(--accent-rgb),0.07)}
   .qm-opt-ico{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;
-    border:1px solid var(--border);color:var(--gold-soft);background:rgba(201,162,39,0.07);flex:none}
+    border:1px solid var(--border);color:var(--gold-soft);background:rgba(var(--accent-rgb),0.07);flex:none}
   .qm-opt-ico svg{width:15px;height:15px}
   .qm-opt-name{font-size:14px;font-weight:500}
   .qm-opt-desc{font-size:11.5px;color:var(--muted)}
@@ -477,6 +613,8 @@
 </style>
 </head>
 <body>
+
+<div id="customBgLayer" aria-hidden="true"></div>
 
 <!-- Reusable bureau shield mark -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -515,6 +653,65 @@
   </div>
 </div>
 
+<div class="app-shell">
+
+<nav class="sidebar" id="sidebar">
+  <div class="sb-brand">
+    <div class="seal sb-seal"><svg class="seal-badge" viewBox="0 0 24 24"><use href="#fib-shield"/></svg></div>
+    <div>
+      <p class="sb-brand-title">FIB</p>
+      <p class="sb-brand-sub">Personalabteilung</p>
+    </div>
+  </div>
+
+  <button type="button" class="sb-link sb-home" data-nav="menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>
+    Übersicht
+  </button>
+
+  <p class="sb-group">Module</p>
+  <button type="button" class="sb-link" data-nav="upranks">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+    Rank Management
+  </button>
+  <button type="button" class="sb-link" data-nav="directory">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="7" x2="16" y2="7"/><line x1="9" y1="11" x2="16" y2="11"/></svg>
+    Mitarbeiterverzeichnis
+  </button>
+  <button type="button" class="sb-link" data-nav="personalakte">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    Personalakte-Generator
+  </button>
+
+  <p class="sb-group">Vorlagen</p>
+  <button type="button" class="sb-link" data-nav="tool">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+    Ranganpassung
+  </button>
+  <button type="button" class="sb-link" data-nav="hire">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+    Einstellung
+  </button>
+  <button type="button" class="sb-link" data-nav="termination">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" y1="8" x2="22" y2="13"/><line x1="22" y1="8" x2="17" y2="13"/></svg>
+    Kündigung
+  </button>
+  <button type="button" class="sb-link" data-nav="az">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    AZ-Auswertung
+  </button>
+  <button type="button" class="sb-link" data-nav="sanktion">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Sanktion
+  </button>
+
+  <p class="sb-group">System</p>
+  <button type="button" class="sb-link" data-nav="settings">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    Einstellungen
+  </button>
+</nav>
+
 <div class="wrap">
 
   <div class="statusbar">
@@ -544,21 +741,34 @@
     <p class="section-head">Schnellzugriffe</p>
     <div class="quick-grid" id="quickGrid"></div>
 
-    <!-- Verteilung + Trainingsdivision -->
+    <!-- Verteilung + FIB-Gesamtstärke -->
     <div class="dash-grid">
       <section class="card">
         <p class="card-label">Rangverteilung</p>
         <div class="bars" id="rankBars"></div>
       </section>
       <section class="card">
-        <p class="card-label">Trainingsdivision</p>
-        <div class="td-list" id="tdList"></div>
+        <p class="card-label">FIB Gesamtstärke</p>
+        <div class="org-status">
+          <span class="org-dot loading" id="orgDot" aria-hidden="true"></span>
+          <span class="org-status-text" id="orgStatusText">Verbinde mit Google Sheets …</span>
+        </div>
+        <div class="org-donut-wrap" id="orgDonutWrap"></div>
+        <div class="org-stats" id="orgStats"></div>
       </section>
     </div>
 
     <!-- Personalübersicht -->
     <section class="card">
       <p class="card-label">Personalübersicht</p>
+      <div class="roster-status">
+        <span class="roster-dot loading" id="rosterDot" aria-hidden="true"></span>
+        <span class="roster-status-text" id="rosterStatusText">Verbinde mit Google Sheets …</span>
+        <button type="button" class="roster-refresh" id="rosterRefreshBtn" title="Personalübersicht neu laden">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          Neu laden
+        </button>
+      </div>
       <div class="roster" id="rosterList"></div>
     </section>
 
@@ -753,6 +963,17 @@
           </button>
         </div>
         <p class="hint">„Aktueller Tag" nutzt das heutige Datum (TT.MM.JJJJ).</p>
+
+        <div class="field" style="margin-top:18px">
+          <label class="l">Kurzformat</label>
+          <div class="discord" id="hireShortPreview" style="margin-bottom:10px"></div>
+          <div class="copy-row">
+            <button class="copy" id="hireShortCopyBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span id="hireShortCopyLabel">XX | Name | ID kopieren</span>
+            </button>
+          </div>
+        </div>
       </section>
     </div>
   </section>
@@ -777,16 +998,21 @@
         <p class="card-label">Eingabe</p>
 
         <div class="field">
-          <label class="l" for="termName">Name</label>
-          <input type="text" id="termName" placeholder="Vor- und Nachname" autocomplete="off">
-        </div>
-        <div class="field">
           <label class="l" for="termId">ID</label>
           <input type="text" id="termId" placeholder="z. B. 295473" autocomplete="off">
+          <p class="auto-note" id="termLookupStatus">Name, Rang &amp; Dienstnummer werden automatisch aus dem Mitarbeiterverzeichnis geladen.</p>
         </div>
         <div class="field">
-          <label class="l" for="termRank">Rang</label>
-          <select id="termRank"></select>
+          <label class="l" for="termName">Name <span style="opacity:.55;font-weight:500">(automatisch)</span></label>
+          <input type="text" id="termName" placeholder="wird automatisch befüllt" autocomplete="off" readonly>
+        </div>
+        <div class="field">
+          <label class="l" for="termRank">Rang <span style="opacity:.55;font-weight:500">(automatisch)</span></label>
+          <input type="text" id="termRank" placeholder="wird automatisch befüllt" autocomplete="off" readonly>
+        </div>
+        <div class="field">
+          <label class="l" for="termDn">Dienstnummer <span style="opacity:.55;font-weight:500">(automatisch)</span></label>
+          <input type="text" id="termDn" placeholder="wird automatisch befüllt" autocomplete="off" readonly>
         </div>
         <div class="field">
           <label class="l" for="termAbt">Abteilung</label>
@@ -815,6 +1041,77 @@
           </button>
         </div>
         <p class="hint">Abteilung fügt automatisch den Rollen-Ping ein. Die Ping-Zeile ist fest.</p>
+
+        <div class="field" style="margin-top:18px">
+          <label class="l">Kurzformat</label>
+          <div class="discord" id="termShortPreview" style="margin-bottom:10px"></div>
+          <div class="copy-row">
+            <button class="copy" id="termShortCopyBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span id="termShortCopyLabel">Dienstnummer | Name | ID kopieren</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+
+  <!-- TOOL: SANKTION -->
+  <section id="sanktion" class="screen" hidden>
+    <button class="back" data-back type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Menü</button>
+    <header>
+      <div class="seal"><svg class="seal-badge" viewBox="0 0 24 24"><use href="#fib-shield"/></svg></div>
+      <div>
+        <p class="eyebrow">Federal Investigation Bureau · Personalverwaltung</p>
+        <h1>Sanktion</h1>
+        <p class="sub">Interne Sanktion erstellen, prüfen, kopieren.</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <p class="card-label">Eingabe</p>
+
+        <div class="field">
+          <label class="l" for="sankUserIds">Discord-User-ID(s)</label>
+          <input type="text" id="sankUserIds" placeholder="z. B. 123456789012345678, 234567890123456789" autocomplete="off">
+          <p class="auto-note">Mehrere IDs durch Komma oder Zeilenumbruch getrennt → jede wird einzeln gepingt.</p>
+        </div>
+
+        <div class="field">
+          <label class="l">Verstöße (§ aus dem Sanktionskatalog)</label>
+          <input type="text" id="sankParaSearch" placeholder="§ suchen…" autocomplete="off" style="margin-bottom:10px">
+          <div class="checks" id="sankParaList" style="max-height:260px;overflow:auto"></div>
+        </div>
+
+        <div class="field">
+          <label class="l" for="sankStrafe">Sanktionsmaßnahme</label>
+          <textarea id="sankStrafe" placeholder="Eine Strafe pro Zeile, z. B.&#10;60 Min. Humane Labs&#10;$50.000 Geldstrafe" autocomplete="off" rows="3"></textarea>
+          <p class="auto-note">Jede Zeile wird als eigener Punkt in der Sanktionsmaßnahme aufgeführt.</p>
+        </div>
+
+        <div class="field">
+          <label class="l" for="sankName">Dein Name</label>
+          <input type="text" id="sankName" placeholder="Vor- und Nachname" autocomplete="off">
+        </div>
+        <div class="field">
+          <label class="l" for="sankRank">Dein Rang</label>
+          <select id="sankRank"></select>
+        </div>
+      </section>
+
+      <section class="card preview-card">
+        <p class="card-label">Vorschau</p>
+        <div class="stamp" aria-hidden="true">ÜBERTRAGEN</div>
+        <div class="discord" id="sankPreview"></div>
+        <div class="copy-row">
+          <button class="copy" id="sankCopyBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span id="sankCopyLabel">Nachricht kopieren</span>
+          </button>
+        </div>
+        <p class="hint">Quelle: <a href="https://docs.google.com/spreadsheets/d/1uzAA-_O2JtDBs3bpRG9Mqbva67dqh45LPDjPEf8-njQ/edit?gid=304679539#gid=304679539" target="_blank" rel="noopener" style="color:var(--gold-soft)">Sanktionskatalog (Google Sheets)</a></p>
       </section>
     </div>
   </section>
@@ -878,7 +1175,7 @@
       radial-gradient(ellipse at 80% 100%, rgba(0,51,102,0.06) 0%, transparent 60%);
   }
 
-  .container { max-width: 960px; margin: auto; }
+  .container { max-width: 1280px; margin: auto; }
 
   .header {
     text-align: center;
@@ -1673,7 +1970,7 @@ function copyOutput() {
   }
   .watermark span{white-space:nowrap;}
 
-  .wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 1.5rem 4rem;}
+  .wrap{position:relative;z-index:1;max-width:1480px;margin:0 auto;padding:0 1.5rem 4rem;}
 
   /* ===== HEADER / FOLDER TAB ===== */
   header{padding-top:2.5rem;}
@@ -2459,10 +2756,11 @@ body{
 .topbar img{height:40px;width:40px;object-fit:contain}
 .topbar h1{font:600 16px/1.2 Georgia,'Times New Roman',serif;letter-spacing:.12em;color:var(--gold-lt);margin:0;text-transform:uppercase}
 .topbar small{display:block;color:var(--mut);font-size:11px;letter-spacing:.18em;text-transform:uppercase;margin-top:2px}
-.wrap{display:grid;grid-template-columns:390px 1fr;gap:0;align-items:start}
+.wrap{display:grid;grid-template-columns:560px 1fr;gap:0;align-items:start}
+@media(max-width:1200px){.wrap{grid-template-columns:460px 1fr}}
 @media(max-width:880px){.wrap{grid-template-columns:1fr}}
 
-.controls{padding:22px;max-height:calc(100vh - 73px);overflow:auto;border-right:1px solid #20335f}
+.controls{padding:22px 26px;max-height:calc(100vh - 73px);overflow:auto;border-right:1px solid #20335f}
 .section{margin-bottom:22px}
 .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);
   border-left:3px solid var(--gold);padding-left:9px;margin-bottom:12px;font-weight:700}
@@ -2861,8 +3159,93 @@ render();
     <p class="frame-note">Eigenständiges Tool · läuft isoliert im Panel (eigenes Layout &amp; Skript).</p>
   </section>
 
+  <!-- EINSTELLUNGEN -->
+  <section id="settings" class="screen" hidden>
+    <button class="back" data-back type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Menü</button>
+    <header>
+      <div class="seal"><svg class="seal-badge" viewBox="0 0 24 24"><use href="#fib-shield"/></svg></div>
+      <div>
+        <p class="eyebrow">Federal Investigation Bureau · Human Resources</p>
+        <h1>Einstellungen</h1>
+        <p class="sub">Systemkonfiguration &amp; Datenquellen.</p>
+      </div>
+    </header>
+
+    <section class="card" style="margin-bottom:18px">
+      <p class="card-label">Datenquellen</p>
+      <div class="settings-row">
+        <div>
+          <p class="settings-row-title">Personalübersicht (Google Sheets)</p>
+          <p class="settings-row-sub">Tab „Mitarbeiter" · live verbunden, Fallback bei Verbindungsfehler.</p>
+        </div>
+        <span class="settings-pill ok">Aktiv</span>
+      </div>
+      <div class="settings-row">
+        <div>
+          <p class="settings-row-title">FIB Gesamtstärke (Google Sheets)</p>
+          <p class="settings-row-sub">Tab „Daten" · Agentenzahl &amp; Abteilungsmitglieder.</p>
+        </div>
+        <span class="settings-pill ok">Aktiv</span>
+      </div>
+    </section>
+
+    <section class="card" style="margin-bottom:18px">
+      <p class="card-label">Personalisierung</p>
+
+      <div class="settings-row">
+        <div>
+          <p class="settings-row-title">Hauptfarbe</p>
+          <p class="settings-row-sub">Steuert Akzente, Icons, Rahmen, Buttons &amp; Hervorhebungen im gesamten Tool.</p>
+        </div>
+        <div class="color-controls">
+          <input type="color" id="accentPicker" class="color-swatch" value="#1fb5ad">
+          <button type="button" class="mini-btn" id="accentReset">Zurücksetzen</button>
+        </div>
+      </div>
+      <div class="swatch-row" id="presetSwatches">
+        <button type="button" class="preset-swatch" data-color="#1fb5ad" style="background:#1fb5ad" title="Türkis (Standard)"></button>
+        <button type="button" class="preset-swatch" data-color="#d946ef" style="background:#d946ef" title="Pink"></button>
+        <button type="button" class="preset-swatch" data-color="#3b82f6" style="background:#3b82f6" title="Blau"></button>
+        <button type="button" class="preset-swatch" data-color="#c8a24c" style="background:#c8a24c" title="Gold"></button>
+        <button type="button" class="preset-swatch" data-color="#e3683f" style="background:#e3683f" title="Orange"></button>
+        <button type="button" class="preset-swatch" data-color="#3fae6e" style="background:#3fae6e" title="Grün"></button>
+      </div>
+
+      <div class="settings-row">
+        <div>
+          <p class="settings-row-title">Eigenes Hintergrundbild</p>
+          <p class="settings-row-sub">Wird hinter den Panels angezeigt (leicht abgedunkelt für Lesbarkeit).</p>
+        </div>
+        <div class="color-controls">
+          <label class="file-btn">
+            Bild wählen
+            <input type="file" id="bgFile" accept="image/*" hidden>
+          </label>
+          <button type="button" class="mini-btn" id="bgReset">Entfernen</button>
+        </div>
+      </div>
+      <div class="settings-row" id="bgBlurRow">
+        <div style="flex:1 1 auto">
+          <p class="settings-row-title">Unschärfe</p>
+          <input type="range" id="bgBlur" min="0" max="30" value="0" class="vol-slider">
+        </div>
+        <span class="settings-row-sub" id="bgBlurVal" style="flex:none;min-width:34px;text-align:right">0px</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <p class="card-label">Über dieses Tool</p>
+      <p class="settings-row-sub" style="margin:0">
+        Offline-Toolsuite der FIB-Personalabteilung · GrandRP DE01. Läuft vollständig lokal im Browser,
+        ohne externes Backend. Module greifen optional live auf Google Sheets zu und fallen automatisch
+        auf gespeicherte Stände zurück.
+      </p>
+    </section>
+  </section>
+
   <footer>GrandRP DE01 · FIB Personalabteilung</footer>
 </div>
+</div><!-- /app-shell -->
 
 <!-- Quick Access Modal -->
 <div class="quick-modal-bg" id="quickModalBg">
@@ -2935,6 +3318,12 @@ const TOOLS = [
     icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" y1="8" x2="22" y2="13"/><line x1="22" y1="8" x2="17" y2="13"/></svg>'
   },
   {
+    id:'sanktion', available:true, screen:'sanktion',
+    title:'Sanktion',
+    desc:'Interne Sanktion mit Verstößen, Strafmaß und Unterschrift erzeugen.',
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+  },
+  {
     id:'upranks', available:true, screen:'upranks',
     title:'Rank Management',
     desc:'Memberliste, Queue und RankUp/Derank-Generator (Upranks-Tool).',
@@ -2951,12 +3340,6 @@ const TOOLS = [
     title:'Personalakte-Generator',
     desc:'Personalakten mit SVG-Rendering erstellen und als PNG exportieren.',
     icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>'
-  },
-  {
-    id:'sanction', available:false,
-    title:'Sanktion',
-    desc:'Demnächst verfügbar.',
-    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
   }
 ];
 
@@ -2984,11 +3367,18 @@ function showScreen(id){
     const fr = scr.querySelector('iframe.tool-frame[data-src]');
     if(fr){ fr.srcdoc = fr.dataset.src; fr.removeAttribute('data-src'); }
   }
+  document.querySelectorAll('.sb-link').forEach(b=>{
+    b.classList.toggle('active', b.dataset.nav === id);
+  });
   window.scrollTo(0, 0);
 }
 document.querySelectorAll('[data-back]').forEach(b=>{
   b.addEventListener('click', ()=> showScreen('menu'));
 });
+document.querySelectorAll('.sb-link[data-nav]').forEach(b=>{
+  b.addEventListener('click', ()=> showScreen(b.dataset.nav));
+});
+showScreen('menu');
 
 /* ---------- Schnellzugriffe ---------- */
 (function(){
@@ -3286,6 +3676,7 @@ function mdToHtml(raw){
   return raw.split("\n").map(line=>{
     let l = esc(line);
     l = l.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    l = l.replace(/(?<!\*)\*([^*]+?)\*(?!\*)/g, '<em>$1</em>');
     if(line.startsWith("-# ")){
       return '<span class="smol">'+ esc(line.slice(3)) +'</span>';
     }
@@ -3319,6 +3710,7 @@ render();
 // Copy (wiederverwendbar)
 function wireCopy(btn, lbl, getText){
   const stamp = btn.closest('.preview-card')?.querySelector('.stamp');
+  const idleText = lbl.textContent;
   btn.addEventListener('click', async ()=>{
     const text = getText();
     let ok = false;
@@ -3338,10 +3730,10 @@ function wireCopy(btn, lbl, getText){
         stamp.classList.remove('show'); void stamp.offsetWidth; stamp.classList.add('show');
         setTimeout(()=> stamp.classList.remove('show'), 1300);
       }
-      setTimeout(()=>{ btn.classList.remove('done'); lbl.textContent = "Nachricht kopieren"; }, 1600);
+      setTimeout(()=>{ btn.classList.remove('done'); lbl.textContent = idleText; }, 1600);
     }else{
       lbl.textContent = "Manuell kopieren (Strg+C)";
-      setTimeout(()=>{ lbl.textContent = "Nachricht kopieren"; }, 2200);
+      setTimeout(()=>{ lbl.textContent = idleText; }, 2200);
     }
   });
 }
@@ -3513,6 +3905,7 @@ const hireGrundFree = document.getElementById('hireGrundFree');
 const hireTagSeg  = document.getElementById('hireTagSeg');
 const hireTagFree = document.getElementById('hireTagFree');
 const hirePreview = document.getElementById('hirePreview');
+const hireShortPreview = document.getElementById('hireShortPreview');
 let hireTagMode = 'today';
 fillRankSelect(hireRank);
 
@@ -3531,7 +3924,23 @@ function buildHireMessage(){
     "Tag vom Invite: " + hireTagValue()
   ].join("\n");
 }
-function renderHire(){ hirePreview.innerHTML = mdToHtml(buildHireMessage()); }
+function hireRankNumber(){
+  // "08. Agent" -> "08"; ohne gewählten Rang -> Platzhalter
+  const r = hireRank.value.trim();
+  const m = r.match(/^(\d+)\./);
+  return m ? m[1] : "[XX]";
+}
+function buildHireShortMessage(){
+  return [
+    hireRankNumber(),
+    hireName.value.trim() || "[Name]",
+    hireId.value.trim() || "[ID]"
+  ].join(" | ");
+}
+function renderHire(){
+  hirePreview.innerHTML = mdToHtml(buildHireMessage());
+  hireShortPreview.innerHTML = esc(buildHireShortMessage());
+}
 
 hireGrund.addEventListener('change', ()=>{
   hireGrundFree.style.display = hireGrund.value === '__free__' ? 'block' : 'none';
@@ -3553,6 +3962,7 @@ hireTagSeg.querySelectorAll('.seg-btn').forEach(b=>{
 });
 renderHire();
 wireCopy(document.getElementById('hireCopyBtn'), document.getElementById('hireCopyLabel'), buildHireMessage);
+wireCopy(document.getElementById('hireShortCopyBtn'), document.getElementById('hireShortCopyLabel'), buildHireShortMessage);
 
 
 /* ---------- Kündigung ---------- */
@@ -3569,19 +3979,21 @@ const ABTEILUNGEN = [
 ];
 const TERM_PING = "<@764207282048991263> <@1226929673309655112>";
 
-const termName  = document.getElementById('termName');
-const termId    = document.getElementById('termId');
-const termRank  = document.getElementById('termRank');
-const termAbt   = document.getElementById('termAbt');
-const termGrund = document.getElementById('termGrund');
-const termGrundFree = document.getElementById('termGrundFree');
-const termPreview   = document.getElementById('termPreview');
+const termName   = document.getElementById('termName');
+const termId     = document.getElementById('termId');
+const termRank   = document.getElementById('termRank');
+const termDn     = document.getElementById('termDn');
+const termAbt    = document.getElementById('termAbt');
+const termGrund  = document.getElementById('termGrund');
+const termGrundFree  = document.getElementById('termGrundFree');
+const termPreview    = document.getElementById('termPreview');
+const termShortPreview  = document.getElementById('termShortPreview');
+const termLookupStatus  = document.getElementById('termLookupStatus');
 
 ABTEILUNGEN.forEach(a=>{
   const o=document.createElement('option'); o.value=a.value; o.textContent=a.label; termAbt.appendChild(o);
 });
 termAbt.selectedIndex = 0;
-fillRankSelect(termRank);
 
 function termGrundValue(){
   return termGrund.value === '__free__' ? (termGrundFree.value.trim() || "[Grund]") : termGrund.value;
@@ -3596,28 +4008,309 @@ function buildTermMessage(){
     "Ping: " + TERM_PING
   ].join("\n");
 }
-function renderTerm(){ termPreview.innerHTML = mdToHtml(buildTermMessage()); }
+function buildTermShortMessage(){
+  return [
+    termDn.value.trim() || "[Dienstnummer]",
+    termName.value.trim() || "[Name]",
+    termId.value.trim() || "[ID]"
+  ].join(" | ");
+}
+function renderTerm(){
+  termPreview.innerHTML = mdToHtml(buildTermMessage());
+  termShortPreview.innerHTML = esc(buildTermShortMessage());
+}
 
 termGrund.addEventListener('change', ()=>{
   termGrundFree.style.display = termGrund.value === '__free__' ? 'block' : 'none';
   if(termGrund.value === '__free__') termGrundFree.focus();
   renderTerm();
 });
-[termName, termId, termRank, termAbt, termGrundFree].forEach(el=>{
+[termAbt, termGrundFree].forEach(el=>{
   el.addEventListener('input', renderTerm);
   el.addEventListener('change', renderTerm);
 });
 renderTerm();
 wireCopy(document.getElementById('termCopyBtn'), document.getElementById('termCopyLabel'), buildTermMessage);
+wireCopy(document.getElementById('termShortCopyBtn'), document.getElementById('termShortCopyLabel'), buildTermShortMessage);
+
+// ===== ID-Lookup im Mitarbeiterverzeichnis (gleiche Quelle wie das Verzeichnis-Tool) =====
+// Sheet "1uzAA...", Tab "Daten", Range B11:R1000 — Spalten relativ zu B: ID, Name, Rang, –, DN, –, –, Gruppe, –, Strike
+const TERM_LOOKUP_SPREADSHEET_ID = "1uzAA-_O2JtDBs3bpRG9Mqbva67dqh45LPDjPEf8-njQ";
+const TERM_LOOKUP_GID = "1591796957";
+const TERM_LOOKUP_RANGE = "B11:R1000";
+const TERM_LOOKUP_COL = {id:0, name:1, rank:2, dn:4};
+
+let termRosterCache = null;   // gecachte Liste aus dem Sheet
+let termRosterLoading = false;
+let termLookupTimer = null;
+
+function parseTermLookupRows(rows){
+  const out = [];
+  rows.forEach(row=>{
+    const c = row.c || [];
+    const cell = i => (c[i] && (c[i].f ?? c[i].v)) ?? "";
+    const id = String(cell(TERM_LOOKUP_COL.id)).trim();
+    const name = String(cell(TERM_LOOKUP_COL.name)).trim();
+    if(!id || !name) return;
+    out.push({
+      id,
+      name,
+      rank: String(cell(TERM_LOOKUP_COL.rank)).trim(),
+      dn: String(cell(TERM_LOOKUP_COL.dn)).trim()
+    });
+  });
+  return out;
+}
+
+function setTermLookupStatus(text){
+  if(termLookupStatus) termLookupStatus.textContent = text;
+}
+
+function fetchTermRoster(onDone){
+  if(termRosterLoading) return;
+  termRosterLoading = true;
+  setTermLookupStatus("Lade Mitarbeiterverzeichnis …");
+
+  window.google = window.google || {};
+  window.google.visualization = window.google.visualization || {};
+  window.google.visualization.Query = window.google.visualization.Query || {};
+
+  let settled = false;
+  const timeoutId = setTimeout(()=>{
+    if(!settled){ settled = true; termRosterLoading = false; setTermLookupStatus("Verzeichnis nicht erreichbar (Zeitüberschreitung) — ID erneut eingeben zum Wiederholen."); if(onDone) onDone(false); }
+  }, 9000);
+
+  window.google.visualization.Query.setResponse = function(data){
+    if(settled) return;
+    settled = true;
+    termRosterLoading = false;
+    clearTimeout(timeoutId);
+    try{
+      if(!data || !data.table || !Array.isArray(data.table.rows)) throw new Error("unerwartetes Format");
+      const parsed = parseTermLookupRows(data.table.rows);
+      if(parsed.length === 0) throw new Error("keine Einträge gefunden");
+      termRosterCache = parsed;
+      setTermLookupStatus("Mitarbeiterverzeichnis geladen · " + parsed.length + " Einträge.");
+      if(onDone) onDone(true);
+    }catch(e){
+      setTermLookupStatus("Verzeichnis nicht erreichbar (" + e.message + ") — ID erneut eingeben zum Wiederholen.");
+      if(onDone) onDone(false);
+    }
+  };
+
+  const script = document.createElement("script");
+  script.src = "https://docs.google.com/spreadsheets/d/" + TERM_LOOKUP_SPREADSHEET_ID +
+    "/gviz/tq?gid=" + TERM_LOOKUP_GID + "&range=" + TERM_LOOKUP_RANGE + "&tqx=out:json&_=" + Date.now();
+  script.onerror = function(){
+    if(!settled){ settled = true; termRosterLoading = false; clearTimeout(timeoutId); setTermLookupStatus("Verzeichnis nicht erreichbar (Skriptfehler) — ID erneut eingeben zum Wiederholen."); if(onDone) onDone(false); }
+  };
+  document.body.appendChild(script);
+  setTimeout(()=> script.remove(), 12000);
+}
+
+function applyTermLookup(){
+  const id = termId.value.trim();
+  if(!id){
+    termName.value = ""; termRank.value = ""; termDn.value = "";
+    setTermLookupStatus("Name, Rang & Dienstnummer werden automatisch aus dem Mitarbeiterverzeichnis geladen.");
+    renderTerm();
+    return;
+  }
+  const match = (termRosterCache || []).find(r => r.id === id);
+  if(match){
+    termName.value = match.name;
+    termRank.value = match.rank;
+    termDn.value = match.dn;
+    setTermLookupStatus("Gefunden: " + match.name + (match.rank ? " · " + match.rank : ""));
+  }else{
+    termName.value = ""; termRank.value = ""; termDn.value = "";
+    setTermLookupStatus(termRosterCache ? ("Keine Übereinstimmung für ID „" + id + "“ im Verzeichnis.") : "Verzeichnis noch nicht geladen …");
+  }
+  renderTerm();
+}
+
+termId.addEventListener('input', ()=>{
+  clearTimeout(termLookupTimer);
+  termLookupTimer = setTimeout(()=>{
+    if(!termRosterCache && !termRosterLoading){
+      fetchTermRoster(()=> applyTermLookup());
+    }else{
+      applyTermLookup();
+    }
+  }, 300);
+});
+
+// Verzeichnis direkt beim Öffnen des Tools im Hintergrund vorladen
+fetchTermRoster();
+
+
+/* ---------- Sanktion ---------- */
+const SANKTIONEN = [
+  { p:'1.0', text:'Respektloses Verhalten' },
+  { p:'1.1', text:'Befehlsverweigerung (ggü. ranghöheren, Einsatzleitung oder Leitstelle)' },
+  { p:'1.2', text:'Fragen nach Beförderung' },
+  { p:'1.3', text:'Namensänderung ohne Bekanntmachung und Bestätigung' },
+  { p:'1.4', text:'Nicht Erscheinen zu Gesprächen / Ausbildungsterminen / Meetings ohne Abmeldung' },
+  { p:'1.5', text:'Stören / Mithören von Privatgesprächen ohne Erlaubnis' },
+  { p:'1.6', text:'Diffamieren anderer staatlicher Organisationen' },
+  { p:'1.7', text:'Unerlaubtes Tackeln / am Boden fesseln' },
+  { p:'2.0', text:'Missachtung der Dienstpflicht' },
+  { p:'2.1', text:'Vorsätzliches Falschausstellen von Bußgeldern oder Fahndungsstufen' },
+  { p:'2.2', text:'Mitnahme von Zivilisten während des Dienstes' },
+  { p:'2.3', text:'Das Tragen von komplett schwarz tätowierten Armen / Füßen' },
+  { p:'2.4', text:'Das Befahren des Ghettos im Dienst ohne Berechtigung / Spezialbeamte' },
+  { p:'2.5', text:'Missbrauch des Tazers / sinnloses Tazern' },
+  { p:'2.6', text:'Schlafen am/im HQ (Ausnahme: Pausenraum)' },
+  { p:'2.7', text:'Festnahme von Personen ohne Begründung / Verdacht / Missbrauch der Handschellen' },
+  { p:'2.8', text:'Maskierte Agents vor fremden / externen Personen mit dem Namen ansprechen' },
+  { p:'2.9', text:'Crossstreife ohne Genehmigung' },
+  { p:'2.10', text:'Unverhältnismäßige Waffengewalt gegenüber Wehrlosen' },
+  { p:'2.11', text:'Parken von Privatfahrzeugen auf dem Gelände des FIBs' },
+  { p:'2.12', text:'Nicht schließen der Türen' },
+  { p:'2.13', text:'Nicht erscheinen zu Pflichtevents ohne Abmeldung' },
+  { p:'2.14', text:'Grundlose Vergabe von Einzelhaft' },
+  { p:'2.15', text:'Nicht dokumentieren von UC-Einheiten' },
+  { p:'2.16', text:'Nicht dokumentieren von Fake-ID' },
+  { p:'2.17', text:'Undercover oder Zivil ohne Befugnis' },
+  { p:'2.18', text:'Ausstellung von Falschpark Tickets / Geschw. Verstößen ohne Kennzeichen' },
+  { p:'2.19', text:'Tragen von unseriösen Accessoires' },
+  { p:'2.20', text:'Ausstellen von Sanktionen an Ranghöhere' },
+  { p:'2.21', text:'Teilnahme bei Events ohne eingetragene Ausbildung' },
+  { p:'3.0', text:'Versäumen wichtiger Funksprüche' },
+  { p:'3.1', text:'Mitarbeiterbeschwerden via T-Funk' },
+  { p:'3.2', text:'Nicht nutzen der Leitstelle / Eintragung sowie Austragung vergessen' },
+  { p:'3.3', text:'Nutzung des Sprachfunks außerhalb des Dienstes' },
+  { p:'3.4', text:'(Wiederholter) Verstoß gegen die Befehlskette' },
+  { p:'3.5', text:'Brüllen, Schreien, unangemessene Lautstärke im Funk' },
+  { p:'3.6', text:'Nichteinhaltung der Funkdisziplin' },
+  { p:'3.7', text:'Unterbrechen wichtiger Funksprüche' },
+  { p:'4.0', text:'Verstoß gegen die Kleiderordnung' },
+  { p:'4.1', text:'Verstoß gegen die Waffenordnung' },
+  { p:'4.2', text:'Nutzung privater Waffen ohne Befugnisse im Dienst' },
+  { p:'4.3', text:'Verstoß gegen die Fahrzeugordnung' },
+  { p:'4.4', text:'Das Nutzen von Einsatzmitteln ohne gültige Ausbildung' },
+  { p:'4.5', text:'Stehen lassen von Fahrzeugen / nicht betanken oder reparieren' },
+  { p:'4.6', text:'Nicht entfernen von Absicherungen / Missbrauch von Absicherungen' },
+  { p:'4.7', text:'Im Dienst ohne gültigen Waffenschein / Lizenzen' },
+  { p:'4.8', text:'Entsorgung von Waffen, Munition, Westen und Masken außerhalb des Lagers' },
+  { p:'4.9', text:'Tragen von Abteilungsoutfits ohne in der Abteilung zu sein' },
+  { p:'4.10', text:'Tragen von Balaclavas im Dienst ohne Notwendigkeit' },
+  { p:'4.11', text:'Nutzung von Tarnung/Makeup (Fake-ID) ohne wichtigen Grund' },
+  { p:'5.0', text:'Nicht Anfahren von Event, Globals, Locals, Shopraubs und 11-99' },
+  { p:'5.1', text:'Betreten von Grundstücken ohne Durchsuchungsbefehl' },
+  { p:'5.2', text:'Anstiftung zu einem internen Regelverstoß' },
+  { p:'5.3', text:'Willkürliches Aussenden einer Stoppaufforderung oder Motorblockers' },
+  { p:'5.4', text:'Vom Konvoi / Einsatz entfernen ohne Genehmigung' },
+  { p:'5.5', text:'Tanzen / unangemessenes Verhalten / reden bei Einsätzen' },
+  { p:'5.6', text:'Stören/unbefugtes Einmischen von/bei Einsätzen, Kontrollen, Verhaftungen' },
+  { p:'6.0', text:'Diffamieren des FIB im Dienst sowie außer Dienst' },
+  { p:'6.1', text:'Nicht erfüllen von Strafen innerhalb von 48 Stunden' },
+  { p:'6.2', text:'Entfernen von Wanteds unter dem Rang 13 - Senior Special Agent' },
+  { p:'6.3', text:'Betreten / Gaffen / Aufenthalt bei Einsatzstellen außerhalb des Dienstes' },
+  { p:'6.4', text:'Datenschutzverletzung' },
+  { p:'6.5', text:'Bewerbung bei einer anderen Organisation ohne Absprache' },
+  { p:'6.6', text:'Unabgemeldetes Fehlen von mehr als 72 Stunden' },
+  { p:'6.7', text:'Fehlende Bodycam bei Anfrage der Justiz, FIBCO, LAW oder Leaderschaft' },
+  { p:'6.8', text:'Mangelnde Aktivität/Initiative, Mangelnde Logaktivität' },
+  { p:'7.0', text:'Sonstiges Vergehen (Variabel)' },
+  { p:'7.1', text:'Mehrfache Sanktionen in kürzester Zeit mit dem selben/ähnlichen Grund' }
+];
+
+const sankUserIds    = document.getElementById('sankUserIds');
+const sankParaSearch = document.getElementById('sankParaSearch');
+const sankParaList   = document.getElementById('sankParaList');
+const sankStrafe     = document.getElementById('sankStrafe');
+const sankName       = document.getElementById('sankName');
+const sankRank       = document.getElementById('sankRank');
+const sankPreview    = document.getElementById('sankPreview');
+
+fillRankSelect(sankRank);
+
+const sankChecked = new Set();
+
+function renderSankParaList(filter){
+  const f = (filter||'').trim().toLowerCase();
+  const items = SANKTIONEN.filter(s =>
+    !f || s.p.toLowerCase().includes(f) || s.text.toLowerCase().includes(f)
+  );
+  sankParaList.innerHTML = items.map(s=>{
+    const id = 'sankPara_' + s.p.replace('.', '_');
+    const on = sankChecked.has(s.p) ? ' on' : '';
+    const checked = sankChecked.has(s.p) ? ' checked' : '';
+    return '<label class="check'+on+'" for="'+id+'">'+
+      '<input type="checkbox" id="'+id+'" data-p="'+s.p+'"'+checked+'>'+
+      '<span class="code">§'+s.p+'</span><span>'+esc(s.text)+'</span>'+
+      '</label>';
+  }).join('') || '<p class="auto-note" style="margin:6px 0">Keine Treffer.</p>';
+
+  sankParaList.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+    cb.addEventListener('change', ()=>{
+      const p = cb.dataset.p;
+      if(cb.checked) sankChecked.add(p); else sankChecked.delete(p);
+      cb.closest('.check').classList.toggle('on', cb.checked);
+      renderSank();
+    });
+  });
+}
+renderSankParaList('');
+sankParaSearch.addEventListener('input', ()=> renderSankParaList(sankParaSearch.value));
+
+function sankPingValue(){
+  const raw = sankUserIds.value.split(/[,\n]/).map(s=>s.trim()).filter(Boolean);
+  if(raw.length === 0) return '<@DISCORDUSERID>';
+  return raw.map(id=>{
+    const digits = id.replace(/[^0-9]/g,'');
+    return digits ? '<@'+digits+'>' : '<@'+id+'>';
+  }).join(' ');
+}
+
+function sankParaLines(){
+  const selected = SANKTIONEN.filter(s => sankChecked.has(s.p));
+  if(selected.length === 0) return '- [§ aus dem Sanktionskatalog]';
+  return selected.map(s => '- §'+s.p+' '+s.text).join('\n');
+}
+
+function sankStrafeLines(){
+  const lines = sankStrafe.value.split('\n').map(l=>l.trim()).filter(Boolean);
+  if(lines.length === 0) return '- [Strafe]';
+  return lines.map(l => '- '+l).join('\n');
+}
+
+function buildSankMessage(){
+  const name = sankName.value.trim() || '[Dein Name]';
+  const rank = sankRank.value.trim() || '[Dein Rang]';
+  return [
+    'Sehr geehrter ' + sankPingValue() + ',',
+    '',
+    '**hiermit erteile ich euch eine interne Sanktion aufgrund von Dienstvergehen. Folgende Verstöße gegen die Dienstordnung wurden festgestellt:**',
+    '',
+    sankParaLines(),
+    '',
+    '**Sanktionsmaßnahme:**',
+    '',
+    sankStrafeLines(),
+    '',
+    'Wenn dies nochmal Vorkommen sollte werden es härtere Sanktionen geben.',
+    'In der Sanktion wird nicht **Diskutiert !**',
+    '',
+    '*Hochachtungsvoll,*',
+    name,
+    '-# ' + rank
+  ].join('\n');
+}
+function renderSank(){ sankPreview.innerHTML = mdToHtml(buildSankMessage()); }
+
+[sankUserIds, sankStrafe, sankName, sankRank].forEach(el=>{
+  el.addEventListener('input', renderSank);
+  el.addEventListener('change', renderSank);
+});
+renderSank();
+wireCopy(document.getElementById('sankCopyBtn'), document.getElementById('sankCopyLabel'), buildSankMessage);
 
 
 /* ---------- Dashboard ---------- */
 (function(){
   const p2 = n => String(n).padStart(2,'0');
-
-  // Stand-Datum
-  const dd = document.getElementById('dashDate');
-  if(dd){ const d=new Date(); dd.textContent = p2(d.getDate())+"."+p2(d.getMonth()+1)+"."+d.getFullYear(); }
 
   // Tier-Definition (Reihenfolge = Hierarchie)
   const TIERS = [
@@ -3629,15 +4322,6 @@ wireCopy(document.getElementById('termCopyBtn'), document.getElementById('termCo
   ];
   const tierOf = r => (TIERS.find(t=>t.test(r))||{key:'Sonstige'}).key;
 
-  const count = {};
-  TIERS.forEach(t=> count[t.key]=0);
-  ROSTER.forEach(p=>{ const k=tierOf(p.rank); count[k]=(count[k]||0)+1; });
-
-  const total   = ROSTER.length;
-  const leitung = count['Führungsebene'] + count['Deputy Chief'] + count['Administration'];
-  const sachb   = count['HR Senior'] + count['HR Member'];
-  const tdCount = (typeof AZ_ROSTER !== 'undefined') ? AZ_ROSTER.length : 0;
-
   const IC = {
     users:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
     shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
@@ -3645,59 +4329,434 @@ wireCopy(document.getElementById('termCopyBtn'), document.getElementById('termCo
     grad:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 2.5 3 6 3s6-2 6-3v-5"/></svg>'
   };
 
-  // Kennzahlen
-  const KPIS = [
-    { num: total,   label:'Personalbestand',    icon: IC.users },
-    { num: leitung, label:'Führung & Leitung',  icon: IC.shield },
-    { num: sachb,   label:'HR Senior & Member', icon: IC.id },
-    { num: tdCount, label:'Trainingsdivision',  icon: IC.grad }
-  ];
-  const kpiGrid = document.getElementById('kpiGrid');
-  if(kpiGrid){
-    kpiGrid.innerHTML = KPIS.map(k=>
-      '<div class="kpi"><div class="kpi-accent">'+k.icon+'</div>'+
-      '<div class="kpi-num">'+k.num+'</div>'+
-      '<div class="kpi-label">'+k.label+'</div></div>'
-    ).join('');
+  // currentRoster: Live-Daten aus dem Sheet, oder Fallback auf das statische ROSTER-Array
+  let currentRoster = ROSTER;
+
+  function renderDashboard(){
+    // Stand-Datum
+    const dd = document.getElementById('dashDate');
+    if(dd){ const d=new Date(); dd.textContent = p2(d.getDate())+"."+p2(d.getMonth()+1)+"."+d.getFullYear(); }
+
+    const count = {};
+    TIERS.forEach(t=> count[t.key]=0);
+    currentRoster.forEach(p=>{ const k=tierOf(p.rank); count[k]=(count[k]||0)+1; });
+
+    const total   = currentRoster.length;
+    const leitung = count['Führungsebene'] + count['Deputy Chief'] + count['Administration'];
+    const sachb   = count['HR Senior'] + count['HR Member'];
+    const tdCount = (typeof AZ_ROSTER !== 'undefined') ? AZ_ROSTER.length : 0;
+
+    // Kennzahlen
+    const KPIS = [
+      { num: total,   label:'Personalbestand',    icon: IC.users },
+      { num: leitung, label:'Führung & Leitung',  icon: IC.shield },
+      { num: sachb,   label:'HR Senior & Member', icon: IC.id },
+      { num: tdCount, label:'Trainingsdivision',  icon: IC.grad }
+    ];
+    const kpiGrid = document.getElementById('kpiGrid');
+    if(kpiGrid){
+      kpiGrid.innerHTML = KPIS.map((k,i)=>
+        '<div class="kpi kpi-'+i+'"><div class="kpi-accent">'+k.icon+'</div>'+
+        '<div class="kpi-num">'+k.num+'</div>'+
+        '<div class="kpi-label">'+k.label+'</div></div>'
+      ).join('');
+    }
+
+    // Rangverteilung
+    const bars = document.getElementById('rankBars');
+    if(bars){
+      const max = Math.max(1, ...TIERS.map(t=>count[t.key]));
+      bars.innerHTML = TIERS.map(t=>
+        '<div class="bar-row"><span class="bar-name">'+t.key+'</span>'+
+        '<span class="bar-track"><span class="bar-fill" data-pct="'+Math.round(count[t.key]/max*100)+'"></span></span>'+
+        '<span class="bar-val">'+count[t.key]+'</span></div>'
+      ).join('');
+      requestAnimationFrame(()=> requestAnimationFrame(()=>{
+        bars.querySelectorAll('.bar-fill').forEach(f=>{ f.style.width = f.dataset.pct+'%'; });
+      }));
+    }
+
+    // FIB Gesamtstärke wird separat live befüllt (siehe fetchOrgStatsLive)
+
+    // Personalübersicht (nach Hierarchie sortiert)
+    const rosterEl = document.getElementById('rosterList');
+    if(rosterEl){
+      const order = {}; TIERS.forEach((t,i)=> order[t.key]=i);
+      const sorted = currentRoster.slice().sort((a,b)=>{
+        const d = (order[tierOf(a.rank)]??99) - (order[tierOf(b.rank)]??99);
+        return d !== 0 ? d : a.name.localeCompare(b.name,'de');
+      });
+      rosterEl.innerHTML = sorted.map(p=>
+        '<div class="roster-item"><span class="r-name">'+esc(p.name)+'</span>'+
+        '<span class="r-rank">'+esc(p.rank)+'</span></div>'
+      ).join('');
+    }
   }
 
-  // Rangverteilung
-  const bars = document.getElementById('rankBars');
-  if(bars){
-    const max = Math.max(1, ...TIERS.map(t=>count[t.key]));
-    bars.innerHTML = TIERS.map(t=>
-      '<div class="bar-row"><span class="bar-name">'+t.key+'</span>'+
-      '<span class="bar-track"><span class="bar-fill" data-pct="'+Math.round(count[t.key]/max*100)+'"></span></span>'+
-      '<span class="bar-val">'+count[t.key]+'</span></div>'
-    ).join('');
-    requestAnimationFrame(()=> requestAnimationFrame(()=>{
-      bars.querySelectorAll('.bar-fill').forEach(f=>{ f.style.width = f.dataset.pct+'%'; });
-    }));
+  // ===== Live-Anbindung an Google Sheets (Tab "Mitarbeiter") =====
+  // gviz, per <script>-Tag eingebunden um CORS zu umgehen (kein Backend nötig)
+  const ROSTER_SPREADSHEET_ID = "1dJglXcNWVK_kwUecBQfIHOf_RH9wQ6Oc1GQHSty82Wo";
+  const ROSTER_GID = "355042650"; // Tab "Mitarbeiter"
+  // Spalten im Tab "Mitarbeiter": A=–, B=Name, C=ID, D=Ranks, E=–, F=Strikes
+  const ROSTER_RANGE = "B2:D200";
+
+  const rosterDot   = document.getElementById('rosterDot');
+  const rosterText  = document.getElementById('rosterStatusText');
+  const rosterBtn   = document.getElementById('rosterRefreshBtn');
+
+  function formatTime(d){
+    return d.toLocaleTimeString("de-DE", {hour:"2-digit", minute:"2-digit", second:"2-digit"});
   }
 
-  // Trainingsdivision
-  const tdList = document.getElementById('tdList');
-  if(tdList && typeof AZ_ROSTER !== 'undefined'){
-    tdList.innerHTML = AZ_ROSTER.map(p=>
-      '<div class="td-item"><span class="td-name">'+esc(p.name)+'</span>'+
-      '<span class="td-rank">'+esc(p.rank)+'</span></div>'
-    ).join('');
+  function setRosterStatus(state, detail){
+    if(!rosterDot) return;
+    rosterDot.className = "roster-dot " + state;
+    if(rosterBtn) rosterBtn.classList.toggle('spin', state === 'loading');
+    if(rosterBtn) rosterBtn.disabled = (state === 'loading');
+    if(state === "loading"){
+      rosterText.textContent = "Verbinde mit Google Sheets …";
+    } else if(state === "live"){
+      rosterText.textContent = "Live aus dem Sheet · aktualisiert " + formatTime(new Date()) + " Uhr · " + currentRoster.length + " Mitarbeiter";
+    } else {
+      rosterText.textContent = "Live-Verbindung nicht verfügbar" + (detail ? " (" + detail + ")" : "") + " — zeige gespeicherten Stand (" + currentRoster.length + " Mitarbeiter)";
+    }
   }
 
-  // Personalübersicht (nach Hierarchie sortiert)
-  const rosterEl = document.getElementById('rosterList');
-  if(rosterEl){
-    const order = {}; TIERS.forEach((t,i)=> order[t.key]=i);
-    const sorted = ROSTER.slice().sort((a,b)=>{
-      const d = (order[tierOf(a.rank)]??99) - (order[tierOf(b.rank)]??99);
-      return d !== 0 ? d : a.name.localeCompare(b.name,'de');
+  function parseRosterGvizRows(rows){
+    const out = [];
+    rows.forEach(row=>{
+      const c = row.c || [];
+      const cell = i => (c[i] && (c[i].f ?? c[i].v)) ?? "";
+      const name = String(cell(0)).trim();   // Spalte B
+      const rank = String(cell(2)).trim();   // Spalte D
+      if(!name || !rank) return; // Leer-/Trennzeilen überspringen
+      out.push({ name, rank });
     });
-    rosterEl.innerHTML = sorted.map(p=>
-      '<div class="roster-item"><span class="r-name">'+esc(p.name)+'</span>'+
-      '<span class="r-rank">'+esc(p.rank)+'</span></div>'
-    ).join('');
+    return out;
   }
+
+  function fetchRosterLive(onDone){
+    setRosterStatus("loading");
+    let settled = false;
+
+    window.google = window.google || {};
+    window.google.visualization = window.google.visualization || {};
+    window.google.visualization.Query = window.google.visualization.Query || {};
+
+    const timeoutId = setTimeout(()=>{
+      if(!settled){ settled = true; handleRosterFailure("Zeitüberschreitung"); if(onDone) onDone(); }
+    }, 9000);
+
+    // gviz ruft global gesetzte Callback-Funktion auf (JSONP-Stil)
+    window.google.visualization.Query.setResponse = function(data){
+      if(settled) return;
+      settled = true;
+      clearTimeout(timeoutId);
+      try{
+        if(!data || !data.table || !Array.isArray(data.table.rows)) throw new Error("unerwartetes Format");
+        const parsed = parseRosterGvizRows(data.table.rows);
+        if(parsed.length === 0) throw new Error("keine Einträge gefunden");
+        currentRoster = parsed;
+        renderDashboard();
+        setRosterStatus("live");
+      }catch(e){
+        handleRosterFailure(e.message);
+      }
+      if(onDone) onDone();
+    };
+
+    const script = document.createElement("script");
+    script.src = "https://docs.google.com/spreadsheets/d/" + ROSTER_SPREADSHEET_ID +
+      "/gviz/tq?gid=" + ROSTER_GID + "&range=" + ROSTER_RANGE + "&tqx=out:json&_=" + Date.now();
+    script.onerror = function(){
+      if(!settled){ settled = true; clearTimeout(timeoutId); handleRosterFailure("Skript konnte nicht geladen werden"); if(onDone) onDone(); }
+    };
+    document.body.appendChild(script);
+    setTimeout(()=> script.remove(), 12000);
+  }
+
+
+  function handleRosterFailure(reason){
+    currentRoster = ROSTER; // Fallback auf den gespeicherten Stand
+    renderDashboard();
+    setRosterStatus("fallback", reason);
+  }
+
+  if(rosterBtn) rosterBtn.addEventListener('click', ()=> fetchRosterLive());
+
+  // ===== Live-Anbindung FIB Gesamtstärke (Sheet "1uzAA...", Tab "Daten") =====
+  // Gleiche Quelle/Spaltenlogik wie im Mitarbeiterverzeichnis-Tool: Gesamtzahl
+  // Datensätze = Agenten, Datensätze mit Abteilungseintrag (Spalte Q/R) = Abteilungsmitglieder.
+  const ORG_SPREADSHEET_ID = "1uzAA-_O2JtDBs3bpRG9Mqbva67dqh45LPDjPEf8-njQ";
+  const ORG_GID = "1591796957"; // Tab "Daten"
+  const ORG_RANGE = "B11:R1000";
+  // Offsets relativ zu Spalte B (B=0): Name, Abt.1, Abt.2
+  const ORG_COL = { name: 1, dept1: 15, dept2: 16 };
+
+  const orgDot  = document.getElementById('orgDot');
+  const orgText = document.getElementById('orgStatusText');
+  const orgStatsEl = document.getElementById('orgStats');
+
+  function renderOrgStats(total, withDept){
+    const donutWrap = document.getElementById('orgDonutWrap');
+    if(!donutWrap) return;
+    const ohneDept = Math.max(0, total - withDept);
+    const pctDept = total > 0 ? Math.round(withDept/total*100) : 0;
+    const pctOhne = 100 - pctDept;
+
+    const R = 52, CX = 64, CY = 64, STROKE = 16;
+    const circ = 2*Math.PI*R;
+    const deptLen = circ * (withDept/Math.max(total,1));
+    const ohneLen = circ - deptLen;
+
+    donutWrap.innerHTML =
+      '<div class="org-donut">'+
+        '<svg viewBox="0 0 128 128">'+
+          '<circle cx="'+CX+'" cy="'+CY+'" r="'+R+'" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="'+STROKE+'"/>'+
+          '<circle cx="'+CX+'" cy="'+CY+'" r="'+R+'" fill="none" stroke="var(--crm-magenta)" stroke-width="'+STROKE+'" '+
+            'stroke-dasharray="'+deptLen.toFixed(1)+' '+circ.toFixed(1)+'" stroke-linecap="round"/>'+
+          '<circle cx="'+CX+'" cy="'+CY+'" r="'+R+'" fill="none" stroke="var(--crm-cyan)" stroke-width="'+STROKE+'" '+
+            'stroke-dasharray="'+ohneLen.toFixed(1)+' '+circ.toFixed(1)+'" stroke-dashoffset="-'+deptLen.toFixed(1)+'" stroke-linecap="round"/>'+
+        '</svg>'+
+        '<div class="org-donut-center"><div class="org-donut-num">'+total+'</div><div class="org-donut-lbl">Agenten<br>gesamt</div></div>'+
+      '</div>'+
+      '<div class="org-legend">'+
+        '<div class="org-legend-item"><span class="org-legend-dot" style="background:var(--crm-magenta)"></span>Abteilungsmitglieder<span class="org-legend-pct">'+pctDept+'%</span></div>'+
+        '<div class="org-legend-item"><span class="org-legend-dot" style="background:var(--crm-cyan)"></span>Ohne Abteilung<span class="org-legend-pct">'+pctOhne+'%</span></div>'+
+      '</div>';
+  }
+
+  function setOrgStatus(state, total, withDept, detail){
+    if(!orgDot) return;
+    orgDot.className = "org-dot " + state;
+    if(state === "loading"){
+      orgText.textContent = "Verbinde mit Google Sheets …";
+    } else if(state === "live"){
+      orgText.textContent = "Live aus dem Sheet · aktualisiert " + formatTimeShort(new Date()) + " Uhr";
+    } else {
+      orgText.textContent = "Live-Verbindung nicht verfügbar" + (detail ? " (" + detail + ")" : "");
+    }
+    if(typeof total === 'number') renderOrgStats(total, withDept);
+  }
+
+  function formatTimeShort(d){
+    const p = n => String(n).padStart(2,'0');
+    return p(d.getHours())+":"+p(d.getMinutes())+":"+p(d.getSeconds());
+  }
+
+  function parseOrgGvizRows(rows){
+    let total = 0, withDept = 0;
+    rows.forEach(row=>{
+      const c = row.c || [];
+      const cell = i => (c[i] && (c[i].f ?? c[i].v)) ?? "";
+      const name = String(cell(ORG_COL.name)).trim();
+      if(!name) return; // Leer-/Trennzeilen überspringen
+      total++;
+      const dept1 = String(cell(ORG_COL.dept1)).trim();
+      const dept2 = String(cell(ORG_COL.dept2)).trim();
+      if(dept1 || dept2) withDept++;
+    });
+    return { total, withDept };
+  }
+
+  function fetchOrgStatsLive(){
+    setOrgStatus("loading");
+    let settled = false;
+
+    window.google = window.google || {};
+    window.google.visualization = window.google.visualization || {};
+    window.google.visualization.Query = window.google.visualization.Query || {};
+
+    const timeoutId = setTimeout(()=>{
+      if(!settled){ settled = true; setOrgStatus("fallback", undefined, undefined, "Zeitüberschreitung"); }
+    }, 9000);
+
+    window.google.visualization.Query.setResponse = function(data){
+      if(settled) return;
+      settled = true;
+      clearTimeout(timeoutId);
+      try{
+        if(!data || !data.table || !Array.isArray(data.table.rows)) throw new Error("unerwartetes Format");
+        const { total, withDept } = parseOrgGvizRows(data.table.rows);
+        if(total === 0) throw new Error("keine Einträge gefunden");
+        setOrgStatus("live", total, withDept);
+      }catch(e){
+        setOrgStatus("fallback", undefined, undefined, e.message);
+      }
+    };
+
+    const script = document.createElement("script");
+    script.src = "https://docs.google.com/spreadsheets/d/" + ORG_SPREADSHEET_ID +
+      "/gviz/tq?gid=" + ORG_GID + "&range=" + ORG_RANGE + "&tqx=out:json&_=" + Date.now();
+    script.onerror = function(){
+      if(!settled){ settled = true; clearTimeout(timeoutId); setOrgStatus("fallback", undefined, undefined, "Skript konnte nicht geladen werden"); }
+    };
+    document.body.appendChild(script);
+    setTimeout(()=> script.remove(), 12000);
+  }
+
+  // Sofort den gespeicherten Stand zeigen, danach live nachladen.
+  // Org-Fetch wird erst nach Abschluss des Roster-Fetches gestartet, da beide
+  // denselben globalen gviz-JSONP-Callback (window.google.visualization.Query.setResponse) nutzen.
+  renderDashboard();
+  fetchRosterLive(fetchOrgStatsLive);
 })();
 </script>
+
+<!-- ---------- Personalisierung: Hauptfarbe, Hintergrundbild ---------- -->
+<script>
+(function(){
+  const LS_KEY = 'fib_personalization';
+  const DEFAULT_ACCENT = '#1fb5ad';
+  const DEFAULT_ACCENT_SOFT = '#5fd4cd';
+
+  function hexToRgb(hex){
+    const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    if(!m) return null;
+    return { r: parseInt(m[1],16), g: parseInt(m[2],16), b: parseInt(m[3],16) };
+  }
+  function rgbToHsl(r,g,b){
+    r/=255; g/=255; b/=255;
+    const max=Math.max(r,g,b), min=Math.min(r,g,b);
+    let h, s, l=(max+min)/2;
+    if(max===min){ h=0; s=0; }
+    else{
+      const d = max-min;
+      s = l>0.5 ? d/(2-max-min) : d/(max+min);
+      if(max===r) h = ((g-b)/d + (g<b?6:0));
+      else if(max===g) h = (b-r)/d + 2;
+      else h = (r-g)/d + 4;
+      h/=6;
+    }
+    return [h*360, s*100, l*100];
+  }
+  function hslToHex(h,s,l){
+    s/=100; l/=100;
+    const k = n => (n + h/30) % 12;
+    const a = s * Math.min(l, 1-l);
+    const f = n => l - a * Math.max(-1, Math.min(k(n)-3, Math.min(9-k(n), 1)));
+    const toHex = x => Math.round(255*x).toString(16).padStart(2,'0');
+    return '#' + toHex(f(0)) + toHex(f(8)) + toHex(f(4));
+  }
+  function lighten(hex, amt){
+    const rgb = hexToRgb(hex); if(!rgb) return hex;
+    const [h,s,l] = rgbToHsl(rgb.r, rgb.g, rgb.b);
+    return hslToHex(h, Math.max(0,Math.min(100,s)), Math.max(0,Math.min(96,l+amt)));
+  }
+
+  function loadState(){
+    try{
+      const raw = localStorage.getItem(LS_KEY);
+      if(raw) return Object.assign({ accent:DEFAULT_ACCENT, bgImage:null, bgBlur:0 }, JSON.parse(raw));
+    }catch(e){}
+    return { accent:DEFAULT_ACCENT, bgImage:null, bgBlur:0 };
+  }
+  function saveState(s){
+    try{ localStorage.setItem(LS_KEY, JSON.stringify(s)); }catch(e){
+      // z.B. QuotaExceeded bei großem Bild/Audio als Base64 — Personalisierung bleibt nur für diese Sitzung aktiv
+    }
+  }
+
+  let state = loadState();
+
+  function applyAccent(hex){
+    const rgb = hexToRgb(hex) || hexToRgb(DEFAULT_ACCENT);
+    document.documentElement.style.setProperty('--gold', hex);
+    document.documentElement.style.setProperty('--gold-soft', lighten(hex, 18));
+    document.documentElement.style.setProperty('--accent-rgb', rgb.r+','+rgb.g+','+rgb.b);
+    const picker = document.getElementById('accentPicker');
+    if(picker) picker.value = hex;
+    document.querySelectorAll('.preset-swatch').forEach(sw=>{
+      sw.classList.toggle('active', sw.dataset.color.toLowerCase() === hex.toLowerCase());
+    });
+  }
+
+  function applyBgImage(dataUrl){
+    const layer = document.getElementById('customBgLayer');
+    if(!layer) return;
+    if(dataUrl){
+      layer.style.backgroundImage = 'url(' + dataUrl + ')';
+      layer.classList.add('on');
+    }else{
+      layer.style.backgroundImage = '';
+      layer.classList.remove('on');
+    }
+  }
+
+  function applyBgBlur(px){
+    document.documentElement.style.setProperty('--bg-blur', px + 'px');
+    const blurVal = document.getElementById('bgBlurVal');
+    if(blurVal) blurVal.textContent = px + 'px';
+    const blurSlider = document.getElementById('bgBlur');
+    if(blurSlider) blurSlider.value = px;
+  }
+
+  // ===== Initial anwenden =====
+  applyAccent(state.accent || DEFAULT_ACCENT);
+  applyBgImage(state.bgImage);
+  applyBgBlur(state.bgBlur || 0);
+
+  // ===== Farbwahl =====
+  const accentPicker = document.getElementById('accentPicker');
+  const accentReset  = document.getElementById('accentReset');
+  if(accentPicker){
+    accentPicker.value = state.accent || DEFAULT_ACCENT;
+    accentPicker.addEventListener('input', ()=>{
+      state.accent = accentPicker.value;
+      applyAccent(state.accent);
+      saveState(state);
+    });
+  }
+  if(accentReset){
+    accentReset.addEventListener('click', ()=>{
+      state.accent = DEFAULT_ACCENT;
+      applyAccent(state.accent);
+      saveState(state);
+    });
+  }
+  document.querySelectorAll('.preset-swatch').forEach(sw=>{
+    sw.addEventListener('click', ()=>{
+      state.accent = sw.dataset.color;
+      applyAccent(state.accent);
+      saveState(state);
+    });
+  });
+
+  // ===== Eigenes Hintergrundbild =====
+  const bgFile  = document.getElementById('bgFile');
+  const bgReset = document.getElementById('bgReset');
+  if(bgFile){
+    bgFile.addEventListener('change', ()=>{
+      const file = bgFile.files && bgFile.files[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = ()=>{
+        state.bgImage = reader.result;
+        applyBgImage(state.bgImage);
+        saveState(state);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  if(bgReset){
+    bgReset.addEventListener('click', ()=>{
+      state.bgImage = null;
+      applyBgImage(null);
+      saveState(state);
+      if(bgFile) bgFile.value = '';
+    });
+  }
+  const bgBlur = document.getElementById('bgBlur');
+  if(bgBlur){
+    bgBlur.addEventListener('input', ()=>{
+      state.bgBlur = parseInt(bgBlur.value, 10);
+      applyBgBlur(state.bgBlur);
+      saveState(state);
+    });
+  }
+
+})();
+</script>
+
 </body>
 </html>
