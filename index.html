@@ -465,6 +465,112 @@
     .r-rank{white-space:normal;min-width:0}
   }
 
+  /* Bewerbertests */
+  .bt-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+  .bt-tab{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.4px;
+    padding:8px 14px;border-radius:8px;border:1px solid var(--border-soft);
+    background:var(--ink-2);color:var(--muted);cursor:pointer;transition:.15s}
+  .bt-tab:hover{color:var(--text);border-color:var(--border)}
+  .bt-tab.active{background:rgba(var(--accent-rgb),0.16);color:#fff;
+    box-shadow:inset 0 0 0 1px rgba(var(--accent-rgb),0.4)}
+  .bt-summary{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:14px}
+  .bt-stat{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted-2);
+    letter-spacing:.3px}
+  .bt-stat b{color:var(--text);font-size:13px;letter-spacing:0;margin-right:4px}
+  .bt-list{display:flex;flex-direction:column;gap:8px;max-height:560px;overflow:auto;
+    padding-right:4px}
+  .bt-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:14px;
+    padding:11px 14px;border:1px solid var(--border-soft);border-radius:10px;
+    background:var(--ink-2)}
+  .bt-row.hl{box-shadow:0 0 0 1px var(--crm-cyan),0 0 18px -4px var(--crm-cyan)}
+  .bt-name{font-size:13.5px;color:var(--text);font-weight:500}
+  .bt-meta{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted-2);
+    margin-top:2px;letter-spacing:.2px}
+  .bt-score{font-family:'JetBrains Mono',monospace;font-size:13px;text-align:right;
+    white-space:nowrap;padding:5px 10px;border-radius:7px;font-weight:600}
+  .bt-score.good{background:rgba(52,211,153,.14);color:#34d399}
+  .bt-score.mid{background:rgba(250,204,21,.14);color:#facc15}
+  .bt-score.low{background:rgba(248,113,113,.14);color:#f87171}
+  .bt-id{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted-2);
+    white-space:nowrap}
+  .bt-empty{padding:30px 10px;text-align:center;color:var(--muted-2);font-size:12.5px}
+  @media(max-width:560px){
+    .bt-row{grid-template-columns:1fr auto;grid-template-areas:"name score" "id id"}
+    .bt-name{grid-area:name}.bt-score{grid-area:score}.bt-id{grid-area:id}
+  }
+
+  /* Archiv */
+  .arc-status-grid{display:flex;flex-wrap:wrap;gap:6px 14px;margin-bottom:16px}
+  .arc-status-item{display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:.3px;color:var(--muted-2)}
+  .arc-status-item .roster-dot{width:6px;height:6px}
+  .arc-results{display:flex;flex-direction:column;gap:14px}
+  .arc-card{border:1px solid var(--border-soft);border-radius:12px;background:var(--ink-2);overflow:hidden}
+  .arc-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:12px 16px;background:rgba(var(--accent-rgb),0.08);border-bottom:1px solid var(--border-soft)}
+  .arc-card-title{font-size:13.5px;font-weight:600;color:var(--text)}
+  .arc-card-tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:1px;
+    text-transform:uppercase;padding:3px 9px;border-radius:6px;white-space:nowrap}
+  .arc-card-tag.mitarbeiter{background:rgba(52,211,153,.14);color:#34d399}
+  .arc-card-tag.kuendigung{background:rgba(248,113,113,.14);color:#f87171}
+  .arc-fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1px;
+    background:var(--border-soft)}
+  .arc-field{background:var(--ink-2);padding:10px 14px}
+  .arc-field-label{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted-2);margin-bottom:4px}
+  .arc-field-value{font-size:13px;color:var(--text);word-break:break-word}
+  .arc-field-value.empty{color:var(--muted-2);font-style:italic}
+  .arc-field-value.bool-true{color:#34d399;font-family:'JetBrains Mono',monospace;font-size:12px}
+  .arc-field-value.bool-false{color:var(--muted-2);font-family:'JetBrains Mono',monospace;font-size:12px}
+
+  /* Mitarbeiterverzeichnis (nativ, ohne iframe) */
+  .dir-toolbar{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:16px}
+  @media(max-width:640px){.dir-toolbar{grid-template-columns:1fr}}
+  .dir-summary{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:16px}
+  .dir-summary-item{font-family:'JetBrains Mono',monospace}
+  .dir-summary-num{font-size:20px;font-weight:700;color:var(--crm-cyan)}
+  .dir-summary-lbl{font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted-2);margin-top:2px}
+  .dir-tier{margin-bottom:18px;border:1px solid var(--border-soft);border-radius:12px;overflow:hidden;background:var(--ink-2)}
+  .dir-tier.hidden{display:none}
+  .dir-tier-head{display:flex;align-items:center;gap:10px;padding:11px 16px;
+    background:rgba(var(--accent-rgb),0.08);border-bottom:1px solid var(--border-soft)}
+  .dir-tier-head.gold{background:rgba(212,175,55,0.10)}
+  .dir-tier-head.navy{background:rgba(34,211,238,0.08)}
+  .dir-tier-rank{font-size:13px;font-weight:600;color:var(--text)}
+  .dir-tier-count{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted-2);margin-left:auto}
+  .dir-table{width:100%;border-collapse:collapse;font-size:12.5px}
+  .dir-table th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted-2);padding:8px 14px;border-bottom:1px solid var(--border-soft);white-space:nowrap}
+  .dir-table td{padding:9px 14px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+  .dir-table tr:last-child td{border-bottom:none}
+  .dir-table tr.row-hidden{display:none}
+  .dir-table tr:hover td{background:rgba(255,255,255,0.02)}
+  .dir-id{font-family:'JetBrains Mono',monospace;color:var(--muted-2);white-space:nowrap}
+  .dir-name{color:var(--text);font-weight:500;white-space:nowrap}
+  .dir-dn{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted-2);white-space:nowrap}
+  .dir-dept-tag{display:inline-block;font-size:10.5px;padding:2px 8px;border-radius:6px;margin:1px 3px 1px 0;
+    background:rgba(var(--accent-rgb),0.12);color:var(--crm-cyan);white-space:nowrap}
+  .dir-no-dept{color:var(--muted-2);font-style:italic;font-size:11px}
+  .dir-strike{font-family:'JetBrains Mono',monospace;font-size:11px;white-space:nowrap}
+  .dir-train-wrap{display:flex;flex-wrap:wrap;gap:3px;max-width:220px}
+  .dir-train-tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;padding:2px 6px;border-radius:5px;
+    background:rgba(52,211,153,.14);color:#34d399;white-space:nowrap}
+  .dir-train-tag.missing{background:rgba(255,255,255,0.04);color:var(--muted-2);text-decoration:line-through;opacity:.6}
+
+  /* Rank Management: Double-RankUp Overlay */
+  .overlay{display:none;position:fixed;inset:0;background:rgba(5,8,15,0.82);backdrop-filter:blur(4px);
+    z-index:1000;align-items:center;justify-content:center}
+  .overlay.active{display:flex}
+  .overlay-box{background:var(--ink-2);border:1px solid var(--border-soft);border-radius:14px;
+    padding:24px;width:420px;max-width:92vw;box-shadow:0 20px 60px -20px rgba(0,0,0,.6)}
+  .upr-queue-item{display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:9px 12px;border:1px solid var(--border-soft);border-radius:9px;background:var(--ink-2);
+    font-size:12.5px;margin-bottom:6px}
+  .upr-queue-tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.5px;margin-right:6px}
+  .upr-queue-remove{background:none;border:none;color:#f87171;cursor:pointer;font-size:16px;
+    line-height:1;padding:0 4px;font-family:monospace}
+  .upr-queue-remove:hover{color:#fca5a5}
+
   /* FIB Gesamtstärke — Donut */
   .org-status{display:flex;align-items:center;gap:9px;margin:0 0 18px}
   .org-dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto;background:var(--muted-2)}
@@ -681,6 +787,14 @@
   <button type="button" class="sb-link" data-nav="personalakte">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
     Personalakte-Generator
+  </button>
+  <button type="button" class="sb-link" data-nav="bewerbertests">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+    Bewerbertests
+  </button>
+  <button type="button" class="sb-link" data-nav="archiv">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="5" rx="1"/><path d="M4 8v11a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V8"/><line x1="10" y1="13" x2="14" y2="13"/></svg>
+    Archiv
   </button>
 
   <p class="sb-group">Vorlagen</p>
@@ -1128,1589 +1242,173 @@
         <p class="sub">Memberliste importieren, Queue verwalten, RankUp/Derank generieren.</p>
       </div>
     </header>
-    <div class="frame-wrap">
-      <iframe class="tool-frame" data-src="<!DOCTYPE html>
-<html lang=&quot;de&quot;>
-<head>
-<meta charset=&quot;UTF-8&quot;>
-<title>FIB Rank Management Tool</title>
-<link href=&quot;https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&amp;family=Share+Tech+Mono&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
-<style>
-  :root {
-    /* FIB Logo Farben */
-    --fib-dark-blue: #003366;
-    --fib-gold: #d4af37;
-    --fib-gray: #808080;
-    --fib-white: #ffffff;
-    --fib-black: #1a1a1a;
-    
-    /* Design-Variablen basierend auf FIB-Logo */
-    --bg: #0f1419;
-    --bg2: #1a1f2e;
-    --bg3: #252d3d;
-    --border: #2d3a4d;
-    --accent: #d4af37;
-    --accent2: #003366;
-    --accent3: #ffffff;
-    --text: #e8e8e8;
-    --text-dim: #8a8a8a;
-    --heading: #d4af37;
-    --danger: #cc3355;
-    --success: #44aa77;
-    --orange: #e67e22;
-    --purple: #9b59b6;
-    --cyan: #00ffff;
-  }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+    <div class="grid" style="grid-template-columns:1fr">
+      <section class="card">
+        <p class="card-label">01 · Memberliste</p>
+        <div class="roster-status">
+          <span class="roster-dot loading" id="uprDot" aria-hidden="true"></span>
+          <span class="roster-status-text" id="uprStatusText">Lade Mitarbeiterdaten …</span>
+          <button type="button" class="roster-refresh" id="uprRefreshBtn" title="Mitarbeiterliste neu laden">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Neu laden
+          </button>
+        </div>
+        <div class="copy-row">
+          <button class="copy" id="uprClearMembersBtn" type="button" style="background:transparent;border:1px solid var(--border-soft);color:var(--muted)">Liste leeren</button>
+        </div>
+      </section>
 
-  body {
-    font-family: 'Rajdhani', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 24px 16px;
-    background-image:
-      radial-gradient(ellipse at 20% 0%, rgba(212,175,55,0.08) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 100%, rgba(0,51,102,0.06) 0%, transparent 60%);
-  }
+      <section class="card">
+        <p class="card-label">02 · Management</p>
 
-  .container { max-width: 1280px; margin: auto; }
+        <div class="bt-tabs" id="uprModeTabs">
+          <button type="button" class="bt-tab active" data-upr-mode="rankup">RankUp</button>
+          <button type="button" class="bt-tab" data-upr-mode="sonder">Sonder</button>
+          <button type="button" class="bt-tab" data-upr-mode="dept">Abteilung</button>
+          <button type="button" class="bt-tab" data-upr-mode="derank">Derank</button>
+          <button type="button" class="bt-tab" data-upr-mode="employee">Mitarbeiter d. Woche</button>
+        </div>
 
-  .header {
-    text-align: center;
-    margin-bottom: 32px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid var(--accent);
-    position: relative;
-  }
-  
-  .header h1 {
-    font-size: 2.4rem;
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: 4px;
-    text-transform: uppercase;
-  }
-  .header p { 
-    color: var(--text-dim); 
-    font-size: 13px; 
-    letter-spacing: 2px; 
-    margin-top: 4px;
-    color: var(--accent2);
-  }
+        <div class="grid">
+          <div>
+            <div class="field">
+              <label class="l" for="uprSearchMember">Mitglied suchen</label>
+              <input type="text" id="uprSearchMember" placeholder="Name oder ID …" autocomplete="off">
+              <select id="uprSelectMember" size="8" style="margin-top:8px;width:100%"></select>
+            </div>
+          </div>
+          <div>
+            <div class="field" id="uprRankSelectionArea">
+              <label class="l" id="uprRankLabel">Rang auswählen</label>
+              <select id="uprRankSelect"></select>
+            </div>
+            <div class="field" id="uprEmployeeArea" style="display:none">
+              <label class="l">Zusatz-Satz (Mitarbeiter d. Woche)</label>
+              <textarea id="uprEmployeeMessage" placeholder="z. B. Er hat diese Woche herausragende Arbeit geleistet…" style="width:100%;min-height:100px;resize:vertical"></textarea>
+            </div>
+            <div class="copy-row">
+              <button class="copy" id="uprAddBtn" type="button">+ Hinzufügen</button>
+              <button class="copy" id="uprSetEmployeeBtn" type="button" style="display:none">Mitarbeiter festlegen</button>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  .section {
-    background: var(--bg2);
-    border: 2px solid var(--accent);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    position: relative;
-    box-shadow: 0 0 20px rgba(212,175,55,0.1);
-  }
-  .section::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 6px; height: 100%;
-    background: linear-gradient(180deg, var(--accent) 0%, var(--accent2) 100%);
-    border-radius: 10px 0 0 10px;
-  }
+      <section class="card">
+        <p class="card-label">03 · Aktuelle Queue</p>
+        <div class="bt-list" id="uprQueueDisplay"><div class="bt-empty">Noch keine Einträge.</div></div>
+        <p class="auto-note" id="uprEmployeeDisplay"></p>
+        <div class="copy-row">
+          <button class="copy" id="uprClearQueueBtn" type="button" style="background:transparent;border:1px solid var(--border-soft);color:var(--muted)">Queue leeren</button>
+        </div>
+      </section>
 
-  .section h2 {
-    font-size: 1.1rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 14px;
-    font-weight: 600;
-  }
-
-  .section.section-output::before { background: linear-gradient(180deg, #003366 0%, #d4af37 100%); }
-  .section.section-output h2 { color: #003366; }
-
-  label { display: block; color: var(--text-dim); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; margin-top: 14px; }
-
-  textarea, input[type=&quot;text&quot;], select {
-    width: 100%;
-    background: var(--bg3);
-    color: var(--text);
-    border: 1px solid var(--accent);
-    border-radius: 6px;
-    padding: 10px 12px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 13px;
-    outline: none;
-    transition: border-color .2s, box-shadow .2s;
-  }
-  textarea:focus, input[type=&quot;text&quot;]:focus, select:focus { 
-    border-color: var(--accent);
-    box-shadow: 0 0 10px rgba(212,175,55,0.3);
-  }
-  textarea { height: 160px; resize: vertical; }
-
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 10px 20px;
-    border: none; border-radius: 6px;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 15px; font-weight: 700;
-    letter-spacing: 1px; text-transform: uppercase;
-    cursor: pointer; transition: all .18s;
-  }
-  .btn-primary { background: var(--accent); color: var(--fib-black); }
-  .btn-primary:hover { background: #e8c547; box-shadow: 0 0 15px rgba(212,175,55,0.4); }
-  .btn-danger { background: var(--danger); color: #fff; }
-  .btn-danger:hover { background: #dd4466; }
-  .btn-success { background: var(--success); color: #fff; }
-  .btn-success:hover { background: #55bb88; }
-  .btn-info { background: var(--accent2); color: var(--accent); }
-  .btn-info:hover { background: #004d7a; }
-  .btn-cyan { background: var(--cyan); color: var(--fib-black); }
-  .btn-cyan:hover { background: #00cccc; }
-
-  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
-
-  .mode-selector {
-    display: flex;
-    gap: 0;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid var(--accent);
-  }
-  .mode-btn {
-    flex: 1;
-    padding: 12px;
-    text-align: center;
-    cursor: pointer;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: all 0.2s;
-    background: var(--bg3);
-    color: var(--text-dim);
-  }
-  .mode-btn.active {
-    background: var(--accent);
-    color: var(--fib-black);
-  }
-
-  .muted { color: var(--text-dim); font-size: 12px; margin-top: 8px; letter-spacing: 1px; }
-
-  pre#output {
-    background: var(--bg3);
-    border: 1px solid var(--accent);
-    border-radius: 8px;
-    padding: 18px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 13px;
-    color: var(--accent);
-    white-space: pre-wrap;
-    max-height: 500px;
-    overflow-y: auto;
-    line-height: 1.7;
-  }
-
-  /* Queue display */
-  #queueDisplay {
-    background: var(--bg3);
-    border: 1px solid var(--accent);
-    border-radius: 8px;
-    padding: 14px;
-    margin-top: 14px;
-    min-height: 60px;
-    max-height: 260px;
-    overflow-y: auto;
-  }
-  .queue-item {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 5px 8px;
-    background: var(--bg2);
-    border-radius: 4px;
-    margin-bottom: 4px;
-    font-size: 13px;
-  }
-  .queue-item span { color: var(--text); }
-  .queue-item .remove-btn {
-    background: none; border: none;
-    color: var(--danger); cursor: pointer;
-    font-size: 16px; line-height: 1; padding: 0 4px;
-    font-family: monospace;
-  }
-  .queue-item .remove-btn:hover { color: #ff6688; }
-
-  .footer { text-align: right; color: var(--text-dim); font-size: 11px; margin-top: 10px; letter-spacing: 1px; }
-
-  /* Grid layout for member selection */
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  @media(max-width: 600px) { .grid2 { grid-template-columns: 1fr; } }
-
-  select option { padding: 4px; }
-
-  /* OVERLAY */
-  .overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.82);
-    backdrop-filter: blur(4px);
-    z-index: 1000;
-    align-items: center; justify-content: center;
-  }
-  .overlay.active { display: flex; }
-  .overlay-box {
-    background: var(--bg2);
-    border: 2px solid var(--accent);
-    border-radius: 12px;
-    padding: 28px;
-    width: 440px;
-    max-width: 95vw;
-    box-shadow: 0 0 40px rgba(212,175,55,0.25);
-  }
-  .overlay-box h3 { color: var(--accent); font-size: 1.2rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 18px; }
-  .overlay-member { background: var(--bg3); border: 1px solid var(--accent); border-radius: 6px; padding: 10px 14px; margin-bottom: 16px; font-family: 'Share Tech Mono', monospace; font-size: 14px; color: var(--accent); }
-</style>
-</head>
-<body>
-<div class=&quot;container&quot;>
-
-  <div class=&quot;header&quot;>
-    <h1>FIB Rank Management</h1>
-    <p>Federal Investigation Bureau · Rank Management System</p>
-  </div>
-
-  <!-- STEP 1: Members -->
-  <div class=&quot;section&quot;>
-    <h2>01 · Memberliste</h2>
-    <p class=&quot;muted&quot;>Wird automatisch aus dem FIB Mitarbeiterverzeichnis (Google Sheets) geladen. Spalte B = ID, Spalte D = Name.</p>
-    <div id=&quot;sheetStatus&quot; style=&quot;margin-top:12px;padding:10px 14px;border-radius:6px;border:1px solid var(--accent);background:var(--bg3);font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--text-dim)&quot;>⏳ Lade Mitarbeiterdaten...</div>
-    <div class=&quot;btn-row&quot;>
-      <button class=&quot;btn btn-primary&quot; onclick=&quot;loadSheetMembers()&quot;>🔄 Neu laden</button>
-      <button class=&quot;btn btn-danger&quot; onclick=&quot;clearMembers()&quot;>Leeren</button>
-    </div>
-  </div>
-
-  <!-- STEP 2: Mode &amp; Rank Selection -->
-  <div class=&quot;section&quot;>
-    <h2>02 · Management</h2>
-    
-    <div class=&quot;mode-selector&quot;>
-      <div id=&quot;modeRankUp&quot; class=&quot;mode-btn active&quot; onclick=&quot;setMode('rankup')&quot;>RankUp</div>
-      <div id=&quot;modeSonder&quot; class=&quot;mode-btn&quot; onclick=&quot;setMode('sonder')&quot;>Sonder</div>
-      <div id=&quot;modeDept&quot; class=&quot;mode-btn&quot; onclick=&quot;setMode('dept')&quot;>Abteilung</div>
-      <div id=&quot;modeDerank&quot; class=&quot;mode-btn&quot; onclick=&quot;setMode('derank')&quot;>Derank</div>
-      <div id=&quot;modeEmployee&quot; class=&quot;mode-btn&quot; onclick=&quot;setMode('employee')&quot;>Mitarbeiter d. Woche</div>
+      <section class="card preview-card">
+        <p class="card-label">04 · Output</p>
+        <div class="discord" id="uprOutput" style="white-space:pre-wrap">Noch kein Output generiert.</div>
+        <div class="copy-row">
+          <button class="copy" id="uprGenRankupBtn" type="button">RankUp generieren</button>
+          <button class="copy" id="uprGenDerankBtn" type="button">Derank generieren</button>
+          <button class="copy" id="uprCopyBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span id="uprCopyLabel">Kopieren</span>
+          </button>
+        </div>
+      </section>
     </div>
 
-    <div class=&quot;grid2&quot;>
-      <div>
-        <label>Mitglied suchen</label>
-        <input type=&quot;text&quot; id=&quot;searchMember&quot; placeholder=&quot;Name oder ID...&quot; oninput=&quot;updateSelect('selectMember', this.value)&quot;>
-        <select id=&quot;selectMember&quot; size=&quot;7&quot; style=&quot;margin-top:6px&quot;></select>
-      </div>
-      <div>
-        <div id=&quot;rankSelectionArea&quot;>
-          <label id=&quot;rankLabel&quot;>Rang auswählen</label>
-          <select id=&quot;rankSelect&quot;>
-            <!-- Wird dynamisch befüllt -->
+    <!-- DOUBLE RANK OVERLAY -->
+    <div id="uprDoubleOverlay" class="overlay">
+      <div class="overlay-box">
+        <h3 style="margin:0 0 14px;font-size:14px;letter-spacing:1px;color:var(--text)">Double RankUp</h3>
+        <div id="uprOverlayMemberName" class="auto-note" style="margin-bottom:14px"></div>
+        <div class="field">
+          <label class="l">Von Rang</label>
+          <select id="uprDoubleFrom">
+            <option value="7">7. New Agent Trainee</option>
+            <option value="8">8. Agent</option>
+            <option value="9">9. Field Agent</option>
+            <option value="10">10. Agent First Class</option>
+            <option value="12">12. Senior Agent</option>
+            <option value="13">13. Enforcement Agent</option>
+            <option value="14">14. Executive Agent</option>
+            <option value="15">15. Principal Field Agent</option>
+            <option value="16">16. Federal Operations Agent</option>
+            <option value="17">17. Commander</option>
+            <option value="23">23. Special Agent in Charge</option>
+            <option value="24">24. Supervisory Special Agent</option>
           </select>
         </div>
-        <div id=&quot;employeeArea&quot; style=&quot;display:none&quot;>
-          <label>Zusatz-Satz (Mitarbeiter d. Woche)</label>
-          <textarea id=&quot;employeeMessage&quot; placeholder=&quot;z.B. Er hat diese Woche herausragende Arbeit geleistet...&quot; style=&quot;height:100px&quot;></textarea>
+        <div class="field">
+          <label class="l">Auf Rang</label>
+          <select id="uprDoubleTo">
+            <option value="9">9. Field Agent</option>
+            <option value="10">10. Agent First Class</option>
+            <option value="12">12. Senior Agent</option>
+            <option value="13">13. Enforcement Agent</option>
+            <option value="14">14. Executive Agent</option>
+            <option value="15">15. Principal Field Agent</option>
+            <option value="16">16. Federal Operations Agent</option>
+            <option value="17">17. Commander</option>
+            <option value="23">23. Special Agent in Charge</option>
+            <option value="24">24. Supervisory Special Agent</option>
+            <option value="25">25. Supervisory Head Agent</option>
+          </select>
         </div>
-        <div class=&quot;btn-row&quot; style=&quot;margin-top:10px&quot;>
-          <button class=&quot;btn btn-primary&quot; id=&quot;addBtn&quot; onclick=&quot;addEntry()&quot;>+ Hinzufügen</button>
-          <button class=&quot;btn btn-cyan&quot; id=&quot;setEmployeeBtn&quot; onclick=&quot;setEmployee()&quot; style=&quot;display:none&quot;>Mitarbeiter festlegen</button>
+        <div class="copy-row" style="margin-top:18px">
+          <button class="copy" id="uprConfirmDoubleBtn" type="button">Bestätigen</button>
+          <button class="copy" id="uprCancelDoubleBtn" type="button" style="background:transparent;border:1px solid var(--border-soft);color:var(--muted)">Abbrechen</button>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- STEP 3: Queue -->
-  <div class=&quot;section&quot;>
-    <h2>03 · Aktuelle Queue</h2>
-    <div id=&quot;queueDisplay&quot;><span style=&quot;color:var(--text-dim);font-size:13px&quot;>Noch keine Einträge.</span></div>
-    <div id=&quot;employeeDisplay&quot; style=&quot;margin-top:10px; font-size:13px; color:var(--cyan)&quot;></div>
-    <div class=&quot;btn-row&quot; style=&quot;margin-top:14px&quot;>
-      <button class=&quot;btn btn-danger&quot; onclick=&quot;clearQueue()&quot;>Queue leeren</button>
-    </div>
-  </div>
-
-  <!-- STEP 4: Output -->
-  <div class=&quot;section section-output&quot;>
-    <h2>04 · Output</h2>
-    <pre id=&quot;output&quot;>Noch kein Output generiert.</pre>
-    <div class=&quot;btn-row&quot;>
-      <button class=&quot;btn btn-primary&quot; onclick=&quot;generateCombinedOutput()&quot;>RankUp generieren</button>
-      <button class=&quot;btn btn-info&quot; onclick=&quot;generateDerankOutput()&quot;>Derank generieren</button>
-      <button class=&quot;btn btn-success&quot; onclick=&quot;copyOutput()&quot;>Kopieren</button>
-    </div>
-    <div class=&quot;footer&quot;>FIB Rank Management · System Version 4.1</div>
-  </div>
-
-</div>
-
-<!-- DOUBLE RANK OVERLAY -->
-<div id=&quot;doubleOverlay&quot; class=&quot;overlay&quot;>
-  <div class=&quot;overlay-box&quot;>
-    <h3>Double RankUp</h3>
-    <div id=&quot;overlayMemberName&quot; class=&quot;overlay-member&quot;></div>
-    <label>Von Rang</label>
-    <select id=&quot;doubleFrom&quot;>
-      <option value=&quot;7&quot;>7. New Agent Trainee</option>
-      <option value=&quot;8&quot;>8. Agent</option>
-      <option value=&quot;9&quot;>9. Field Agent</option>
-      <option value=&quot;10&quot;>10. Agent First Class</option>
-      <option value=&quot;12&quot;>12. Senior Agent</option>
-      <option value=&quot;13&quot;>13. Enforcement Agent</option>
-      <option value=&quot;14&quot;>14. Executive Agent</option>
-      <option value=&quot;15&quot;>15. Principal Field Agent</option>
-      <option value=&quot;16&quot;>16. Federal Operations Agent</option>
-      <option value=&quot;17&quot;>17. Commander</option>
-      <option value=&quot;23&quot;>23. Special Agent in Charge</option>
-      <option value=&quot;24&quot;>24. Supervisory Special Agent</option>
-    </select>
-    <label>Auf Rang</label>
-    <select id=&quot;doubleTo&quot;>
-      <option value=&quot;9&quot;>9. Field Agent</option>
-      <option value=&quot;10&quot;>10. Agent First Class</option>
-      <option value=&quot;12&quot;>12. Senior Agent</option>
-      <option value=&quot;13&quot;>13. Enforcement Agent</option>
-      <option value=&quot;14&quot;>14. Executive Agent</option>
-      <option value=&quot;15&quot;>15. Principal Field Agent</option>
-      <option value=&quot;16&quot;>16. Federal Operations Agent</option>
-      <option value=&quot;17&quot;>17. Commander</option>
-      <option value=&quot;23&quot;>23. Special Agent in Charge</option>
-      <option value=&quot;24&quot;>24. Supervisory Special Agent</option>
-      <option value=&quot;25&quot;>25. Supervisory Head Agent</option>
-    </select>
-    <div class=&quot;btn-row&quot; style=&quot;margin-top:20px&quot;>
-      <button class=&quot;btn btn-primary&quot; onclick=&quot;confirmDouble()&quot;>Bestätigen</button>
-      <button class=&quot;btn btn-danger&quot; onclick=&quot;closeOverlay()&quot;>Abbrechen</button>
-    </div>
-  </div>
-</div>
-
-<script>
-let members = {};
-let queue = [];
-let currentMode = 'rankup';
-let employeeOfTheWeek = null;
-
-const rankNames = {
-  &quot;25&quot;: &quot;Supervisory Head Agent&quot;,
-  &quot;24&quot;: &quot;Supervisory Special Agent&quot;,
-  &quot;23&quot;: &quot;Special Agent in Charge&quot;,
-  &quot;19&quot;: &quot;Tactical Operator&quot;,
-  &quot;18&quot;: &quot;Department Specialist&quot;,
-  &quot;17&quot;: &quot;Commander&quot;,
-  &quot;16&quot;: &quot;Federal Operations Agent&quot;,
-  &quot;15&quot;: &quot;Principal Field Agent&quot;,
-  &quot;14&quot;: &quot;Executive Agent&quot;,
-  &quot;13&quot;: &quot;Enforcement Agent&quot;,
-  &quot;12&quot;: &quot;Senior Agent&quot;,
-  &quot;10&quot;: &quot;Agent First Class&quot;,
-  &quot;9&quot;: &quot;Field Agent&quot;,
-  &quot;8&quot;: &quot;Agent&quot;,
-  &quot;7&quot;: &quot;New Agent Trainee&quot;
-};
-
-const rankUpOptions = `
-  <option value=&quot;&quot;>— Rang wählen —</option>
-  <optgroup label=&quot;High Command&quot;>
-    <option value=&quot;hc-23&quot;>→ 23. Special Agent in Charge (HC Einstieg)</option>
-    <option value=&quot;23-24&quot;>23 → 24 · Special Agent in Charge → Supervisory Special Agent</option>
-    <option value=&quot;24-25&quot;>24 → 25 · Supervisory Special Agent → Supervisory Head Agent</option>
-  </optgroup>
-  <optgroup label=&quot;Standard Ränge&quot;>
-    <option value=&quot;7-8&quot;>7 → 8 · New Agent Trainee → Agent</option>
-    <option value=&quot;8-9&quot;>8 → 9 · Agent → Field Agent</option>
-    <option value=&quot;9-10&quot;>9 → 10 · Field Agent → Agent First Class</option>
-    <option value=&quot;10-12&quot;>10 → 12 · Agent First Class → Senior Agent</option>
-    <option value=&quot;12-13&quot;>12 → 13 · Senior Agent → Enforcement Agent</option>
-    <option value=&quot;13-14&quot;>13 → 14 · Enforcement Agent → Executive Agent</option>
-    <option value=&quot;14-15&quot;>14 → 15 · Executive Agent → Principal Field Agent</option>
-    <option value=&quot;15-16&quot;>15 → 16 · Principal Field Agent → Federal Operations Agent</option>
-    <option value=&quot;16-17&quot;>16 → 17 · Federal Operations Agent → Commander</option>
-  </optgroup>
-`;
-
-const sonderOptions = `
-  <option value=&quot;&quot;>— Rang wählen —</option>
-  <optgroup label=&quot;High Command (Sonder)&quot;>
-    <option value=&quot;hc-23&quot;>→ 23. Special Agent in Charge (HC Einstieg)</option>
-    <option value=&quot;23-24&quot;>23 → 24 · Special Agent in Charge → Supervisory Special Agent</option>
-    <option value=&quot;24-25&quot;>24 → 25 · Supervisory Special Agent → Supervisory Head Agent</option>
-  </optgroup>
-  <optgroup label=&quot;Standard (Sonder)&quot;>
-    <option value=&quot;7-8&quot;>7 → 8 · New Agent Trainee → Agent</option>
-    <option value=&quot;8-9&quot;>8 → 9 · Agent → Field Agent</option>
-    <option value=&quot;9-10&quot;>9 → 10 · Field Agent → Agent First Class</option>
-    <option value=&quot;10-12&quot;>10 → 12 · Agent First Class → Senior Agent</option>
-    <option value=&quot;12-13&quot;>12 → 13 · Senior Agent → Enforcement Agent</option>
-    <option value=&quot;13-14&quot;>13 → 14 · Enforcement Agent → Executive Agent</option>
-    <option value=&quot;14-15&quot;>14 → 15 · Executive Agent → Principal Field Agent</option>
-    <option value=&quot;15-16&quot;>15 → 16 · Principal Field Agent → Federal Operations Agent</option>
-    <option value=&quot;16-17&quot;>16 → 17 · Federal Operations Agent → Commander</option>
-    <option value=&quot;double&quot;>⚡ Double RankUp (Sonderbeförderung)</option>
-  </optgroup>
-`;
-
-const deptOptions = `
-  <option value=&quot;&quot;>— Rang wählen —</option>
-  <option value=&quot;dept-18&quot;>→ 18. Department Specialist</option>
-  <option value=&quot;dept-19&quot;>→ 19. Tactical Operator</option>
-`;
-
-const derankOptions = `
-  <option value=&quot;&quot;>— Rang wählen —</option>
-  <optgroup label=&quot;High Command&quot;>
-    <option value=&quot;25-24&quot;>25 → 24 · Supervisory Head Agent → Supervisory Special Agent</option>
-    <option value=&quot;24-23&quot;>24 → 23 · Supervisory Special Agent → Special Agent in Charge</option>
-    <option value=&quot;23-17&quot;>23 → 17 · Special Agent in Charge → Commander</option>
-  </optgroup>
-  <optgroup label=&quot;Standard Ränge&quot;>
-    <option value=&quot;17-16&quot;>17 → 16 · Commander → Federal Operations Agent</option>
-    <option value=&quot;16-15&quot;>16 → 15 · Federal Operations Agent → Principal Field Agent</option>
-    <option value=&quot;15-14&quot;>15 → 14 · Principal Field Agent → Executive Agent</option>
-    <option value=&quot;14-13&quot;>14 → 13 · Executive Agent → Enforcement Agent</option>
-    <option value=&quot;13-12&quot;>13 → 12 · Enforcement Agent → Senior Agent</option>
-    <option value=&quot;12-10&quot;>12 → 10 · Senior Agent → Agent First Class</option>
-    <option value=&quot;10-9&quot;>10 → 9 · Agent First Class → Field Agent</option>
-    <option value=&quot;9-8&quot;>9 → 8 · Field Agent → Agent</option>
-    <option value=&quot;8-7&quot;>8 → 7 · Agent → New Agent Trainee</option>
-  </optgroup>
-`;
-
-function setMode(mode) {
-  currentMode = mode;
-  document.getElementById('modeRankUp').classList.toggle('active', mode === 'rankup');
-  document.getElementById('modeSonder').classList.toggle('active', mode === 'sonder');
-  document.getElementById('modeDept').classList.toggle('active', mode === 'dept');
-  document.getElementById('modeDerank').classList.toggle('active', mode === 'derank');
-  document.getElementById('modeEmployee').classList.toggle('active', mode === 'employee');
-  
-  const label = document.getElementById('rankLabel');
-  const select = document.getElementById('rankSelect');
-  const rankArea = document.getElementById('rankSelectionArea');
-  const employeeArea = document.getElementById('employeeArea');
-  const addBtn = document.getElementById('addBtn');
-  const setEmployeeBtn = document.getElementById('setEmployeeBtn');
-  
-  if (mode === 'employee') {
-    rankArea.style.display = 'none';
-    employeeArea.style.display = 'block';
-    addBtn.style.display = 'none';
-    setEmployeeBtn.style.display = 'inline-flex';
-  } else {
-    rankArea.style.display = 'block';
-    employeeArea.style.display = 'none';
-    addBtn.style.display = 'inline-flex';
-    setEmployeeBtn.style.display = 'none';
-    
-    if (mode === 'rankup') {
-      label.textContent = 'Rang auswählen (RankUp)';
-      select.innerHTML = rankUpOptions;
-    } else if (mode === 'sonder') {
-      label.textContent = 'Rang auswählen (Sonder)';
-      select.innerHTML = sonderOptions;
-    } else if (mode === 'dept') {
-      label.textContent = 'Rang auswählen (Abteilung)';
-      select.innerHTML = deptOptions;
-    } else {
-      label.textContent = 'Rang auswählen (Derank)';
-      select.innerHTML = derankOptions;
-    }
-  }
-}
-
-// Initialer Modus
-setMode('rankup');
-
-const APPS_SCRIPT_URL = &quot;https://script.google.com/macros/s/AKfycbwVMS-KDDYVIhtSfd8wPs7ayop_sjAYtei8oRCEa5MlIDw8f3oZFXgZ9dn5Iun5azzX/exec&quot;;
-
-async function loadSheetMembers() {
-  const status = document.getElementById('sheetStatus');
-  status.style.color = 'var(--text-dim)';
-  status.textContent = '⏳ Lade Mitarbeiterdaten aus Google Sheets...';
-
-  try {
-    const res = await fetch(APPS_SCRIPT_URL);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
-
-    members = {};
-    data.forEach(entry => {
-      if (entry.id &amp;&amp; entry.name) members[entry.id] = entry.name;
-    });
-
-    updateSelect('selectMember', '');
-    status.style.color = 'var(--success)';
-    status.textContent = '✅ ' + data.length + ' Mitarbeiter geladen · Zuletzt aktualisiert: ' + new Date().toLocaleTimeString('de-DE');
-  } catch (e) {
-    status.style.color = 'var(--danger)';
-    status.textContent = '❌ Fehler beim Laden: ' + e.message + ' — Bitte &quot;Neu laden&quot; versuchen oder Netzwerk prüfen.';
-  }
-}
-
-// Automatisch beim Start laden
-document.addEventListener('DOMContentLoaded', loadSheetMembers);
-// Fallback falls DOMContentLoaded schon gefeuert
-if (document.readyState !== 'loading') loadSheetMembers();
-
-function updateSelect(id, searchTerm) {
-  const select = document.getElementById(id);
-  select.innerHTML = '';
-  
-  Object.entries(members).forEach(([id, name]) => {
-    if (searchTerm === '' || id.includes(searchTerm) || name.toLowerCase().includes(searchTerm.toLowerCase())) {
-      const option = document.createElement('option');
-      option.value = id;
-      option.textContent = `${id} · ${name}`;
-      select.appendChild(option);
-    }
-  });
-}
-
-function addEntry() {
-  const memberId = document.getElementById('selectMember').value;
-  const rankValue = document.getElementById('rankSelect').value;
-  
-  if (!memberId || !rankValue) return;
-  
-  const memberName = members[memberId];
-  
-  if (rankValue === 'double') {
-    document.getElementById('overlayMemberName').textContent = `${memberId} · ${memberName}`;
-    document.getElementById('doubleOverlay').classList.add('active');
-    window.currentDoubleMemberId = memberId;
-    window.currentDoubleMemberName = memberName;
-    return;
-  }
-  
-  queue.push({ id: memberId, name: memberName, rank: rankValue, mode: currentMode });
-  updateQueueDisplay();
-}
-
-function setEmployee() {
-  const memberId = document.getElementById('selectMember').value;
-  const message = document.getElementById('employeeMessage').value;
-  
-  if (!memberId) return;
-  
-  employeeOfTheWeek = {
-    id: memberId,
-    name: members[memberId],
-    message: message
-  };
-  
-  document.getElementById('employeeDisplay').textContent = `★ Mitarbeiter d. Woche: ${employeeOfTheWeek.name} (${employeeOfTheWeek.id})`;
-}
-
-function confirmDouble() {
-  const from = document.getElementById('doubleFrom').value;
-  const to = document.getElementById('doubleTo').value;
-  const rankValue = `double-${from}-${to}`;
-  
-  queue.push({
-    id: window.currentDoubleMemberId,
-    name: window.currentDoubleMemberName,
-    rank: rankValue,
-    mode: 'sonder'
-  });
-  
-  closeOverlay();
-  updateQueueDisplay();
-}
-
-function closeOverlay() {
-  document.getElementById('doubleOverlay').classList.remove('active');
-}
-
-function updateQueueDisplay() {
-  const display = document.getElementById('queueDisplay');
-  if (queue.length === 0) {
-    display.innerHTML = '<span style=&quot;color:var(--text-dim);font-size:13px&quot;>Noch keine Einträge.</span>';
-    return;
-  }
-  
-  let html = '<div class=&quot;queue-group&quot;>';
-  queue.forEach((item, idx) => {
-    let color = 'var(--success)';
-    if (item.mode === 'derank') color = 'var(--danger)';
-    if (item.mode === 'sonder') color = 'var(--orange)';
-    if (item.mode === 'dept') color = 'var(--purple)';
-    
-    const modeTag = `<span style=&quot;color:${color};font-size:10px&quot;>[${item.mode.toUpperCase()}]</span>`;
-    html += `<div class=&quot;queue-item&quot;><span>${modeTag} ${item.name} (${item.rank})</span><button class=&quot;remove-btn&quot; onclick=&quot;removeQueueItem(${idx})&quot;>×</button></div>`;
-  });
-  html += '</div>';
-  
-  display.innerHTML = html;
-}
-
-function removeQueueItem(idx) {
-  queue.splice(idx, 1);
-  updateQueueDisplay();
-}
-
-function clearQueue() {
-  queue = [];
-  employeeOfTheWeek = null;
-  document.getElementById('employeeDisplay').textContent = '';
-  updateQueueDisplay();
-}
-
-function clearMembers() {
-  members = {};
-  const status = document.getElementById('sheetStatus');
-  if (status) { status.style.color = 'var(--text-dim)'; status.textContent = 'Liste geleert. Klicke &quot;Neu laden&quot; um die Daten erneut aus Google Sheets zu holen.'; }
-  updateSelect('selectMember', '');
-}
-
-function generateCombinedOutput() {
-  // Filtern nach Kategorien
-  const hcs_normal = queue.filter(i => i.mode === 'rankup' &amp;&amp; (i.rank.startsWith('hc-') || i.rank === '23-24' || i.rank === '24-25'));
-  const hcs_sonder = queue.filter(i => i.mode === 'sonder' &amp;&amp; (i.rank.startsWith('hc-') || i.rank === '23-24' || i.rank === '24-25'));
-  
-  const rankups = queue.filter(i => i.mode === 'rankup' &amp;&amp; !hcs_normal.includes(i));
-  const sonders = queue.filter(i => i.mode === 'sonder' &amp;&amp; !hcs_sonder.includes(i));
-  const depts = queue.filter(i => i.mode === 'dept');
-  
-  if (rankups.length === 0 &amp;&amp; sonders.length === 0 &amp;&amp; depts.length === 0 &amp;&amp; hcs_normal.length === 0 &amp;&amp; hcs_sonder.length === 0 &amp;&amp; !employeeOfTheWeek) return;
-  
-  const today = new Date().toLocaleDateString('de-DE');
-  let finalOutput = `**__Weekly Upranks vom ${today}__**\n\n`;
-  
-  // HC-Block nur für normale RankUps
-  if (hcs_normal.length > 0) {
-    finalOutput += `**__High Command Upranks__**\n\n`;
-    finalOutput += formatGroup(hcs_normal);
-  }
-
-  // Normale RankUps
-  if (rankups.length > 0) {
-    finalOutput += formatGroup(rankups);
-  }
-  
-  // Sonderupranks (inkl. HC wenn dort gewählt)
-  if (sonders.length > 0 || hcs_sonder.length > 0) {
-    finalOutput += `**__Sonderupranks__**\n\n`;
-    if (hcs_sonder.length > 0) {
-      finalOutput += formatGroup(hcs_sonder);
-    }
-    if (sonders.length > 0) {
-      finalOutput += formatGroup(sonders);
-    }
-  }
-  
-  // Abteilung
-  if (depts.length > 0) {
-    finalOutput += `**__Abteilungsupranks__**\n\n`;
-    finalOutput += formatGroup(depts);
-  }
-
-  // Mitarbeiter der Woche
-  if (employeeOfTheWeek) {
-    finalOutput += `**__Mitarbeiter der Woche__**\n`;
-    finalOutput += `> **${employeeOfTheWeek.name} | ${employeeOfTheWeek.id}**\n`;
-    if (employeeOfTheWeek.message) {
-      finalOutput += `> ${employeeOfTheWeek.message}\n`;
-    }
-    finalOutput += `\nHerzlichen Glückwunsch! ★\n`;
-  }
-  
-  finalOutput += `\n**Ich bitte um Herzliche Glückwünsche an alle Beförderten!** || <@&amp;1156202809432227890> ||\n`;
-  finalOutput += `\nMFG\nHR Leitung`;
-  
-  document.getElementById('output').textContent = finalOutput;
-}
-
-function generateDerankOutput() {
-  const items = queue.filter(i => i.mode === 'derank');
-  if (items.length === 0) return;
-  
-  const today = new Date().toLocaleDateString('de-DE');
-  let finalOutput = `**__Deranks vom ${today}__**\n\n`;
-  finalOutput += formatGroup(items);
-  finalOutput += `\nMFG\nHR Leitung`;
-  
-  document.getElementById('output').textContent = finalOutput;
-}
-
-function formatGroup(items) {
-  let groupStr = &quot;&quot;;
-  const grouped = {};
-  
-  items.forEach(item => {
-    let toRank, fromRank;
-    
-    if (item.rank.startsWith('hc-')) {
-      toRank = item.rank.replace('hc-', '');
-      fromRank = null;
-    } else if (item.rank.startsWith('dept-')) {
-      toRank = item.rank.replace('dept-', '');
-      fromRank = null;
-    } else if (item.rank.startsWith('double-')) {
-      const parts = item.rank.replace('double-', '').split('-');
-      fromRank = parts[0];
-      toRank = parts[1];
-    } else {
-      const parts = item.rank.split('-');
-      fromRank = parts[0];
-      toRank = parts[1];
-    }
-
-    if (!grouped[toRank]) grouped[toRank] = { from: fromRank, members: [] };
-    grouped[toRank].members.push(`${item.name} | ${item.id}`);
-  });
-
-  for (const [toRank, data] of Object.entries(grouped)) {
-    groupStr += `> **__--> ${toRank}. ${rankNames[toRank] || 'Unbekannt'}__**\n`;
-    data.members.forEach(m => {
-      groupStr += `> ${m}\n`;
-    });
-    if (data.from) {
-      groupStr += `> -# ${data.from}. ${rankNames[data.from] || 'Unbekannt'}\n`;
-    }
-    groupStr += `\n`;
-  }
-  return groupStr;
-}
-
-function copyOutput() {
-  const output = document.getElementById('output').textContent;
-  if (output === &quot;Noch kein Output generiert.&quot;) return;
-  navigator.clipboard.writeText(output);
-}
-</script>
-</body>
-</html>
-" title="FIB Rank Management Tool" loading="lazy"></iframe>
-    </div>
-    <p class="frame-note">Eigenständiges Tool · läuft isoliert im Panel (eigenes Layout &amp; Skript).</p>
   </section>
 
+  <!-- TOOL: MITARBEITERVERZEICHNIS -->
   <!-- TOOL: MITARBEITERVERZEICHNIS -->
   <section id="directory" class="screen" hidden>
     <button class="back" data-back type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Menü</button>
     <header>
       <div class="seal"><svg class="seal-badge" viewBox="0 0 24 24"><use href="#fib-shield"/></svg></div>
       <div>
-        <p class="eyebrow">Federal Investigation Bureau · Aktenverwaltung</p>
+        <p class="eyebrow">Federal Investigation Bureau · Personalverwaltung</p>
         <h1>Mitarbeiterverzeichnis</h1>
-        <p class="sub">Digitales Verzeichnis im Aktenlook durchsuchen.</p>
+        <p class="sub">Live aus dem FIB Mitarbeiterverzeichnis (Google Sheets) — inkl. Ausbildungen.</p>
       </div>
     </header>
-    <div class="frame-wrap">
-      <iframe class="tool-frame" data-src="<!DOCTYPE html>
-<html lang=&quot;de&quot;>
-<head>
-<meta charset=&quot;UTF-8&quot;>
-<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
-<title>Akte FIB-2026-0619 · Mitarbeiterverzeichnis</title>
-<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
-<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
-<link href=&quot;https://fonts.googleapis.com/css2?family=Special+Elite&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
-<style>
-  :root{
-    --paper: #ECE5CF;
-    --paper-deep: #DFD5B4;
-    --paper-line: #C2B68F;
-    --ink: #211C14;
-    --ink-soft: #5C5440;
-    --ink-faint: #8C8267;
-    --stamp-red: #9C2B23;
-    --stamp-red-soft: rgba(156,43,35,.10);
-    --gold: #A87B22;
-    --navy: #28394B;
-    --redact: #15130F;
-    --shadow: rgba(30,25,15,.22);
-    --font-display: 'Special Elite', 'Courier New', monospace;
-    --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
-  }
 
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--paper);
-    color:var(--ink);
-    font-family:var(--font-mono);
-    line-height:1.5;
-    position:relative;
-    overflow-x:hidden;
-  }
-  body::before{
-    content:&quot;&quot;;
-    position:fixed;
-    inset:-20%;
-    z-index:0;
-    pointer-events:none;
-    background-image: repeating-linear-gradient(0deg, rgba(33,28,20,.025) 0 1px, transparent 1px 3px);
-    mix-blend-mode:multiply;
-  }
-  .watermark{
-    position:fixed;
-    inset:-10% -30%;
-    z-index:0;
-    pointer-events:none;
-    display:flex;
-    flex-wrap:wrap;
-    gap:4rem 3rem;
-    transform:rotate(-18deg);
-    opacity:.05;
-    font-family:var(--font-display);
-    font-size:1.9rem;
-    letter-spacing:.3em;
-    color:var(--ink);
-    user-select:none;
-  }
-  .watermark span{white-space:nowrap;}
+    <div class="grid" style="grid-template-columns:1fr">
+      <section class="card">
+        <p class="card-label">Status</p>
+        <div class="roster-status">
+          <span class="roster-dot loading" id="dirDot" aria-hidden="true"></span>
+          <span class="roster-status-text" id="dirStatusText">Verbinde mit Google Sheets …</span>
+          <button type="button" class="roster-refresh" id="dirRefreshBtn" title="Verzeichnis neu laden">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Neu laden
+          </button>
+        </div>
 
-  .wrap{position:relative;z-index:1;max-width:1480px;margin:0 auto;padding:0 1.5rem 4rem;}
+        <div class="dir-summary" id="dirSummary"></div>
 
-  /* ===== HEADER / FOLDER TAB ===== */
-  header{padding-top:2.5rem;}
-  .tab{
-    display:inline-block;
-    background:var(--paper-deep);
-    border:1px solid var(--paper-line);
-    border-bottom:none;
-    padding:.35rem 1.1rem .5rem;
-    font-family:var(--font-display);
-    font-size:.72rem;
-    letter-spacing:.18em;
-    color:var(--ink-soft);
-    border-radius:4px 4px 0 0;
-    transform:translateY(1px);
-  }
-  .file-panel{
-    background:var(--paper-deep);
-    border:1px solid var(--paper-line);
-    border-radius:2px 10px 10px 10px;
-    padding:1.8rem 1.8rem 1.6rem;
-    position:relative;
-    box-shadow:0 14px 30px -18px var(--shadow);
-    animation:settle .6s ease both;
-  }
-  @keyframes settle{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-
-  .masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:1.5rem;flex-wrap:wrap;}
-  .masthead-text .agency{
-    font-family:var(--font-display);
-    font-size:.78rem;
-    letter-spacing:.28em;
-    color:var(--navy);
-    margin:0 0 .5rem;
-  }
-  .masthead-text h1{
-    font-family:var(--font-display);
-    font-size:clamp(1.7rem,4.2vw,2.5rem);
-    margin:0 0 .55rem;
-    color:var(--ink);
-    letter-spacing:.01em;
-  }
-  .meta-line{
-    font-size:.78rem;
-    color:var(--ink-soft);
-    display:flex;
-    gap:1.1rem;
-    flex-wrap:wrap;
-    border-top:1px dashed var(--paper-line);
-    padding-top:.6rem;
-    margin-top:.8rem;
-  }
-  .meta-line b{color:var(--ink);font-weight:600;}
-
-  /* seal */
-  .seal{
-    flex:0 0 auto;
-    width:108px;height:108px;
-    position:relative;
-  }
-  .seal svg{width:100%;height:100%;filter:drop-shadow(0 2px 1px rgba(0,0,0,.08));}
-
-  .stamp{
-    position:absolute;
-    top:-14px; right:-6px;
-    font-family:var(--font-display);
-    color:var(--stamp-red);
-    border:3px solid var(--stamp-red);
-    padding:.25rem .6rem;
-    font-size:.95rem;
-    letter-spacing:.14em;
-    border-radius:6px;
-    transform:rotate(-9deg);
-    opacity:.85;
-    background:var(--stamp-red-soft);
-    animation:stamp-in .5s ease .25s both;
-    pointer-events:none;
-  }
-  @keyframes stamp-in{from{opacity:0;transform:rotate(-9deg) scale(1.6);}to{opacity:.85;transform:rotate(-9deg) scale(1);}}
-
-  /* ===== SUMMARY CARD ===== */
-  .summary{
-    margin-top:1.6rem;
-    background:var(--paper);
-    border:1px solid var(--paper-line);
-    border-radius:6px;
-    padding:1.4rem 1.6rem;
-    display:grid;
-    grid-template-columns:auto 1fr;
-    gap:1.6rem;
-    align-items:start;
-  }
-  .summary .totals{display:flex;flex-direction:column;gap:.9rem;border-right:1px dashed var(--paper-line);padding-right:1.6rem;min-width:150px;}
-  .totals .num{font-family:var(--font-display);font-size:2.1rem;color:var(--navy);line-height:1;}
-  .totals .lbl{font-size:.68rem;letter-spacing:.12em;color:var(--ink-soft);text-transform:uppercase;margin-top:.25rem;}
-
-  .dept-list{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:.35rem 1.6rem;
-    font-size:.82rem;
-  }
-  .dept-list .heading{
-    grid-column:1/-1;
-    font-family:var(--font-display);
-    font-size:.7rem;
-    letter-spacing:.16em;
-    color:var(--ink-soft);
-    text-transform:uppercase;
-    margin-bottom:.2rem;
-  }
-  .dept-row{display:flex;align-items:baseline;gap:.4rem;}
-  .dept-row .name{white-space:nowrap;}
-  .dept-row .dots{flex:1;border-bottom:1px dotted var(--paper-line);transform:translateY(-3px);}
-  .dept-row .count{font-weight:600;color:var(--navy);}
-
-  @media(max-width:620px){
-    .summary{grid-template-columns:1fr;}
-    .totals{flex-direction:row;gap:1.4rem;border-right:none;border-bottom:1px dashed var(--paper-line);padding-right:0;padding-bottom:1rem;}
-    .dept-list{grid-template-columns:1fr;}
-  }
-
-  /* ===== CONTROLS ===== */
-  .live-status{
-    display:flex;
-    align-items:center;
-    gap:.6rem;
-    margin-top:1.1rem;
-    padding-top:.9rem;
-    border-top:1px dashed var(--paper-line);
-    font-size:.74rem;
-    color:var(--ink-soft);
-    flex-wrap:wrap;
-  }
-  .status-dot{width:8px;height:8px;border-radius:50%;background:var(--ink-faint);flex:0 0 auto;}
-  .status-dot.live{background:#3F6B3F;box-shadow:0 0 0 3px rgba(63,107,63,.18);}
-  .status-dot.fallback{background:var(--stamp-red);box-shadow:0 0 0 3px var(--stamp-red-soft);}
-  .status-dot.loading{background:var(--gold);animation:pulse 1.1s ease-in-out infinite;}
-  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
-  #statusText{flex:1 1 auto;min-width:200px;}
-  .refresh-btn{
-    font-family:var(--font-mono);
-    font-size:.7rem;
-    letter-spacing:.05em;
-    border:1px solid var(--ink-soft);
-    background:transparent;
-    color:var(--ink-soft);
-    padding:.3rem .65rem;
-    border-radius:3px;
-    cursor:pointer;
-  }
-  .refresh-btn:hover:not(:disabled){border-color:var(--navy);color:var(--navy);}
-  .refresh-btn:disabled{opacity:.5;cursor:default;}
-
-  .controls{
-    margin-top:1.6rem;
-    display:flex;
-    gap:.9rem;
-    flex-wrap:wrap;
-    align-items:center;
-  }
-  .controls label{font-size:.68rem;letter-spacing:.1em;color:var(--ink-soft);text-transform:uppercase;display:block;margin-bottom:.3rem;}
-  .field{flex:1 1 260px;}
-  .field input, .field select{
-    width:100%;
-    font-family:var(--font-mono);
-    font-size:.92rem;
-    padding:.6rem .7rem;
-    background:var(--paper);
-    border:1px solid var(--ink-soft);
-    border-radius:3px;
-    color:var(--ink);
-  }
-  .field input:focus, .field select:focus{
-    outline:2px solid var(--navy);
-    outline-offset:1px;
-  }
-  .field.select-field{flex:0 1 220px;}
-  .result-count{font-size:.72rem;color:var(--ink-soft);white-space:nowrap;align-self:flex-end;padding-bottom:.5rem;}
-
-  /* ===== TIER SECTIONS ===== */
-  .tier{margin-top:2.4rem;}
-  .tier-head{
-    display:flex;
-    align-items:baseline;
-    gap:.8rem;
-    border-bottom:2px solid var(--ink);
-    padding-bottom:.4rem;
-    margin-bottom:.1rem;
-  }
-  .tier-head .rank{
-    font-family:var(--font-display);
-    font-size:1.05rem;
-    letter-spacing:.04em;
-  }
-  .tier-head .count{font-size:.74rem;color:var(--ink-soft);}
-  .tier-head .fill{flex:1;border-bottom:1px dotted var(--paper-line);transform:translateY(-5px);}
-
-  .table-scroll{overflow-x:auto;margin-top:.2rem;}
-  table{border-collapse:collapse;width:100%;min-width:760px;font-size:.84rem;}
-  thead th{
-    text-align:left;
-    font-size:.66rem;
-    letter-spacing:.1em;
-    text-transform:uppercase;
-    color:var(--ink-soft);
-    font-weight:600;
-    padding:.5rem .6rem;
-    border-bottom:1px solid var(--paper-line);
-    white-space:nowrap;
-  }
-  tbody td{
-    padding:.55rem .6rem;
-    border-bottom:1px solid var(--paper-line);
-    vertical-align:top;
-    white-space:nowrap;
-  }
-  tbody td.wrap-cell{white-space:normal;}
-  tbody tr{transition:background .15s ease;border-left:3px solid transparent;}
-  tbody tr:hover{background:rgba(40,57,75,.05);}
-  tbody tr.t-gold{border-left-color:var(--gold);}
-  tbody tr.t-navy{border-left-color:var(--navy);}
-  tbody tr.t-plain{border-left-color:var(--paper-line);}
-  td.id{color:var(--ink-faint);}
-  td.name{font-weight:600;}
-  td.dn{color:var(--navy);font-weight:600;}
-  .redact-bar{
-    display:inline-block;
-    width:46px;height:.78em;
-    background:var(--redact);
-    border-radius:2px;
-    vertical-align:middle;
-    opacity:.85;
-  }
-  .dept-tag{
-    display:inline-block;
-    font-size:.72rem;
-    padding:.1rem .4rem;
-    border:1px solid var(--paper-line);
-    border-radius:3px;
-    margin:0 .25rem .2rem 0;
-    color:var(--ink-soft);
-  }
-  .strike{color:var(--ink-faint);}
-
-  .tier.hidden, tbody tr.row-hidden{display:none;}
-
-  .no-results{
-    margin-top:2rem;
-    padding:1.5rem;
-    border:1px dashed var(--paper-line);
-    text-align:center;
-    color:var(--ink-soft);
-    font-size:.85rem;
-    display:none;
-  }
-
-  /* ===== FOOTER ===== */
-  footer{
-    margin-top:3rem;
-    border-top:2px solid var(--ink);
-    padding-top:1.2rem;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:1rem;
-    flex-wrap:wrap;
-    font-size:.72rem;
-    color:var(--ink-soft);
-  }
-  footer .end{font-family:var(--font-display);letter-spacing:.16em;color:var(--ink);}
-
-  @media (prefers-reduced-motion: reduce){
-    *{animation:none !important; transition:none !important; scroll-behavior:auto !important;}
-  }
-</style>
-</head>
-<body>
-
-<div class=&quot;watermark&quot; aria-hidden=&quot;true&quot;>
-  <span>VERTRAULICH · FIB-AKTE · VERTRAULICH · FIB-AKTE</span>
-  <span>VERTRAULICH · FIB-AKTE · VERTRAULICH · FIB-AKTE</span>
-  <span>VERTRAULICH · FIB-AKTE · VERTRAULICH · FIB-AKTE</span>
-  <span>VERTRAULICH · FIB-AKTE · VERTRAULICH · FIB-AKTE</span>
-  <span>VERTRAULICH · FIB-AKTE · VERTRAULICH · FIB-AKTE</span>
-  <span>VERTRAULICH · FIB-AKTE · VERTRAULICH · FIB-AKTE</span>
-</div>
-
-<div class=&quot;wrap&quot;>
-
-  <header>
-    <div class=&quot;tab&quot;>AKTE&amp;nbsp;&amp;nbsp;PERSONAL</div>
-    <div class=&quot;file-panel&quot;>
-      <div class=&quot;masthead&quot;>
-        <div class=&quot;masthead-text&quot;>
-          <p class=&quot;agency&quot;>Federal Investigation Bureau</p>
-          <h1>Mitarbeiterverzeichnis</h1>
-          <div class=&quot;meta-line&quot;>
-            <span>Akte Nr. <b>FIB-2026-0619</b></span>
-            <span>Stand: <b>19.06.2026</b></span>
-            <span>Sachbearbeiter: <b>Personalabteilung</b></span>
+        <div class="dir-toolbar">
+          <div class="field">
+            <label class="l" for="dirSearch">Aktensuche — Name, ID oder Dienstnummer</label>
+            <input type="text" id="dirSearch" placeholder="z. B. Eko Plaste, 17450, DN 1 …" autocomplete="off">
+          </div>
+          <div class="field">
+            <label class="l" for="dirDeptFilter">Abteilung</label>
+            <select id="dirDeptFilter">
+              <option value="">Alle Abteilungen</option>
+            </select>
           </div>
         </div>
-        <div class=&quot;seal&quot; aria-hidden=&quot;true&quot;>
-          <svg viewBox=&quot;0 0 120 120&quot;>
-            <defs>
-              <path id=&quot;seal-arc-top&quot; d=&quot;M 14,60 A 46,46 0 0 1 106,60&quot; />
-              <path id=&quot;seal-arc-bot&quot; d=&quot;M 106,62 A 46,46 0 0 1 14,62&quot; />
-            </defs>
-            <circle cx=&quot;60&quot; cy=&quot;60&quot; r=&quot;56&quot; fill=&quot;none&quot; stroke=&quot;#9C2B23&quot; stroke-width=&quot;1.5&quot; opacity=&quot;.75&quot;/>
-            <circle cx=&quot;60&quot; cy=&quot;60&quot; r=&quot;48&quot; fill=&quot;none&quot; stroke=&quot;#9C2B23&quot; stroke-width=&quot;1&quot; opacity=&quot;.55&quot;/>
-            <text font-family=&quot;Special Elite, monospace&quot; font-size=&quot;8.3&quot; fill=&quot;#9C2B23&quot; opacity=&quot;.8&quot; letter-spacing=&quot;1.5&quot;>
-              <textPath href=&quot;#seal-arc-top&quot; startOffset=&quot;50%&quot; text-anchor=&quot;middle&quot;>FEDERAL INVESTIGATION</textPath>
-            </text>
-            <text font-family=&quot;Special Elite, monospace&quot; font-size=&quot;8.3&quot; fill=&quot;#9C2B23&quot; opacity=&quot;.8&quot; letter-spacing=&quot;1.5&quot;>
-              <textPath href=&quot;#seal-arc-bot&quot; startOffset=&quot;50%&quot; text-anchor=&quot;middle&quot;>BUREAU · BUREAU</textPath>
-            </text>
-            <path d=&quot;M60 38 L65 54 L82 54 L68 64 L73 80 L60 70 L47 80 L52 64 L38 54 L55 54 Z&quot; fill=&quot;#9C2B23&quot; opacity=&quot;.8&quot;/>
-          </svg>
-          <div class=&quot;stamp&quot;>AKTIV</div>
-        </div>
-      </div>
+        <p class="auto-note" id="dirResultCount"></p>
 
-      <div class=&quot;summary&quot;>
-        <div class=&quot;totals&quot;>
-          <div>
-            <div class=&quot;num&quot; id=&quot;totalAgents&quot;>–</div>
-            <div class=&quot;lbl&quot;>Agenten erfasst</div>
-          </div>
-          <div>
-            <div class=&quot;num&quot; id=&quot;totalWithDept&quot;>–</div>
-            <div class=&quot;lbl&quot;>mit Abteilungszuordnung</div>
-          </div>
-        </div>
-        <div class=&quot;dept-list&quot; id=&quot;deptList&quot;>
-          <div class=&quot;heading&quot;>Abteilungsstärke</div>
-        </div>
-      </div>
-
-      <div class=&quot;live-status&quot;>
-        <span class=&quot;status-dot loading&quot; id=&quot;statusDot&quot; aria-hidden=&quot;true&quot;></span>
-        <span id=&quot;statusText&quot;>Verbinde mit Google Sheets …</span>
-        <button class=&quot;refresh-btn&quot; id=&quot;refreshBtn&quot; type=&quot;button&quot; disabled>↻ Aktualisieren</button>
-      </div>
-
-      <div class=&quot;controls&quot;>
-        <div class=&quot;field&quot;>
-          <label for=&quot;search&quot;>Aktensuche — Name, ID oder Dienstnummer</label>
-          <input type=&quot;text&quot; id=&quot;search&quot; placeholder=&quot;z. B. Eko Plaste, 17450, DN 1 …&quot; autocomplete=&quot;off&quot;>
-        </div>
-        <div class=&quot;field select-field&quot;>
-          <label for=&quot;deptFilter&quot;>Abteilung</label>
-          <select id=&quot;deptFilter&quot;>
-            <option value=&quot;&quot;>Alle Abteilungen</option>
-          </select>
-        </div>
-        <div class=&quot;result-count&quot; id=&quot;resultCount&quot;></div>
-      </div>
+        <div id="dirTiers"></div>
+        <p class="bt-empty" id="dirNoResults" style="display:none">Keine Einträge zu dieser Suche gefunden.</p>
+      </section>
     </div>
-  </header>
-
-  <main id=&quot;tiers&quot;></main>
-
-  <p class=&quot;no-results&quot; id=&quot;noResults&quot;>Keine Akteneinträge zu dieser Suche gefunden.</p>
-
-  <footer>
-    <span class=&quot;end&quot;>— Ende der Akte —</span>
-    <span>Dieses Dokument ist eine inoffizielle Aufbereitung des Quell-Sheets „FIB Mitarbeiterverzeichnis&quot;. Nur für interne Zwecke.</span>
-  </footer>
-
-</div>
-
-<script>
-// ===== Datensatz (78 sichtbare Akteneinträge) =====
-const FALLBACK_SNAPSHOT_DATE = &quot;19.06.2026&quot;;
-const fallbackRecords = [
-{id:17450, name:&quot;Eko Plaste&quot;, rank:&quot;30. Director of FIB&quot;, dn:&quot;1&quot;, group:&quot;Leaderschaft&quot;, dept:[&quot;Chief Executive Curator&quot;,&quot;Chairman of the Directorate&quot;], invite:&quot;25.05.2026&quot;, promo:&quot;25.05.2026&quot;},
-{id:264694, name:&quot;Tim Chessee&quot;, rank:&quot;29. Deputy Director of FIB&quot;, dn:&quot;2&quot;, group:&quot;Leaderschaft&quot;, dept:[&quot;Deputy Executive Curator&quot;,&quot;Director of Integrity&quot;], invite:&quot;25.05.2026&quot;, promo:&quot;25.05.2026&quot;},
-{id:240601, name:&quot;Nils Brandenburger&quot;, rank:&quot;28. Assistant Director of FIB&quot;, dn:&quot;777&quot;, group:&quot;Leaderschaft&quot;, dept:[&quot;Assistant Executive Curator&quot;,&quot;Director of Bureau Administration&quot;], invite:&quot;25.05.2026&quot;, promo:&quot;25.05.2026&quot;},
-{id:156935, name:&quot;Assan Diop&quot;, rank:&quot;28. Assistant Director of FIB&quot;, dn:&quot;999&quot;, group:&quot;Leaderschaft&quot;, dept:[&quot;Assistant Executive Curator&quot;,&quot;Director of People&quot;], invite:&quot;25.05.2026&quot;, promo:&quot;25.05.2026&quot;},
-{id:76002, name:&quot;Dan Reacher&quot;, rank:&quot;28. Assistant Director of FIB&quot;, dn:&quot;5&quot;, group:&quot;Leaderschaft&quot;, dept:[&quot;Assistant Executive Curator&quot;,&quot;Director of Criminal Investigations&quot;], invite:&quot;25.05.2026&quot;, promo:&quot;25.05.2026&quot;},
-{id:85558, name:&quot;Dimii Nevergone&quot;, rank:&quot;28. Assistant Director of FIB&quot;, dn:&quot;3&quot;, group:&quot;Leaderschaft&quot;, dept:[&quot;Assistant Executive Curator&quot;,&quot;Director of National Security&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:26412, name:&quot;Luca Santos&quot;, rank:&quot;28. Assistant Director of FIB&quot;, dn:&quot;361&quot;, group:&quot;Leaderschaft&quot;, dept:[&quot;Assistant Executive Curator&quot;,&quot;Director of Law &amp; Order&quot;], invite:&quot;29.05.2026&quot;, promo:&quot;29.05.2026&quot;},
-{id:6180, name:&quot;Paul Nao&quot;, rank:&quot;28. Assistant Director of FIB&quot;, dn:&quot;17&quot;, group:&quot;Leaderschaft&quot;, dept:[&quot;Assistant Executive Curator&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:102262, name:&quot;Hakuri Schrom&quot;, rank:&quot;28. Assistant Director of FIB&quot;, dn:&quot;262&quot;, group:&quot;Leaderschaft&quot;, dept:[&quot;Assistant Executive Curator&quot;], invite:&quot;02.06.2026&quot;, promo:&quot;02.06.2026&quot;},
-
-{id:135691, name:&quot;Joachim vonWanze&quot;, rank:&quot;27. Divisional Director&quot;, dn:&quot;10&quot;, group:&quot;Curator of Division&quot;, dept:[&quot;Curator | HR&quot;,&quot;FIBCO&quot;], invite:&quot;25.05.2026&quot;, promo:&quot;25.05.2026&quot;},
-{id:157291, name:&quot;Hugo Federov&quot;, rank:&quot;27. Divisional Director&quot;, dn:&quot;7&quot;, group:&quot;Curator of Division&quot;, dept:[&quot;Curator | FIBCO&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:128034, name:&quot;Bali Nevergone&quot;, rank:&quot;27. Divisional Director&quot;, dn:&quot;27&quot;, group:&quot;Curator of Division&quot;, dept:[&quot;Curator | CIRG&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:156327, name:&quot;Falkdoc Federov&quot;, rank:&quot;27. Divisional Director&quot;, dn:&quot;8&quot;, group:&quot;Curator of Division&quot;, dept:[&quot;Curator | PR&quot;,&quot;FIBCO&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;04.06.2026&quot;},
-
-{id:295473, name:&quot;Felix Mccalley&quot;, rank:&quot;26. Inspector of the FIB&quot;, dn:&quot;6&quot;, group:&quot;High Command Lead&quot;, dept:[&quot;Head of High Command&quot;,&quot;FIBCO&quot;], invite:&quot;25.05.2026&quot;, promo:&quot;25.05.2026&quot;},
-
-{id:217060, name:&quot;Raffi Yane&quot;, rank:&quot;25. Supervisory Head Agent&quot;, dn:&quot;4&quot;, group:&quot;High Command&quot;, dept:[&quot;HR Leitung&quot;,&quot;FIBCO&quot;], invite:&quot;25.05.2026&quot;, promo:&quot;25.05.2026&quot;},
-{id:26899, name:&quot;Amando Carillo&quot;, rank:&quot;25. Supervisory Head Agent&quot;, dn:&quot;31&quot;, group:&quot;High Command&quot;, dept:[&quot;CID Stellv. Leitung&quot;], invite:&quot;25.05.2026&quot;, promo:&quot;25.05.2026&quot;},
-{id:219213, name:&quot;Jannick Yurr&quot;, rank:&quot;25. Supervisory Head Agent&quot;, dn:&quot;187&quot;, group:&quot;High Command&quot;, dept:[&quot;CID Stellv. Leitung&quot;,&quot;FIBCO&quot;], invite:&quot;25.05.2026&quot;, promo:&quot;25.05.2026&quot;},
-{id:34258, name:&quot;Fynn Andreas&quot;, rank:&quot;25. Supervisory Head Agent&quot;, dn:&quot;11&quot;, group:&quot;High Command&quot;, dept:[&quot;FIBCO Leitung&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:106544, name:&quot;Marcel Gruuber&quot;, rank:&quot;25. Supervisory Head Agent&quot;, dn:&quot;15&quot;, group:&quot;High Command&quot;, dept:[], invite:&quot;25.05.2026&quot;, promo:&quot;25.05.2026&quot;},
-
-{id:256009, name:&quot;Kayne Smoker&quot;, rank:&quot;24. Supervisory Agent&quot;, dn:&quot;25&quot;, group:&quot;High Command&quot;, dept:[&quot;TD Stellv. Leitung&quot;,&quot;CIRG&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:142220, name:&quot;Simon Kellermann&quot;, rank:&quot;24. Supervisory Agent&quot;, dn:&quot;143&quot;, group:&quot;High Command&quot;, dept:[&quot;FIBCO&quot;], invite:&quot;29.05.2026&quot;, promo:&quot;29.05.2026&quot;},
-
-{id:176902, name:&quot;Filip vonWanze&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;32&quot;, group:&quot;High Command&quot;, dept:[&quot;TD&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:218257, name:&quot;Ranjid Bay&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;33&quot;, group:&quot;High Command&quot;, dept:[&quot;CIRG&quot;,&quot;CID&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:135217, name:&quot;Sebastian Kuroyama&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;52&quot;, group:&quot;High Command&quot;, dept:[&quot;CID&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:264668, name:&quot;Kai Herzog&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;21&quot;, group:&quot;High Command&quot;, dept:[&quot;FIBCO&quot;,&quot;HR&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:258321, name:&quot;Mickey Maybach&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;53&quot;, group:&quot;High Command&quot;, dept:[&quot;FIBCO&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:50091, name:&quot;Syn Veno&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;59&quot;, group:&quot;High Command&quot;, dept:[&quot;CID&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;29.05.2026&quot;},
-{id:244186, name:&quot;Anton Moluda&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;9&quot;, group:&quot;High Command&quot;, dept:[&quot;FIBCO Stellv. Leitung&quot;], invite:&quot;05.06.2026&quot;, promo:&quot;05.06.2026&quot;},
-{id:109467, name:&quot;Felix Cunningham&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;12&quot;, group:&quot;High Command&quot;, dept:[&quot;CID Leitung&quot;,&quot;HR&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;05.06.2026&quot;},
-{id:192812, name:&quot;Nico Saito&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;23&quot;, group:&quot;High Command&quot;, dept:[&quot;TD Stellv. Leitung&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;05.06.2026&quot;},
-{id:105534, name:&quot;Akin Kaplan&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;71&quot;, group:&quot;High Command&quot;, dept:[&quot;FIBCO&quot;,&quot;CID&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;05.06.2026&quot;},
-{id:257441, name:&quot;Hugo Pinsel&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;16&quot;, group:&quot;High Command&quot;, dept:[&quot;FIBCO Stellv. Leitung&quot;,&quot;HR&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;05.06.2026&quot;},
-{id:290275, name:&quot;Tomek Dick&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;58&quot;, group:&quot;High Command&quot;, dept:[&quot;PR&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;05.06.2026&quot;},
-{id:288863, name:&quot;Bernhard Wolf&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;132&quot;, group:&quot;High Command&quot;, dept:[&quot;FIBCO&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;05.06.2026&quot;},
-{id:239288, name:&quot;Noah Raiin&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;444&quot;, group:&quot;High Command&quot;, dept:[&quot;FIBCO&quot;,&quot;HR&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;05.06.2026&quot;},
-{id:12263, name:&quot;Fabi Astro&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;107&quot;, group:&quot;High Command&quot;, dept:[&quot;HR Senior&quot;,&quot;FIBCO&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;05.06.2026&quot;},
-{id:136176, name:&quot;Quentin Wesh&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;111&quot;, group:&quot;High Command&quot;, dept:[&quot;CIRG Stellv. Leitung&quot;,&quot;TD&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;05.06.2026&quot;},
-{id:79712, name:&quot;Angus Newton&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;62&quot;, group:&quot;High Command&quot;, dept:[&quot;FIBCO&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;05.06.2026&quot;},
-{id:214462, name:&quot;Marcel Fero&quot;, rank:&quot;23. Special Agent in Charge&quot;, dn:&quot;34&quot;, group:&quot;High Command&quot;, dept:[], invite:&quot;26.05.2026&quot;, promo:&quot;05.06.2026&quot;},
-
-{id:18612, name:&quot;Nico Schlumpf&quot;, rank:&quot;22. Division Chief&quot;, dn:&quot;28&quot;, group:&quot;Division Lead&quot;, dept:[&quot;IA Leitung&quot;,&quot;FIBCO&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:140883, name:&quot;Johannes Brecher&quot;, rank:&quot;22. Division Chief&quot;, dn:&quot;14&quot;, group:&quot;Division Lead&quot;, dept:[&quot;CIRG Leitung&quot;,&quot;CID&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:126465, name:&quot;Nia vonWanze&quot;, rank:&quot;22. Division Chief&quot;, dn:&quot;22&quot;, group:&quot;Division Lead&quot;, dept:[&quot;TD Leitung&quot;], invite:&quot;27.05.2026&quot;, promo:&quot;27.05.2026&quot;},
-{id:190803, name:&quot;Berkoli Midnight&quot;, rank:&quot;22. Division Chief&quot;, dn:&quot;19&quot;, group:&quot;Division Lead&quot;, dept:[&quot;PR Leitung&quot;], invite:&quot;27.05.2026&quot;, promo:&quot;27.05.2026&quot;},
-
-{id:200311, name:&quot;Jonas Rak&quot;, rank:&quot;21. Deputy Division Chief&quot;, dn:&quot;13&quot;, group:&quot;Division Lead&quot;, dept:[&quot;HR Stellv. Leitung&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:5545, name:&quot;Fredo Frost&quot;, rank:&quot;21. Deputy Division Chief&quot;, dn:&quot;69&quot;, group:&quot;Division Lead&quot;, dept:[&quot;CID Stellv. Leitung&quot;], invite:&quot;25.05.2026&quot;, promo:&quot;25.05.2026&quot;},
-{id:220186, name:&quot;Bellobatz Dacruze&quot;, rank:&quot;21. Deputy Division Chief&quot;, dn:&quot;77&quot;, group:&quot;Division Lead&quot;, dept:[&quot;CIRG Stellv. Leitung&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-
-{id:155716, name:&quot;Paul Trappler&quot;, rank:&quot;19. Tactical Operator&quot;, dn:&quot;122&quot;, group:&quot;Abteilungsrang&quot;, dept:[&quot;CIRG&quot;], invite:&quot;06.06.2026&quot;, promo:&quot;06.06.2026&quot;},
-{id:218503, name:&quot;Frosty Dick&quot;, rank:&quot;19. Tactical Operator&quot;, dn:&quot;85&quot;, group:&quot;Abteilungsrang&quot;, dept:[&quot;CIRG&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;29.05.2026&quot;},
-
-{id:244882, name:&quot;Tobi Lakiri&quot;, rank:&quot;18. Department Specialist&quot;, dn:&quot;48&quot;, group:&quot;Abteilungsrang&quot;, dept:[&quot;PR&quot;], invite:&quot;01.06.2026&quot;, promo:&quot;01.06.2026&quot;},
-{id:9895, name:&quot;Kalle Osbornee&quot;, rank:&quot;18. Department Specialist&quot;, dn:&quot;57&quot;, group:&quot;Abteilungsrang&quot;, dept:[&quot;TD&quot;], invite:&quot;27.05.2026&quot;, promo:&quot;27.05.2026&quot;},
-
-{id:189768, name:&quot;Kenan Kasalla&quot;, rank:&quot;17. Commander&quot;, dn:&quot;37&quot;, group:&quot;Command&quot;, dept:[], invite:&quot;07.06.2026&quot;, promo:&quot;07.06.2026&quot;},
-{id:137965, name:&quot;Nate Nays&quot;, rank:&quot;17. Commander&quot;, dn:&quot;121&quot;, group:&quot;Command&quot;, dept:[&quot;HR&quot;,&quot;CID&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:14338, name:&quot;Carlos Sandman&quot;, rank:&quot;17. Commander&quot;, dn:&quot;163&quot;, group:&quot;Command&quot;, dept:[], invite:&quot;07.06.2026&quot;, promo:&quot;07.06.2026&quot;},
-{id:404, name:&quot;Kev Error&quot;, rank:&quot;17. Commander&quot;, dn:&quot;404&quot;, group:&quot;Command&quot;, dept:[&quot;CIRG&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;05.06.2026&quot;},
-{id:225755, name:&quot;Thommy Perez&quot;, rank:&quot;17. Commander&quot;, dn:&quot;50&quot;, group:&quot;Command&quot;, dept:[], invite:&quot;04.06.2026&quot;, promo:&quot;04.06.2026&quot;},
-{id:4149, name:&quot;Atze Altin&quot;, rank:&quot;17. Commander&quot;, dn:&quot;49&quot;, group:&quot;Command&quot;, dept:[], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:192303, name:&quot;Jonass Breitling&quot;, rank:&quot;17. Commander&quot;, dn:&quot;51&quot;, group:&quot;Command&quot;, dept:[], invite:&quot;02.06.2026&quot;, promo:&quot;02.06.2026&quot;},
-{id:225011, name:&quot;Odin Wolf&quot;, rank:&quot;17. Commander&quot;, dn:&quot;112&quot;, group:&quot;Command&quot;, dept:[], invite:&quot;26.05.2026&quot;, promo:&quot;29.05.2026&quot;},
-{id:232642, name:&quot;Peter Holz&quot;, rank:&quot;17. Commander&quot;, dn:&quot;61&quot;, group:&quot;Command&quot;, dept:[&quot;FIBCO&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:252692, name:&quot;Jason Janee&quot;, rank:&quot;17. Commander&quot;, dn:&quot;155&quot;, group:&quot;Command&quot;, dept:[&quot;CIRG&quot;], invite:&quot;27.05.2026&quot;, promo:&quot;27.05.2026&quot;},
-{id:52617, name:&quot;Michi Mahoni&quot;, rank:&quot;17. Commander&quot;, dn:&quot;95&quot;, group:&quot;Command&quot;, dept:[&quot;CIRG&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:203202, name:&quot;Fernando Dick&quot;, rank:&quot;17. Commander&quot;, dn:&quot;66&quot;, group:&quot;Command&quot;, dept:[], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:286372, name:&quot;Cengo Neverloved&quot;, rank:&quot;17. Commander&quot;, dn:&quot;70&quot;, group:&quot;Command&quot;, dept:[], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:115582, name:&quot;Lia Kaplan&quot;, rank:&quot;17. Commander&quot;, dn:&quot;35&quot;, group:&quot;Command&quot;, dept:[&quot;CID&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;05.06.2026&quot;},
-{id:251159, name:&quot;Tim Balls&quot;, rank:&quot;17. Commander&quot;, dn:&quot;125&quot;, group:&quot;Command&quot;, dept:[], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:212921, name:&quot;Alicee Asic&quot;, rank:&quot;17. Commander&quot;, dn:&quot;73&quot;, group:&quot;Command&quot;, dept:[&quot;CIRG&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:62, name:&quot;Kevin Done&quot;, rank:&quot;17. Commander&quot;, dn:&quot;63&quot;, group:&quot;Command&quot;, dept:[], invite:&quot;27.05.2026&quot;, promo:&quot;27.05.2026&quot;},
-{id:292078, name:&quot;Ibo Aquila&quot;, rank:&quot;17. Commander&quot;, dn:&quot;74&quot;, group:&quot;Command&quot;, dept:[], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:66603, name:&quot;Harald Sachse&quot;, rank:&quot;17. Commander&quot;, dn:&quot;603&quot;, group:&quot;Command&quot;, dept:[], invite:&quot;29.05.2026&quot;, promo:&quot;29.05.2026&quot;},
-{id:208195, name:&quot;Vaun Deberg&quot;, rank:&quot;17. Commander&quot;, dn:&quot;82&quot;, group:&quot;Command&quot;, dept:[], invite:&quot;30.05.2026&quot;, promo:&quot;30.05.2026&quot;},
-{id:301271, name:&quot;Aure Knusper&quot;, rank:&quot;17. Commander&quot;, dn:&quot;80&quot;, group:&quot;Command&quot;, dept:[&quot;CIRG&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;29.05.2026&quot;},
-{id:159846, name:&quot;Titus Maximus&quot;, rank:&quot;17. Commander&quot;, dn:&quot;152&quot;, group:&quot;Command&quot;, dept:[&quot;FIBCO&quot;], invite:&quot;27.05.2026&quot;, promo:&quot;27.05.2026&quot;},
-{id:174040, name:&quot;Luca Hochreiter&quot;, rank:&quot;17. Commander&quot;, dn:&quot;175&quot;, group:&quot;Command&quot;, dept:[], invite:&quot;30.05.2026&quot;, promo:&quot;30.05.2026&quot;},
-{id:257297, name:&quot;Yuri Loveless&quot;, rank:&quot;17. Commander&quot;, dn:&quot;79&quot;, group:&quot;Command&quot;, dept:[&quot;CID&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;29.05.2026&quot;},
-{id:26568, name:&quot;Harleen Bama&quot;, rank:&quot;17. Commander&quot;, dn:&quot;65&quot;, group:&quot;Command&quot;, dept:[], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:229248, name:&quot;Eren Almaz&quot;, rank:&quot;17. Commander&quot;, dn:&quot;20&quot;, group:&quot;Command&quot;, dept:[&quot;FIBCO&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;},
-{id:289353, name:&quot;Raul Nuis&quot;, rank:&quot;17. Commander&quot;, dn:&quot;75&quot;, group:&quot;Command&quot;, dept:[], invite:&quot;26.05.2026&quot;, promo:&quot;29.05.2026&quot;},
-{id:253176, name:&quot;Gimo Jimmbo&quot;, rank:&quot;17. Commander&quot;, dn:&quot;707&quot;, group:&quot;Command&quot;, dept:[&quot;FIBCO&quot;], invite:&quot;26.05.2026&quot;, promo:&quot;26.05.2026&quot;}
-];
-
-const GOLD_GROUPS = [&quot;Leaderschaft&quot;,&quot;Curator of Division&quot;,&quot;High Command Lead&quot;];
-const NAVY_GROUPS = [&quot;High Command&quot;,&quot;Division Lead&quot;];
-
-const DEPT_NAMES = [
-  [&quot;HR&quot;,&quot;Human Resources&quot;],
-  [&quot;PR&quot;,&quot;Public Relations&quot;],
-  [&quot;CIRG&quot;,&quot;Critical Incident Response Group&quot;],
-  [&quot;TD&quot;,&quot;Training Division&quot;],
-  [&quot;CID&quot;,&quot;Criminal Investigative Division&quot;],
-  [&quot;LAW&quot;,&quot;LAW Department&quot;],
-  [&quot;FIBCO&quot;,&quot;Corruption Office (FIBCO)&quot;],
-  [&quot;IA&quot;,&quot;Internal Affairs&quot;]
-];
-
-function tierClass(group){
-  if(GOLD_GROUPS.includes(group)) return &quot;t-gold&quot;;
-  if(NAVY_GROUPS.includes(group)) return &quot;t-navy&quot;;
-  return &quot;t-plain&quot;;
-}
-
-function deptCell(list){
-  if(!list || list.length === 0){
-    return '<span class=&quot;redact-bar&quot; title=&quot;keine Abteilung erfasst&quot;></span>';
-  }
-  return list.map(d => `<span class=&quot;dept-tag&quot;>${d}</span>`).join(&quot;&quot;);
-}
-
-function extractDeptCode(text){
-  const m = String(text).match(/\b(HR|CIRG|CID|FIBCO|PR|TD|IA|LAW)\b/);
-  return m ? m[1] : null;
-}
-
-// Gruppiere in der vorliegenden Reihenfolge nach Rang (Reihenfolge = Hierarchie wie im Sheet)
-function buildTiers(data){
-  const tiers = [];
-  let current = null;
-  data.forEach(r => {
-    if(!current || current.rank !== r.rank){
-      current = {rank:r.rank, group:r.group, rows:[]};
-      tiers.push(current);
-    }
-    current.rows.push(r);
-  });
-  return tiers;
-}
-
-const tiersEl = document.getElementById(&quot;tiers&quot;);
-const deptFilterEl = document.getElementById(&quot;deptFilter&quot;);
-const statusDot = document.getElementById(&quot;statusDot&quot;);
-const statusText = document.getElementById(&quot;statusText&quot;);
-const refreshBtn = document.getElementById(&quot;refreshBtn&quot;);
-
-let activeRecords = fallbackRecords;
-let usingLive = false;
-let lastUpdated = null;
-
-function renderTiers(records){
-  tiersEl.innerHTML = &quot;&quot;;
-  buildTiers(records).forEach(tier => {
-    const section = document.createElement(&quot;section&quot;);
-    section.className = &quot;tier&quot;;
-    section.dataset.rank = tier.rank;
-    section.innerHTML = `
-      <div class=&quot;tier-head&quot;>
-        <span class=&quot;rank&quot;>${tier.rank}</span>
-        <span class=&quot;fill&quot;></span>
-        <span class=&quot;count&quot;>${tier.rows.length} ${tier.rows.length === 1 ? &quot;Eintrag&quot; : &quot;Einträge&quot;}</span>
-      </div>
-      <div class=&quot;table-scroll&quot;>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>DN</th>
-              <th>Abteilung(en)</th>
-              <th>Beitritt</th>
-              <th>Letzte Beförderung</th>
-              <th>Verstöße</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${tier.rows.map(r => `
-              <tr class=&quot;${tierClass(r.group)}&quot; data-search=&quot;${(r.name+&quot; &quot;+r.id+&quot; &quot;+r.dn).toLowerCase()}&quot; data-depts=&quot;${r.dept.join('|').toUpperCase()}&quot;>
-                <td class=&quot;id&quot;>${r.id}</td>
-                <td class=&quot;name&quot;>${r.name}</td>
-                <td class=&quot;dn&quot;>DN&amp;nbsp;${r.dn}</td>
-                <td class=&quot;wrap-cell&quot;>${deptCell(r.dept)}</td>
-                <td>${r.invite}</td>
-                <td>${r.promo}</td>
-                <td class=&quot;strike&quot;>${r.strike || &quot;0/3&quot;}</td>
-              </tr>
-            `).join(&quot;&quot;)}
-          </tbody>
-        </table>
-      </div>
-    `;
-    tiersEl.appendChild(section);
-  });
-}
-
-function renderSummary(records){
-  const counts = Object.fromEntries(DEPT_NAMES.map(([code]) => [code, 0]));
-  let withDept = 0;
-  records.forEach(r => {
-    let has = false;
-    r.dept.forEach(d => {
-      const code = extractDeptCode(d);
-      if(code){ counts[code]++; has = true; }
-    });
-    if(has) withDept++;
-  });
-  document.getElementById(&quot;totalAgents&quot;).textContent = records.length;
-  document.getElementById(&quot;totalWithDept&quot;).textContent = withDept;
-  const list = document.getElementById(&quot;deptList&quot;);
-  list.innerHTML = '<div class=&quot;heading&quot;>Abteilungsstärke</div>' + DEPT_NAMES.map(([code, name]) => `
-    <div class=&quot;dept-row&quot;><span class=&quot;name&quot;>${name}</span><span class=&quot;dots&quot;></span><span class=&quot;count&quot;>${counts[code]}</span></div>
-  `).join(&quot;&quot;);
-}
-
-function rebuildDeptFilterOptions(records){
-  const allDepts = new Set();
-  records.forEach(r => r.dept.forEach(d => {
-    const code = extractDeptCode(d);
-    if(code) allDepts.add(code);
-  }));
-  const current = deptFilterEl.value;
-  deptFilterEl.innerHTML = '<option value=&quot;&quot;>Alle Abteilungen</option>';
-  [...allDepts].sort().forEach(code => {
-    const opt = document.createElement(&quot;option&quot;);
-    opt.value = code;
-    opt.textContent = code;
-    deptFilterEl.appendChild(opt);
-  });
-  if([...allDepts].includes(current)) deptFilterEl.value = current;
-}
-
-function applyFilters(){
-  const q = document.getElementById(&quot;search&quot;).value.trim().toLowerCase();
-  const dept = deptFilterEl.value.toUpperCase();
-  let visibleTotal = 0;
-
-  document.querySelectorAll(&quot;.tier&quot;).forEach(section => {
-    let visibleInTier = 0;
-    section.querySelectorAll(&quot;tbody tr&quot;).forEach(row => {
-      const matchesSearch = !q || row.dataset.search.includes(q);
-      const matchesDept = !dept || row.dataset.depts.includes(dept);
-      const show = matchesSearch &amp;&amp; matchesDept;
-      row.classList.toggle(&quot;row-hidden&quot;, !show);
-      if(show) visibleInTier++;
-    });
-    section.classList.toggle(&quot;hidden&quot;, visibleInTier === 0);
-    visibleTotal += visibleInTier;
-  });
-
-  document.getElementById(&quot;resultCount&quot;).textContent = `${visibleTotal} von ${activeRecords.length} angezeigt`;
-  document.getElementById(&quot;noResults&quot;).style.display = visibleTotal === 0 ? &quot;block&quot; : &quot;none&quot;;
-}
-
-function renderAll(){
-  renderTiers(activeRecords);
-  renderSummary(activeRecords);
-  rebuildDeptFilterOptions(activeRecords);
-  applyFilters();
-}
-
-function formatTime(d){
-  return d.toLocaleTimeString(&quot;de-DE&quot;, {hour:&quot;2-digit&quot;, minute:&quot;2-digit&quot;, second:&quot;2-digit&quot;});
-}
-
-function setStatus(state, detail){
-  statusDot.className = &quot;status-dot &quot; + state;
-  if(state === &quot;loading&quot;){
-    statusText.textContent = &quot;Verbinde mit Google Sheets …&quot;;
-    refreshBtn.disabled = true;
-  } else if(state === &quot;live&quot;){
-    statusText.textContent = `Live-Daten aus dem Sheet · aktualisiert ${formatTime(lastUpdated)} Uhr · ${activeRecords.length} Akteneinträge`;
-    refreshBtn.disabled = false;
-  } else {
-    statusText.textContent = `Live-Verbindung nicht verfügbar${detail ? &quot; (&quot; + detail + &quot;)&quot; : &quot;&quot;} — zeige gespeicherten Stand vom ${FALLBACK_SNAPSHOT_DATE} (${activeRecords.length} Einträge)`;
-    refreshBtn.disabled = false;
-  }
-}
-
-// ===== Live-Anbindung an Google Sheets (gviz, per <script>-Tag um CORS zu umgehen) =====
-const SPREADSHEET_ID = &quot;1uzAA-_O2JtDBs3bpRG9Mqbva67dqh45LPDjPEf8-njQ&quot;;
-const GID = &quot;1591796957&quot;;
-// Bereich ab Zeile 11 (nach Titel-/Statistikzeilen), Spalten B–R wie im Original-Sheet
-const DATA_RANGE = &quot;B11:R1000&quot;;
-// Offsets relativ zum Range-Start (B=0): ID, Name, Rang, –, DN, –, –, Gruppe, –, Strike, –, Beitritt, Letzter Rang, –, –, Abt.1, Abt.2
-const COL = {id:0, name:1, rank:2, dn:4, group:7, strike:9, invite:11, lastRank:12, dept1:15, dept2:16};
-
-function parseGvizRows(rows){
-  const out = [];
-  rows.forEach(row => {
-    const c = row.c || [];
-    const cell = i => (c[i] &amp;&amp; (c[i].f ?? c[i].v)) ?? &quot;&quot;;
-    const name = String(cell(COL.name)).trim();
-    if(!name) return; // Leer-/Trennzeilen überspringen
-    const dept = [cell(COL.dept1), cell(COL.dept2)].map(d => String(d).trim()).filter(Boolean);
-    out.push({
-      id: String(cell(COL.id)).trim(),
-      name,
-      rank: String(cell(COL.rank)).trim(),
-      dn: String(cell(COL.dn)).trim(),
-      group: String(cell(COL.group)).trim(),
-      strike: String(cell(COL.strike)).trim() || &quot;0/3&quot;,
-      invite: String(cell(COL.invite)).trim(),
-      promo: String(cell(COL.lastRank)).trim(),
-      dept
-    });
-  });
-  return out;
-}
-
-function fetchLiveData(){
-  setStatus(&quot;loading&quot;);
-  let settled = false;
-
-  window.google = window.google || {};
-  window.google.visualization = window.google.visualization || {};
-  window.google.visualization.Query = window.google.visualization.Query || {};
-
-  const timeoutId = setTimeout(() => {
-    if(!settled){ settled = true; handleLiveFailure(&quot;Zeitüberschreitung&quot;); }
-  }, 9000);
-
-  window.google.visualization.Query.setResponse = function(data){
-    if(settled) return;
-    settled = true;
-    clearTimeout(timeoutId);
-    try{
-      if(!data || !data.table || !Array.isArray(data.table.rows)) throw new Error(&quot;unerwartetes Format&quot;);
-      const parsed = parseGvizRows(data.table.rows);
-      if(parsed.length === 0) throw new Error(&quot;keine Einträge gefunden&quot;);
-      activeRecords = parsed;
-      usingLive = true;
-      lastUpdated = new Date();
-      renderAll();
-      setStatus(&quot;live&quot;);
-    }catch(e){
-      handleLiveFailure(e.message);
-    }
-  };
-
-  const script = document.createElement(&quot;script&quot;);
-  script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?gid=${GID}&amp;range=${DATA_RANGE}&amp;tqx=out:json&amp;_=${Date.now()}`;
-  script.onerror = function(){
-    if(!settled){ settled = true; clearTimeout(timeoutId); handleLiveFailure(&quot;Skript konnte nicht geladen werden&quot;); }
-  };
-  document.body.appendChild(script);
-  setTimeout(() => script.remove(), 12000);
-}
-
-function handleLiveFailure(reason){
-  usingLive = false;
-  activeRecords = fallbackRecords;
-  renderAll();
-  setStatus(&quot;fallback&quot;, reason);
-}
-
-refreshBtn.addEventListener(&quot;click&quot;, fetchLiveData);
-document.getElementById(&quot;search&quot;).addEventListener(&quot;input&quot;, applyFilters);
-deptFilterEl.addEventListener(&quot;change&quot;, applyFilters);
-
-// Sofort den gespeicherten Stand anzeigen, danach live nachladen
-renderAll();
-fetchLiveData();
-</script>
-</body>
-</html>
-" title="Mitarbeiterverzeichnis" loading="lazy"></iframe>
-    </div>
-    <p class="frame-note">Eigenständiges Tool · läuft isoliert im Panel (eigenes Layout &amp; Skript).</p>
   </section>
 
   <!-- TOOL: PERSONALAKTE-GENERATOR -->
@@ -3159,6 +1857,92 @@ render();
     <p class="frame-note">Eigenständiges Tool · läuft isoliert im Panel (eigenes Layout &amp; Skript).</p>
   </section>
 
+  <!-- TOOL: BEWERBERTESTS -->
+  <section id="bewerbertests" class="screen" hidden>
+    <button class="back" data-back type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Menü
+    </button>
+    <header>
+      <div class="seal"><svg class="seal-badge" viewBox="0 0 24 24"><use href="#fib-shield"/></svg></div>
+      <div>
+        <p class="eyebrow">Federal Investigation Bureau · Personalverwaltung</p>
+        <h1>Bewerbertests</h1>
+        <p class="sub">Ergebnisse aus dem Allgemeinen Test und der Offenen Bewerbung einsehen.</p>
+      </div>
+    </header>
+
+    <div class="grid" style="grid-template-columns:1fr">
+      <section class="card">
+        <p class="card-label">Suche &amp; Ansicht</p>
+
+        <div class="bt-tabs" id="btTabs">
+          <button type="button" class="bt-tab active" data-bt-tab="allgemein">Allgemeiner Test</button>
+          <button type="button" class="bt-tab" data-bt-tab="offen">Offene Bewerbung</button>
+        </div>
+
+        <div class="roster-status">
+          <span class="roster-dot loading" id="btDot" aria-hidden="true"></span>
+          <span class="roster-status-text" id="btStatus">Lade Testergebnisse …</span>
+          <button type="button" class="roster-refresh" id="btRefreshBtn" title="Testergebnisse neu laden">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Neu laden
+          </button>
+        </div>
+
+        <div class="field">
+          <label class="l" for="btSearch">Suche nach ID (Reisepassnummer)</label>
+          <input type="text" id="btSearch" placeholder="z. B. 270757 — leer lassen für alle Einträge" autocomplete="off">
+        </div>
+
+        <div class="bt-summary" id="btSummary"></div>
+
+        <div class="bt-list" id="btList"></div>
+      </section>
+    </div>
+  </section>
+
+  <!-- TOOL: ARCHIV -->
+  <section id="archiv" class="screen" hidden>
+    <button class="back" data-back type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Menü
+    </button>
+    <header>
+      <div class="seal"><svg class="seal-badge" viewBox="0 0 24 24"><use href="#fib-shield"/></svg></div>
+      <div>
+        <p class="eyebrow">Federal Investigation Bureau · Personalverwaltung</p>
+        <h1>Archiv</h1>
+        <p class="sub">Mitarbeiter- und Kündigungslisten früherer Amtsperioden per ID durchsuchen.</p>
+      </div>
+    </header>
+
+    <div class="grid" style="grid-template-columns:1fr">
+      <section class="card">
+        <p class="card-label">Suche</p>
+
+        <div class="roster-status">
+          <span class="roster-dot loading" id="arcDot" aria-hidden="true"></span>
+          <span class="roster-status-text" id="arcStatus">Lade Archiv …</span>
+          <button type="button" class="roster-refresh" id="arcRefreshBtn" title="Archiv neu laden">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Neu laden
+          </button>
+        </div>
+
+        <div class="arc-status-grid" id="arcSourceStatus"></div>
+
+        <div class="field">
+          <label class="l" for="arcSearch">ID suchen</label>
+          <input type="text" id="arcSearch" placeholder="z. B. 295473" autocomplete="off">
+          <p class="auto-note">Durchsucht alle 6 Archiv-Tabellen (Mitarbeiter &amp; Kündigungen je Amtsperiode) gleichzeitig.</p>
+        </div>
+
+        <div class="arc-results" id="arcResults"></div>
+      </section>
+    </div>
+  </section>
+
   <!-- EINSTELLUNGEN -->
   <section id="settings" class="screen" hidden>
     <button class="back" data-back type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Menü</button>
@@ -3170,6 +1954,24 @@ render();
         <p class="sub">Systemkonfiguration &amp; Datenquellen.</p>
       </div>
     </header>
+
+    <section class="card" style="margin-bottom:18px">
+      <p class="card-label">Mein Profil</p>
+      <p class="settings-row-sub" style="margin:0 0 14px">
+        Wird als Standard für „Eigener Name" / „Eigener Rang" in allen Modulen verwendet (Ranganpassung, Sanktion, Personalakte, Leitstelle …).
+      </p>
+      <div class="field">
+        <label class="l" for="myNameInput">Mein Name</label>
+        <input type="text" id="myNameInput" placeholder="z. B. Felix Mccalley" autocomplete="off">
+      </div>
+      <div class="field">
+        <label class="l" for="myRankInput">Mein Rang</label>
+        <input type="text" id="myRankInput" placeholder="z. B. 26. Inspector of the FIB" autocomplete="off">
+      </div>
+      <div class="copy-row">
+        <button type="button" class="mini-btn" id="myProfileClear">Zurücksetzen</button>
+      </div>
+    </section>
 
     <section class="card" style="margin-bottom:18px">
       <p class="card-label">Datenquellen</p>
@@ -3263,6 +2065,38 @@ render();
 </div>
 
 <script>
+/* ---------- Mein Profil (zentral: Eigener Name & Eigener Rang) ---------- */
+const MY_PROFILE_KEY = 'fib_my_profile';
+const MyProfile = {
+  name: '',
+  rank: '',
+  load(){
+    try{
+      const raw = localStorage.getItem(MY_PROFILE_KEY);
+      if(raw){
+        const obj = JSON.parse(raw);
+        this.name = obj.name || '';
+        this.rank = obj.rank || '';
+      }
+    }catch(e){ /* ignore */ }
+  },
+  save(){
+    try{
+      localStorage.setItem(MY_PROFILE_KEY, JSON.stringify({ name: this.name, rank: this.rank }));
+    }catch(e){ /* ignore */ }
+  },
+  set(name, rank){
+    this.name = (name || '').trim();
+    this.rank = (rank || '').trim();
+    this.save();
+    this._notify();
+  },
+  _listeners: [],
+  onChange(fn){ this._listeners.push(fn); },
+  _notify(){ this._listeners.forEach(fn=>{ try{ fn(this.name, this.rank); }catch(e){} }); }
+};
+MyProfile.load();
+
 /* ---------- Splash ---------- */
 (function(){
   const splash = document.getElementById('splash');
@@ -3340,6 +2174,18 @@ const TOOLS = [
     title:'Personalakte-Generator',
     desc:'Personalakten mit SVG-Rendering erstellen und als PNG exportieren.',
     icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>'
+  },
+  {
+    id:'bewerbertests', available:true, screen:'bewerbertests',
+    title:'Bewerbertests',
+    desc:'Bewerbertestergebnisse (Allgemeiner Test & Offene Bewerbung) live einsehen und per ID suchen.',
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>'
+  },
+  {
+    id:'archiv', available:true, screen:'archiv',
+    title:'Archiv',
+    desc:'Historische Mitarbeiter- und Kündigungslisten früherer Amtsperioden per ID durchsuchen.',
+    icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="5" rx="1"/><path d="M4 8v11a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V8"/><line x1="10" y1="13" x2="14" y2="13"/></svg>'
   }
 ];
 
@@ -3365,7 +2211,24 @@ function showScreen(id){
   const scr = document.getElementById(id);
   if(scr){
     const fr = scr.querySelector('iframe.tool-frame[data-src]');
-    if(fr){ fr.srcdoc = fr.dataset.src; fr.removeAttribute('data-src'); }
+    if(fr){
+      let srcdoc = fr.dataset.src;
+      // Personalakte-Generator: Unterschrift-Default mit zentralem Profil befüllen (nur falls Profil gesetzt)
+      if(id === 'personalakte' && MyProfile.name){
+        srcdoc = srcdoc.replace(
+          /id="sigName" value="[^"]*"/,
+          'id="sigName" value="' + MyProfile.name.replace(/"/g,'&quot;') + '"'
+        );
+        if(MyProfile.rank){
+          srcdoc = srcdoc.replace(
+            /id="sigRank" value="[^"]*"/,
+            'id="sigRank" value="' + MyProfile.rank.replace(/"/g,'&quot;') + '"'
+          );
+        }
+      }
+      fr.srcdoc = srcdoc;
+      fr.removeAttribute('data-src');
+    }
   }
   document.querySelectorAll('.sb-link').forEach(b=>{
     b.classList.toggle('active', b.dataset.nav === id);
@@ -3581,6 +2444,17 @@ freeOpt.value='__free__'; freeOpt.textContent='— Freie Eingabe —';
 nameSel.appendChild(freeOpt);
 nameSel.selectedIndex = 0;
 
+// Vorbelegung aus den zentralen Profil-Einstellungen (Mein Name / Mein Rang)
+if(MyProfile.name){
+  if(ROSTER.some(p => p.name === MyProfile.name)){
+    nameSel.value = MyProfile.name;
+  }else{
+    nameSel.value = '__free__';
+    nameFree.style.display = 'block';
+    nameFree.value = MyProfile.name;
+  }
+}
+
 function currentName(){
   if(nameSel.value === '__free__') return nameFree.value.trim() || "[Eigener Name]";
   return nameSel.value;
@@ -3592,6 +2466,7 @@ function syncOwnRank(){
     ownInput.readOnly = false;
     ownInput.placeholder = "Rang eingeben…";
     ownNote.textContent = "freie Eingabe";
+    if(!ownInput.value.trim() && MyProfile.rank) ownInput.value = MyProfile.rank;
   }else{
     ownInput.readOnly = true;
     ownInput.value = RANK_BY_NAME[nameSel.value] || "";
@@ -3789,6 +2664,17 @@ azFreeOpt.value='__free__'; azFreeOpt.textContent='— Freie Eingabe —';
 azNameSel.appendChild(azFreeOpt);
 azNameSel.selectedIndex = 0;
 
+// Vorbelegung aus den zentralen Profil-Einstellungen (Mein Name / Mein Rang)
+if(MyProfile.name){
+  if(AZ_ROSTER.some(p => p.name === MyProfile.name)){
+    azNameSel.value = MyProfile.name;
+  }else{
+    azNameSel.value = '__free__';
+    azNameFree.style.display = 'block';
+    azNameFree.value = MyProfile.name;
+  }
+}
+
 function azCurrentName(){
   if(azNameSel.value === '__free__') return azNameFree.value.trim() || "[Eigener Name]";
   return azNameSel.value;
@@ -3798,6 +2684,7 @@ function azSyncOwnRank(){
     azOwnInput.readOnly = false;
     azOwnInput.placeholder = "Rang eingeben…";
     azOwnNote.textContent = "freie Eingabe";
+    if(!azOwnInput.value.trim() && MyProfile.rank) azOwnInput.value = MyProfile.rank;
   }else{
     azOwnInput.readOnly = true;
     azOwnInput.value = AZ_RANK_BY_NAME[azNameSel.value] || "";
@@ -4144,6 +3031,1189 @@ termId.addEventListener('input', ()=>{
 fetchTermRoster();
 
 
+/* ---------- Bewerbertests ---------- */
+const BT_SPREADSHEET_ID = "12-ULkZYL7zStP8qcjRcbKTDxEuWubaYaWnc0_VkFriU";
+// Spalten je Tab einzeln konfigurierbar, da die Formulare unterschiedliche Reihenfolgen haben.
+// Allgemeiner Test: A=Zeitstempel, B=Punkte ("X / Y"), D=Name, E=Reisepassnummer (ID) — Spalte C ungenutzt
+// Offene Bewerbung: A=Zeitstempel, B=Punkte ("X / Y"), C=Name, D=Reisepassnummer (ID)
+const BT_SOURCES = {
+  allgemein: { gid:"1528610802", label:"Allgemeiner Test",  maxPoints:35, range:"A2:E1000", col:{time:0, points:1, name:3, id:4} },
+  offen:     { gid:"945822881",  label:"Offene Bewerbung",  maxPoints:35, range:"A2:D1000", col:{time:0, points:1, name:2, id:3} }
+};
+
+const btTabs     = document.getElementById('btTabs');
+const btSearch   = document.getElementById('btSearch');
+const btDot      = document.getElementById('btDot');
+const btStatus   = document.getElementById('btStatus');
+const btRefreshBtn = document.getElementById('btRefreshBtn');
+const btSummary  = document.getElementById('btSummary');
+const btList     = document.getElementById('btList');
+
+let btActiveTab = 'allgemein';
+const btCache = { allgemein: null, offen: null };   // geladene Einträge pro Tab
+const btLoading = { allgemein: false, offen: false };
+let btSearchTimer = null;
+
+function btFormatTime(d){
+  return d.toLocaleTimeString("de-DE", {hour:"2-digit", minute:"2-digit", second:"2-digit"});
+}
+
+function parseBtRows(col, rows){
+  const out = [];
+  rows.forEach(row=>{
+    const c = row.c || [];
+    const cell = i => (c[i] && (c[i].f ?? c[i].v)) ?? "";
+    const name = String(cell(col.name)).trim();
+    const id = String(cell(col.id)).trim();
+    if(!name && !id) return; // Leerzeilen überspringen
+    const pointsRaw = String(cell(col.points)).trim();
+    const m = pointsRaw.match(/(\d+)\s*\/\s*(\d+)/);
+    out.push({
+      time: String(cell(col.time)).trim(),
+      pointsRaw,
+      score: m ? parseInt(m[1],10) : null,
+      max: m ? parseInt(m[2],10) : null,
+      name,
+      id
+    });
+  });
+  return out;
+}
+
+function btSetDot(state){ if(btDot) btDot.className = "roster-dot " + state; }
+function btSetStatus(text){ if(btStatus) btStatus.textContent = text; }
+function btSetRefreshSpin(on){
+  if(!btRefreshBtn) return;
+  btRefreshBtn.classList.toggle('spin', on);
+  btRefreshBtn.disabled = on;
+}
+
+function fetchBtData(tabKey, force, onDone){
+  if(btLoading[tabKey]) return;
+  if(!force && btCache[tabKey]){ if(onDone) onDone(true); return; }
+  btLoading[tabKey] = true;
+  if(tabKey === btActiveTab){ btSetDot('loading'); btSetStatus("Lade " + BT_SOURCES[tabKey].label + " …"); btSetRefreshSpin(true); }
+
+  window.google = window.google || {};
+  window.google.visualization = window.google.visualization || {};
+  window.google.visualization.Query = window.google.visualization.Query || {};
+
+  let settled = false;
+  const timeoutId = setTimeout(()=>{
+    if(!settled){
+      settled = true; btLoading[tabKey] = false;
+      if(tabKey === btActiveTab){ btSetDot('fallback'); btSetStatus("Nicht erreichbar (Zeitüberschreitung) — erneut versuchen."); btSetRefreshSpin(false); }
+      if(onDone) onDone(false);
+    }
+  }, 9000);
+
+  window.google.visualization.Query.setResponse = function(data){
+    if(settled) return;
+    settled = true;
+    btLoading[tabKey] = false;
+    clearTimeout(timeoutId);
+    try{
+      if(!data || !data.table || !Array.isArray(data.table.rows)) throw new Error("unerwartetes Format");
+      const parsed = parseBtRows(BT_SOURCES[tabKey].col, data.table.rows);
+      btCache[tabKey] = parsed;
+      if(tabKey === btActiveTab){
+        btSetDot('live');
+        btSetStatus(BT_SOURCES[tabKey].label + " geladen · " + parsed.length + " Einträge · " + btFormatTime(new Date()) + " Uhr");
+        btSetRefreshSpin(false);
+      }
+      if(onDone) onDone(true);
+    }catch(e){
+      if(tabKey === btActiveTab){ btSetDot('fallback'); btSetStatus("Nicht erreichbar (" + e.message + ") — erneut versuchen."); btSetRefreshSpin(false); }
+      if(onDone) onDone(false);
+    }
+  };
+
+  const script = document.createElement("script");
+  script.src = "https://docs.google.com/spreadsheets/d/" + BT_SPREADSHEET_ID +
+    "/gviz/tq?gid=" + BT_SOURCES[tabKey].gid + "&range=" + BT_SOURCES[tabKey].range + "&tqx=out:json&_=" + Date.now();
+  script.onerror = function(){
+    if(!settled){
+      settled = true; btLoading[tabKey] = false; clearTimeout(timeoutId);
+      if(tabKey === btActiveTab){ btSetDot('fallback'); btSetStatus("Nicht erreichbar (Skriptfehler) — erneut versuchen."); btSetRefreshSpin(false); }
+      if(onDone) onDone(false);
+    }
+  };
+  document.body.appendChild(script);
+  setTimeout(()=> script.remove(), 12000);
+}
+
+function btScoreClass(score, max){
+  if(score == null || !max) return '';
+  const pct = score / max;
+  if(pct >= 0.75) return 'good';
+  if(pct >= 0.5) return 'mid';
+  return 'low';
+}
+
+function btRenderSummary(entries){
+  if(!entries || entries.length === 0){ btSummary.innerHTML = ''; return; }
+  const valid = entries.filter(e => e.score != null);
+  const avg = valid.length ? (valid.reduce((s,e)=> s + e.score, 0) / valid.length) : 0;
+  const passed = valid.filter(e => e.max && (e.score / e.max) >= 0.75).length;
+  btSummary.innerHTML =
+    '<span class="bt-stat"><b>' + entries.length + '</b>Einträge</span>' +
+    '<span class="bt-stat"><b>' + avg.toFixed(1) + '</b>Ø Punkte</span>' +
+    '<span class="bt-stat"><b>' + passed + '</b>≥ 75%</span>';
+}
+
+function btRenderList(){
+  const tabKey = btActiveTab;
+  const entries = btCache[tabKey];
+  const query = btSearch.value.trim().toLowerCase();
+
+  if(!entries){
+    btList.innerHTML = '<div class="bt-empty">' + (btLoading[tabKey] ? 'Lade Daten …' : 'Keine Daten geladen.') + '</div>';
+    btSummary.innerHTML = '';
+    return;
+  }
+
+  const filtered = query
+    ? entries.filter(e => e.id.toLowerCase().includes(query))
+    : entries;
+
+  // Neueste zuerst anzeigen
+  const sorted = filtered.slice().reverse();
+
+  btRenderSummary(filtered);
+
+  if(sorted.length === 0){
+    btList.innerHTML = '<div class="bt-empty">Keine Einträge für diese ID gefunden.</div>';
+    return;
+  }
+
+  btList.innerHTML = sorted.map(e=>{
+    const cls = btScoreClass(e.score, e.max);
+    const hl = query && e.id.toLowerCase().includes(query) ? ' hl' : '';
+    return '<div class="bt-row' + hl + '">' +
+      '<div><div class="bt-name">' + esc(e.name || '—') + '</div>' +
+      '<div class="bt-meta">' + esc(e.time || '') + '</div></div>' +
+      '<div class="bt-score ' + cls + '">' + esc(e.pointsRaw || '–') + '</div>' +
+      '<div class="bt-id">ID ' + esc(e.id || '–') + '</div>' +
+      '</div>';
+  }).join('');
+}
+
+function btLoadActiveTab(force){
+  const tabKey = btActiveTab;
+  if(!force && btCache[tabKey]){
+    btSetDot('live');
+    btSetStatus(BT_SOURCES[tabKey].label + " geladen · " + btCache[tabKey].length + " Einträge.");
+    btRenderList();
+    return;
+  }
+  if(force) btCache[tabKey] = null;
+  btRenderList(); // zeigt "Lade Daten …"
+  fetchBtData(tabKey, !!force, ()=> btRenderList());
+}
+
+btTabs.querySelectorAll('.bt-tab').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    if(btn.dataset.btTab === btActiveTab) return;
+    btActiveTab = btn.dataset.btTab;
+    btTabs.querySelectorAll('.bt-tab').forEach(b=> b.classList.toggle('active', b===btn));
+    btLoadActiveTab();
+  });
+});
+
+btRefreshBtn.addEventListener('click', ()=> btLoadActiveTab(true));
+
+btSearch.addEventListener('input', ()=>{
+  clearTimeout(btSearchTimer);
+  btSearchTimer = setTimeout(btRenderList, 200);
+});
+
+// Beide Tabs im Hintergrund vorladen, sobald das Tool genutzt wird
+btLoadActiveTab();
+fetchBtData('offen', false);
+
+
+/* ---------- Archiv ---------- */
+const ARC_SPREADSHEET_ID = "1mVmnZPPLhqJirV1ekxMUIIbXTTs9N9-KRDBwCUxSC9c";
+// Großzügiger Bereich je Quelle (A:AL deckt auch die rechten Checkbox-Spalten ab),
+// die Kopfzeile wird automatisch per Label-Erkennung gefunden (robust gegen variierende Layouts).
+const ARC_SOURCES = [
+  { key:'mitarbeiter_plaste', gid:"634541059",  label:"Mitarbeiter E. Plaste",  type:"mitarbeiter" },
+  { key:'kuendigung_plaste',  gid:"1547718140", label:"Kündigungen E. Plaste",  type:"kuendigung"  },
+  { key:'mitarbeiter_leyla',  gid:"1038224078", label:"Mitarbeiter L. Ballerina", type:"mitarbeiter" },
+  { key:'kuendigung_leyla',   gid:"113721129",  label:"Kündigungen Leyla",      type:"kuendigung"  },
+  { key:'mitarbeiter_cock',   gid:"241859155",  label:"Mitarbeiter S. Cock",    type:"mitarbeiter" },
+  { key:'kuendigung_cock',    gid:"1479303635", label:"Kündigungen S. Cock",    type:"kuendigung"  }
+];
+const ARC_RANGE = "A1:AL1000";
+
+const arcDot      = document.getElementById('arcDot');
+const arcStatus    = document.getElementById('arcStatus');
+const arcRefreshBtn = document.getElementById('arcRefreshBtn');
+const arcSourceStatus = document.getElementById('arcSourceStatus');
+const arcSearch    = document.getElementById('arcSearch');
+const arcResults   = document.getElementById('arcResults');
+
+// Pro Quelle: { rows: [...], colMap: {Label:index}, state: 'loading'|'live'|'fallback' }
+const arcData = {};
+ARC_SOURCES.forEach(s => { arcData[s.key] = { rows:null, colMap:null, state:'loading' }; });
+let arcSearchTimer = null;
+
+function arcFindHeader(rows){
+  // Sucht in den ersten 30 Zeilen nach der Zeile, die sowohl "ID" als auch "Name" als Label enthält.
+  // Nutzt .f (formatted/angezeigter Wert) als Fallback, falls die Zelle eine Formel ist und .v leer/null wäre.
+  for(let i=0; i<Math.min(rows.length, 30); i++){
+    const c = (rows[i] && rows[i].c) || [];
+    const vals = c.map(cell => cell ? String((cell.f ?? cell.v) ?? '').trim() : '');
+    if(vals.includes('ID') && vals.includes('Name')){
+      return { headerIndex:i, vals };
+    }
+  }
+  return null;
+}
+
+function arcCellRaw(row, idx){
+  const c = (row && row.c || [])[idx];
+  return c ? (c.f ?? c.v) : null;
+}
+
+// Fallback für Tabellen ohne textuelle Kopfzeile (z. B. wenn der abgefragte Bereich
+// direkt mit Daten beginnt): erkennt die ID-Spalte anhand mehrstelliger numerischer
+// Werte und nimmt die direkt folgende Text-Spalte als Name-Spalte an.
+function arcDetectIdNameCols(rows){
+  const sample = rows.slice(0, Math.min(rows.length, 15));
+  if(sample.length === 0) return null;
+  const maxCols = Math.max(0, ...sample.map(r => (r.c||[]).length));
+  let idCol = -1;
+  for(let col=1; col<maxCols; col++){
+    let numeric=0, nonEmpty=0;
+    sample.forEach(row=>{
+      const v = String(arcCellRaw(row, col) ?? '').trim();
+      if(v === '') return;
+      nonEmpty++;
+      if(/^\d{3,}$/.test(v)) numeric++;
+    });
+    if(nonEmpty >= 2 && numeric / nonEmpty >= 0.6){ idCol = col; break; }
+  }
+  if(idCol === -1) return null;
+  let nameCol = -1;
+  for(let col=idCol+1; col<maxCols; col++){
+    let nonEmpty=0, boolish=0, numeric=0;
+    sample.forEach(row=>{
+      const v = String(arcCellRaw(row, col) ?? '').trim();
+      if(v === '') return;
+      nonEmpty++;
+      if(/^(TRUE|FALSE)$/i.test(v)) boolish++;
+      if(/^\d+([.,/]\d+)?$/.test(v)) numeric++;
+    });
+    if(nonEmpty >= 2 && boolish === 0 && numeric === 0){ nameCol = col; break; }
+  }
+  if(nameCol === -1) return null;
+  return { idCol, nameCol, maxCols };
+}
+
+function arcBuildColMap(headerVals){
+  const map = {};
+  const order = [];
+  headerVals.forEach((label, idx)=>{
+    const key = String(label).trim();
+    if(!key) return;
+    if(!(key in map)){ map[key] = idx; order.push(key); }
+  });
+  return { map, order };
+}
+
+function arcParseSource(data){
+  if(!data || !data.table || !Array.isArray(data.table.rows)) throw new Error("unerwartetes Format");
+  const rawRows = data.table.rows;
+  const header = arcFindHeader(rawRows);
+
+  if(header){
+    const { map, order } = arcBuildColMap(header.vals);
+    const cellAt = (row, idx) => String(arcCellRaw(row, idx) ?? "").trim();
+    const records = [];
+    for(let i = header.headerIndex + 1; i < rawRows.length; i++){
+      const row = rawRows[i];
+      const id = cellAt(row, map['ID']);
+      const name = cellAt(row, map['Name']);
+      if(!id && !name) continue;
+      const fields = {};
+      order.forEach(label=>{
+        if(label === 'ID' || label === 'Name') return;
+        fields[label] = cellAt(row, map[label]);
+      });
+      records.push({ id, name, fields, fieldOrder: order.filter(l => l !== 'ID' && l !== 'Name') });
+    }
+    return records;
+  }
+
+  // Kein textueller Header gefunden (Bereich beginnt direkt mit Daten) — Positions-Heuristik nutzen.
+  const detected = arcDetectIdNameCols(rawRows);
+  if(!detected){
+    const dump = rawRows.slice(0, 14).map((row, i)=>{
+      const c = row.c || [];
+      const vals = c.map(cell => cell ? (cell.f ?? cell.v) : null);
+      return i + ": [" + vals.map(v => JSON.stringify(v)).join(", ") + "]";
+    }).join("\n");
+    console.warn("[Archiv] Kopfzeilen-Diagnose (erste 14 Zeilen):\n" + dump);
+    throw new Error("Kopfzeile (ID/Name) nicht gefunden");
+  }
+  const { idCol, nameCol, maxCols } = detected;
+  const cellAt = (row, idx) => String(arcCellRaw(row, idx) ?? "").trim();
+  const otherCols = [];
+  for(let col=0; col<maxCols; col++){
+    if(col === idCol || col === nameCol) continue;
+    otherCols.push(col);
+  }
+  // Inhaltsbasiertes Raten sinnvoller Labels anhand der ersten Datenzeilen, statt nur "Spalte X".
+  // Bekannte Muster aus den Archiv-Tabellen: Rang-Text, Datum, reine TRUE/FALSE-Spalten,
+  // Bruch-Strings wie "0/3" (Strike/Urlaub). Unklare Spalten bleiben bei "Spalte X".
+  const sampleForLabels = rawRows.slice(0, 15);
+  function guessLabel(col){
+    let rankLike=0, dateLike=0, boolLike=0, fractionLike=0, nonEmpty=0;
+    sampleForLabels.forEach(row=>{
+      const v = cellAt(row, col);
+      if(!v) return;
+      nonEmpty++;
+      if(/^\d+\.\s/.test(v)) rankLike++;
+      else if(/^\d{2}\.\d{2}\.\d{4}$/.test(v)) dateLike++;
+      else if(/^(TRUE|FALSE)$/i.test(v)) boolLike++;
+      else if(/^\d+\/\d+$/.test(v)) fractionLike++;
+    });
+    if(nonEmpty === 0) return null;
+    if(rankLike / nonEmpty >= 0.5) return "Rang";
+    if(boolLike / nonEmpty >= 0.8) return "Checkbox " + String.fromCharCode(65 + col);
+    if(dateLike / nonEmpty >= 0.5) return "Datum (" + String.fromCharCode(65 + col) + ")";
+    if(fractionLike / nonEmpty >= 0.5) return "Strike/Urlaub (" + String.fromCharCode(65 + col) + ")";
+    return "Spalte " + String.fromCharCode(65 + col);
+  }
+  const colLabels = {};
+  otherCols.forEach(col => { colLabels[col] = guessLabel(col) || ("Spalte " + String.fromCharCode(65 + col)); });
+
+  const records = [];
+  for(let i = 0; i < rawRows.length; i++){
+    const row = rawRows[i];
+    const id = cellAt(row, idCol);
+    const name = cellAt(row, nameCol);
+    if(!id && !name) continue;
+    const fields = {};
+    const fieldOrder = [];
+    otherCols.forEach(col=>{
+      const val = cellAt(row, col);
+      if(val === '') return; // komplett leere Spalten an dieser Zeile überspringen
+      const label = colLabels[col];
+      fields[label] = val;
+      fieldOrder.push(label);
+    });
+    records.push({ id, name, fields, fieldOrder });
+  }
+  return records;
+}
+
+function arcRenderSourceStatus(){
+  arcSourceStatus.innerHTML = ARC_SOURCES.map(s=>{
+    const st = arcData[s.key].state;
+    return '<span class="arc-status-item"><span class="roster-dot ' + st + '"></span>' + esc(s.label) + '</span>';
+  }).join('');
+}
+
+function arcAllSettled(){
+  return ARC_SOURCES.every(s => arcData[s.key].state === 'live' || arcData[s.key].state === 'fallback');
+}
+
+function arcSetOverallStatus(){
+  const liveCount = ARC_SOURCES.filter(s => arcData[s.key].state === 'live').length;
+  const loadingCount = ARC_SOURCES.filter(s => arcData[s.key].state === 'loading').length;
+  if(loadingCount > 0){
+    arcDot.className = "roster-dot loading";
+    arcStatus.textContent = "Lade Archiv-Tabellen … (" + liveCount + "/" + ARC_SOURCES.length + " geladen)";
+  }else if(liveCount === ARC_SOURCES.length){
+    arcDot.className = "roster-dot live";
+    arcStatus.textContent = "Archiv vollständig geladen · " + ARC_SOURCES.length + " Tabellen.";
+  }else if(liveCount > 0){
+    arcDot.className = "roster-dot fallback";
+    arcStatus.textContent = liveCount + "/" + ARC_SOURCES.length + " Tabellen geladen — einige nicht erreichbar.";
+  }else{
+    arcDot.className = "roster-dot fallback";
+    arcStatus.textContent = "Archiv nicht erreichbar — „Neu laden“ versuchen.";
+  }
+  arcRefreshBtn.classList.toggle('spin', loadingCount > 0);
+  arcRefreshBtn.disabled = loadingCount > 0;
+}
+
+let arcQueueRunning = false;
+
+function fetchArcSource(source, force, onDone){
+  if(!force && arcData[source.key].rows){ if(onDone) onDone(); return; }
+  arcData[source.key].state = 'loading';
+  arcRenderSourceStatus();
+  arcSetOverallStatus();
+
+  window.google = window.google || {};
+  window.google.visualization = window.google.visualization || {};
+  window.google.visualization.Query = window.google.visualization.Query || {};
+
+  let settled = false;
+  const timeoutId = setTimeout(()=>{
+    if(!settled){
+      settled = true;
+      arcData[source.key].state = 'fallback';
+      console.error("[Archiv] " + source.label + " FEHLER: Zeitüberschreitung (keine Antwort nach 10s)");
+      arcRenderSourceStatus(); arcSetOverallStatus();
+      arcRenderResults();
+      if(onDone) onDone();
+    }
+  }, 18000);
+
+  window.google.visualization.Query.setResponse = function(data){
+    if(settled) return;
+    settled = true;
+    clearTimeout(timeoutId);
+    try{
+      // gviz liefert bei Zugriffsproblemen/leeren Bereichen oft trotzdem HTTP 200,
+      // aber mit status !== 'ok' oder ohne table — das wird hier sichtbar gemacht.
+      if(data && data.status && data.status !== 'ok'){
+        const msgs = (data.errors || []).map(e => e.detailed_message || e.message).join('; ');
+        throw new Error("gviz status=" + data.status + (msgs ? " (" + msgs + ")" : ""));
+      }
+      const records = arcParseSource(data);
+      arcData[source.key].rows = records;
+      arcData[source.key].state = 'live';
+      console.info("[Archiv] " + source.label + " geladen:", records.length, "Einträge");
+    }catch(e){
+      arcData[source.key].state = 'fallback';
+      console.error("[Archiv] " + source.label + " FEHLER:", e.message, data);
+    }
+    arcRenderSourceStatus();
+    arcSetOverallStatus();
+    arcRenderResults();
+    if(onDone) onDone();
+  };
+
+  const script = document.createElement("script");
+  script.src = "https://docs.google.com/spreadsheets/d/" + ARC_SPREADSHEET_ID +
+    "/gviz/tq?gid=" + source.gid + "&range=" + ARC_RANGE + "&tqx=out:json&_=" + Date.now();
+  script.onerror = function(){
+    if(!settled){
+      settled = true; clearTimeout(timeoutId);
+      arcData[source.key].state = 'fallback';
+      console.error("[Archiv] " + source.label + " FEHLER: Skript konnte nicht geladen werden (gid=" + source.gid + ")");
+      arcRenderSourceStatus(); arcSetOverallStatus();
+      arcRenderResults();
+      if(onDone) onDone();
+    }
+  };
+  document.body.appendChild(script);
+  setTimeout(()=> script.remove(), 19000);
+}
+
+// Quellen NACHEINANDER laden (nicht parallel) — gviz/JSONP ruft global ein und
+// einen einzigen Callback (window.google.visualization.Query.setResponse) auf;
+// paralleles Laden würde sich diesen Callback gegenseitig wegnehmen.
+function arcLoadAll(force){
+  if(arcQueueRunning) return;
+  arcQueueRunning = true;
+  const queue = ARC_SOURCES.slice();
+  function next(){
+    const s = queue.shift();
+    if(!s){ arcQueueRunning = false; return; }
+    if(force) arcData[s.key].rows = null;
+    fetchArcSource(s, !!force, next);
+  }
+  next();
+}
+
+function arcFieldValueHtml(raw){
+  const v = (raw ?? '').trim();
+  if(v === '') return '<span class="arc-field-value empty">—</span>';
+  if(/^TRUE$/i.test(v)) return '<span class="arc-field-value bool-true">✓ JA</span>';
+  if(/^FALSE$/i.test(v)) return '<span class="arc-field-value bool-false">✕ NEIN</span>';
+  return '<span class="arc-field-value">' + esc(v) + '</span>';
+}
+
+function arcRenderResults(){
+  const query = arcSearch.value.trim().toLowerCase();
+  if(!query){
+    arcResults.innerHTML = '<div class="bt-empty">ID eingeben, um das Archiv zu durchsuchen.</div>';
+    return;
+  }
+
+  const cards = [];
+  ARC_SOURCES.forEach(source=>{
+    const entry = arcData[source.key];
+    if(!entry.rows) return; // Quelle noch nicht geladen — wird nach Laden automatisch neu gerendert
+    entry.rows.forEach(rec=>{
+      if(rec.id.toLowerCase() === query || rec.id.toLowerCase().includes(query)){
+        cards.push({ source, rec, exact: rec.id.toLowerCase() === query });
+      }
+    });
+  });
+
+  if(cards.length === 0){
+    const stillLoading = ARC_SOURCES.some(s => arcData[s.key].state === 'loading');
+    arcResults.innerHTML = '<div class="bt-empty">' +
+      (stillLoading ? 'Noch nicht alle Tabellen geladen — bitte kurz warten.' : 'Keine Einträge für diese ID gefunden.') +
+      '</div>';
+    return;
+  }
+
+  // Exakte Treffer zuerst
+  cards.sort((a,b)=> (b.exact - a.exact));
+
+  arcResults.innerHTML = cards.map(({source, rec})=>{
+    const tagClass = source.type === 'mitarbeiter' ? 'mitarbeiter' : 'kuendigung';
+    const tagLabel = source.type === 'mitarbeiter' ? 'Mitarbeiter' : 'Kündigung';
+    const fieldsHtml = rec.fieldOrder.map(label=>{
+      return '<div class="arc-field"><div class="arc-field-label">' + esc(label) + '</div>' +
+        arcFieldValueHtml(rec.fields[label]) + '</div>';
+    }).join('');
+    return '<div class="arc-card">' +
+      '<div class="arc-card-head">' +
+      '<span class="arc-card-title">' + esc(rec.name || '—') + ' · ID ' + esc(rec.id || '–') + '</span>' +
+      '<span class="arc-card-tag ' + tagClass + '">' + tagLabel + ' — ' + esc(source.label) + '</span>' +
+      '</div>' +
+      '<div class="arc-fields">' + fieldsHtml + '</div>' +
+      '</div>';
+  }).join('');
+}
+
+arcRefreshBtn.addEventListener('click', ()=> arcLoadAll(true));
+arcSearch.addEventListener('input', ()=>{
+  clearTimeout(arcSearchTimer);
+  arcSearchTimer = setTimeout(arcRenderResults, 200);
+});
+
+arcRenderSourceStatus();
+arcSetOverallStatus();
+arcRenderResults();
+arcLoadAll(false);
+
+
+/* ---------- Mitarbeiterverzeichnis ---------- */
+const DIR_SPREADSHEET_ID = "1uzAA-_O2JtDBs3bpRG9Mqbva67dqh45LPDjPEf8-njQ";
+const DIR_GID = "1591796957";
+// Bereich ab Zeile 11 (nach Titel-/Statistikzeilen). Spalten B–AB (erweitert ggü. vorher B–R,
+// damit auch die Ausbildungs-/Qualifikations-Checkboxen mitgeladen werden).
+const DIR_RANGE = "B11:AB1000";
+// Offsets relativ zum Range-Start (B=0): ID, Name, Rang, –, DN, –, –, Gruppe, –, Strike, –,
+// Beitritt, Letzter Rang, –, –, Abt.1, Abt.2, –, dann die Ausbildungs-Checkboxen.
+const DIR_COL = {id:0, name:1, rank:2, dn:4, group:7, strike:9, invite:11, lastRank:12, dept1:15, dept2:16};
+// Ausbildungen/Qualifikationen wie im Sheet-Header (Zeile 9, Spalten T–AB)
+const DIR_TRAININGS = [
+  { key:'ga',  label:'GA',     col:18 },
+  { key:'evs', label:'EVS',    col:19 },
+  { key:'lst', label:'LST',    col:20 },
+  { key:'aks', label:'AKS',    col:21 },
+  { key:'tst', label:'TST',    col:22 },
+  { key:'vhf', label:'VHF/EL', col:23 },
+  { key:'jur', label:'JUR',    col:24 },
+  { key:'uc',  label:'UC',     col:25 },
+  { key:'ftk', label:'FTK',    col:26 }
+];
+
+const DIR_GOLD_GROUPS = ["Leaderschaft","Curator of Division","High Command Lead"];
+const DIR_NAVY_GROUPS = ["High Command","Division Lead"];
+const DIR_DEPT_NAMES = [
+  ["HR","Human Resources"],
+  ["PR","Public Relations"],
+  ["CIRG","Critical Incident Response Group"],
+  ["TD","Training Division"],
+  ["CID","Criminal Investigative Division"],
+  ["LAW","LAW Department"],
+  ["FIBCO","Corruption Office (FIBCO)"],
+  ["IA","Internal Affairs"]
+];
+
+const dirDot       = document.getElementById('dirDot');
+const dirStatusText = document.getElementById('dirStatusText');
+const dirRefreshBtn = document.getElementById('dirRefreshBtn');
+const dirSummary    = document.getElementById('dirSummary');
+const dirSearch      = document.getElementById('dirSearch');
+const dirDeptFilter  = document.getElementById('dirDeptFilter');
+const dirResultCount = document.getElementById('dirResultCount');
+const dirTiersEl     = document.getElementById('dirTiers');
+const dirNoResults   = document.getElementById('dirNoResults');
+
+let dirRecords = [];
+let dirUsingLive = false;
+let dirSearchTimer = null;
+
+function dirFormatTime(d){
+  return d.toLocaleTimeString("de-DE", {hour:"2-digit", minute:"2-digit", second:"2-digit"});
+}
+
+function dirTierClass(group){
+  if(DIR_GOLD_GROUPS.includes(group)) return 'gold';
+  if(DIR_NAVY_GROUPS.includes(group)) return 'navy';
+  return '';
+}
+
+function dirExtractDeptCode(text){
+  const m = String(text).match(/\b(HR|CIRG|CID|FIBCO|PR|TD|IA|LAW)\b/);
+  return m ? m[1] : null;
+}
+
+function dirDeptCell(list){
+  if(!list || list.length === 0) return '<span class="dir-no-dept">keine Abteilung</span>';
+  return list.map(d => '<span class="dir-dept-tag">' + esc(d) + '</span>').join('');
+}
+
+function dirTrainCell(trainings){
+  return '<div class="dir-train-wrap">' + DIR_TRAININGS.map(t=>{
+    const has = !!trainings[t.key];
+    return '<span class="dir-train-tag' + (has ? '' : ' missing') + '">' + esc(t.label) + '</span>';
+  }).join('') + '</div>';
+}
+
+function dirParseGvizRows(rows){
+  const out = [];
+  rows.forEach(row => {
+    const c = row.c || [];
+    const cell = i => (c[i] && (c[i].f ?? c[i].v)) ?? "";
+    const name = String(cell(DIR_COL.name)).trim();
+    if(!name) return; // Leer-/Trennzeilen überspringen
+    const dept = [cell(DIR_COL.dept1), cell(DIR_COL.dept2)].map(d => String(d).trim()).filter(Boolean);
+    const trainings = {};
+    DIR_TRAININGS.forEach(t=>{
+      const v = String(cell(t.col)).trim();
+      trainings[t.key] = /^TRUE$/i.test(v);
+    });
+    out.push({
+      id: String(cell(DIR_COL.id)).trim(),
+      name,
+      rank: String(cell(DIR_COL.rank)).trim(),
+      dn: String(cell(DIR_COL.dn)).trim(),
+      group: String(cell(DIR_COL.group)).trim(),
+      strike: String(cell(DIR_COL.strike)).trim() || "0/3",
+      invite: String(cell(DIR_COL.invite)).trim(),
+      promo: String(cell(DIR_COL.lastRank)).trim(),
+      dept,
+      trainings
+    });
+  });
+  return out;
+}
+
+// Gruppiert in vorliegender Reihenfolge nach Rang (Hierarchie wie im Sheet)
+function dirBuildTiers(data){
+  const tiers = [];
+  let current = null;
+  data.forEach(r => {
+    if(!current || current.rank !== r.rank){
+      current = { rank:r.rank, group:r.group, rows:[] };
+      tiers.push(current);
+    }
+    current.rows.push(r);
+  });
+  return tiers;
+}
+
+function dirRenderSummary(records){
+  const counts = Object.fromEntries(DIR_DEPT_NAMES.map(([code]) => [code, 0]));
+  let withDept = 0;
+  records.forEach(r => {
+    let has = false;
+    r.dept.forEach(d => {
+      const code = dirExtractDeptCode(d);
+      if(code){ counts[code]++; has = true; }
+    });
+    if(has) withDept++;
+  });
+  dirSummary.innerHTML =
+    '<div class="dir-summary-item"><div class="dir-summary-num">' + records.length + '</div><div class="dir-summary-lbl">Agenten erfasst</div></div>' +
+    '<div class="dir-summary-item"><div class="dir-summary-num">' + withDept + '</div><div class="dir-summary-lbl">mit Abteilungszuordnung</div></div>' +
+    DIR_DEPT_NAMES.map(([code,label])=>
+      '<div class="dir-summary-item"><div class="dir-summary-num">' + counts[code] + '</div><div class="dir-summary-lbl">' + esc(code) + '</div></div>'
+    ).join('');
+}
+
+function dirRebuildDeptFilterOptions(records){
+  const allDepts = new Set();
+  records.forEach(r => r.dept.forEach(d => {
+    const code = dirExtractDeptCode(d);
+    if(code) allDepts.add(code);
+  }));
+  const current = dirDeptFilter.value;
+  dirDeptFilter.innerHTML = '<option value="">Alle Abteilungen</option>';
+  [...allDepts].sort().forEach(code=>{
+    const opt = document.createElement('option');
+    opt.value = code; opt.textContent = code;
+    dirDeptFilter.appendChild(opt);
+  });
+  if([...allDepts].includes(current)) dirDeptFilter.value = current;
+}
+
+function dirRenderTiers(records){
+  dirTiersEl.innerHTML = '';
+  dirBuildTiers(records).forEach(tier=>{
+    const section = document.createElement('div');
+    section.className = 'dir-tier';
+    section.dataset.rank = tier.rank;
+    section.innerHTML =
+      '<div class="dir-tier-head ' + dirTierClass(tier.group) + '">' +
+        '<span class="dir-tier-rank">' + esc(tier.rank) + '</span>' +
+        '<span class="dir-tier-count">' + tier.rows.length + (tier.rows.length === 1 ? ' Eintrag' : ' Einträge') + '</span>' +
+      '</div>' +
+      '<div style="overflow-x:auto"><table class="dir-table"><thead><tr>' +
+        '<th>ID</th><th>Name</th><th>DN</th><th>Abteilung(en)</th><th>Beitritt</th>' +
+        '<th>Letzte Beförderung</th><th>Verstöße</th><th>Ausbildungen</th>' +
+      '</tr></thead><tbody>' +
+      tier.rows.map(r=>
+        '<tr data-search="' + esc((r.name+" "+r.id+" "+r.dn).toLowerCase()) + '" data-depts="' + esc(r.dept.join('|').toUpperCase()) + '">' +
+          '<td class="dir-id">' + esc(r.id) + '</td>' +
+          '<td class="dir-name">' + esc(r.name) + '</td>' +
+          '<td class="dir-dn">DN&nbsp;' + esc(r.dn) + '</td>' +
+          '<td>' + dirDeptCell(r.dept) + '</td>' +
+          '<td class="dir-dn">' + esc(r.invite) + '</td>' +
+          '<td class="dir-dn">' + esc(r.promo) + '</td>' +
+          '<td class="dir-strike">' + esc(r.strike || "0/3") + '</td>' +
+          '<td>' + dirTrainCell(r.trainings) + '</td>' +
+        '</tr>'
+      ).join('') +
+      '</tbody></table></div>';
+    dirTiersEl.appendChild(section);
+  });
+}
+
+function dirApplyFilters(){
+  const q = dirSearch.value.trim().toLowerCase();
+  const dept = dirDeptFilter.value.toUpperCase();
+  let visibleTotal = 0;
+
+  dirTiersEl.querySelectorAll('.dir-tier').forEach(section=>{
+    let visibleInTier = 0;
+    section.querySelectorAll('tbody tr').forEach(row=>{
+      const matchesSearch = !q || row.dataset.search.includes(q);
+      const matchesDept = !dept || row.dataset.depts.includes(dept);
+      const show = matchesSearch && matchesDept;
+      row.classList.toggle('row-hidden', !show);
+      if(show) visibleInTier++;
+    });
+    section.classList.toggle('hidden', visibleInTier === 0);
+    visibleTotal += visibleInTier;
+  });
+
+  dirResultCount.textContent = visibleTotal + " von " + dirRecords.length + " angezeigt";
+  dirNoResults.style.display = (visibleTotal === 0 && dirRecords.length > 0) ? 'block' : 'none';
+}
+
+function dirRenderAll(){
+  dirRenderTiers(dirRecords);
+  dirRenderSummary(dirRecords);
+  dirRebuildDeptFilterOptions(dirRecords);
+  dirApplyFilters();
+}
+
+function dirSetStatus(state, detail){
+  dirDot.className = "roster-dot " + state;
+  dirRefreshBtn.classList.toggle('spin', state === 'loading');
+  dirRefreshBtn.disabled = (state === 'loading');
+  if(state === "loading"){
+    dirStatusText.textContent = "Verbinde mit Google Sheets …";
+  }else if(state === "live"){
+    dirStatusText.textContent = "Live-Daten aus dem Sheet · aktualisiert " + dirFormatTime(new Date()) + " Uhr · " + dirRecords.length + " Akteneinträge";
+  }else{
+    dirStatusText.textContent = "Live-Verbindung nicht verfügbar" + (detail ? " (" + detail + ")" : "") + " — „Neu laden“ versuchen (" + dirRecords.length + " Einträge im Speicher)";
+  }
+}
+
+function dirFetchLive(){
+  dirSetStatus("loading");
+  let settled = false;
+
+  window.google = window.google || {};
+  window.google.visualization = window.google.visualization || {};
+  window.google.visualization.Query = window.google.visualization.Query || {};
+
+  const timeoutId = setTimeout(()=>{
+    if(!settled){ settled = true; dirHandleFailure("Zeitüberschreitung"); }
+  }, 12000);
+
+  window.google.visualization.Query.setResponse = function(data){
+    if(settled) return;
+    settled = true;
+    clearTimeout(timeoutId);
+    try{
+      if(!data || !data.table || !Array.isArray(data.table.rows)) throw new Error("unerwartetes Format");
+      const parsed = dirParseGvizRows(data.table.rows);
+      if(parsed.length === 0) throw new Error("keine Einträge gefunden");
+      dirRecords = parsed;
+      dirUsingLive = true;
+      dirRenderAll();
+      dirSetStatus("live");
+    }catch(e){
+      dirHandleFailure(e.message);
+    }
+  };
+
+  const script = document.createElement("script");
+  script.src = "https://docs.google.com/spreadsheets/d/" + DIR_SPREADSHEET_ID +
+    "/gviz/tq?gid=" + DIR_GID + "&range=" + DIR_RANGE + "&tqx=out:json&_=" + Date.now();
+  script.onerror = function(){
+    if(!settled){ settled = true; clearTimeout(timeoutId); dirHandleFailure("Skript konnte nicht geladen werden"); }
+  };
+  document.body.appendChild(script);
+  setTimeout(()=> script.remove(), 15000);
+}
+
+function dirHandleFailure(reason){
+  dirUsingLive = false;
+  dirRenderAll();
+  dirSetStatus("fallback", reason);
+}
+
+dirRefreshBtn.addEventListener('click', dirFetchLive);
+dirSearch.addEventListener('input', ()=>{
+  clearTimeout(dirSearchTimer);
+  dirSearchTimer = setTimeout(dirApplyFilters, 150);
+});
+dirDeptFilter.addEventListener('change', dirApplyFilters);
+
+dirRenderAll();
+dirFetchLive();
+
+
+/* ---------- Rank Management ---------- */
+let uprMembers = {};        // {id: name}
+let uprQueue = [];          // [{id, name, rank, mode}]
+let uprCurrentMode = 'rankup';
+let uprEmployeeOfTheWeek = null;
+
+const uprRankNames = {
+  "25": "Supervisory Head Agent",
+  "24": "Supervisory Special Agent",
+  "23": "Special Agent in Charge",
+  "19": "Tactical Operator",
+  "18": "Department Specialist",
+  "17": "Commander",
+  "16": "Federal Operations Agent",
+  "15": "Principal Field Agent",
+  "14": "Executive Agent",
+  "13": "Enforcement Agent",
+  "12": "Senior Agent",
+  "10": "Agent First Class",
+  "9": "Field Agent",
+  "8": "Agent",
+  "7": "New Agent Trainee"
+};
+
+const UPR_RANKUP_OPTIONS = `
+  <option value="">— Rang wählen —</option>
+  <optgroup label="High Command">
+    <option value="hc-23">→ 23. Special Agent in Charge (HC Einstieg)</option>
+    <option value="23-24">23 → 24 · Special Agent in Charge → Supervisory Special Agent</option>
+    <option value="24-25">24 → 25 · Supervisory Special Agent → Supervisory Head Agent</option>
+  </optgroup>
+  <optgroup label="Standard Ränge">
+    <option value="7-8">7 → 8 · New Agent Trainee → Agent</option>
+    <option value="8-9">8 → 9 · Agent → Field Agent</option>
+    <option value="9-10">9 → 10 · Field Agent → Agent First Class</option>
+    <option value="10-12">10 → 12 · Agent First Class → Senior Agent</option>
+    <option value="12-13">12 → 13 · Senior Agent → Enforcement Agent</option>
+    <option value="13-14">13 → 14 · Enforcement Agent → Executive Agent</option>
+    <option value="14-15">14 → 15 · Executive Agent → Principal Field Agent</option>
+    <option value="15-16">15 → 16 · Principal Field Agent → Federal Operations Agent</option>
+    <option value="16-17">16 → 17 · Federal Operations Agent → Commander</option>
+  </optgroup>
+`;
+const UPR_SONDER_OPTIONS = `
+  <option value="">— Rang wählen —</option>
+  <optgroup label="High Command (Sonder)">
+    <option value="hc-23">→ 23. Special Agent in Charge (HC Einstieg)</option>
+    <option value="23-24">23 → 24 · Special Agent in Charge → Supervisory Special Agent</option>
+    <option value="24-25">24 → 25 · Supervisory Special Agent → Supervisory Head Agent</option>
+  </optgroup>
+  <optgroup label="Standard (Sonder)">
+    <option value="7-8">7 → 8 · New Agent Trainee → Agent</option>
+    <option value="8-9">8 → 9 · Agent → Field Agent</option>
+    <option value="9-10">9 → 10 · Field Agent → Agent First Class</option>
+    <option value="10-12">10 → 12 · Agent First Class → Senior Agent</option>
+    <option value="12-13">12 → 13 · Senior Agent → Enforcement Agent</option>
+    <option value="13-14">13 → 14 · Enforcement Agent → Executive Agent</option>
+    <option value="14-15">14 → 15 · Executive Agent → Principal Field Agent</option>
+    <option value="15-16">15 → 16 · Principal Field Agent → Federal Operations Agent</option>
+    <option value="16-17">16 → 17 · Federal Operations Agent → Commander</option>
+    <option value="double">⚡ Double RankUp (Sonderbeförderung)</option>
+  </optgroup>
+`;
+const UPR_DEPT_OPTIONS = `
+  <option value="">— Rang wählen —</option>
+  <option value="dept-18">→ 18. Department Specialist</option>
+  <option value="dept-19">→ 19. Tactical Operator</option>
+`;
+const UPR_DERANK_OPTIONS = `
+  <option value="">— Rang wählen —</option>
+  <optgroup label="High Command">
+    <option value="25-24">25 → 24 · Supervisory Head Agent → Supervisory Special Agent</option>
+    <option value="24-23">24 → 23 · Supervisory Special Agent → Special Agent in Charge</option>
+    <option value="23-17">23 → 17 · Special Agent in Charge → Commander</option>
+  </optgroup>
+  <optgroup label="Standard Ränge">
+    <option value="17-16">17 → 16 · Commander → Federal Operations Agent</option>
+    <option value="16-15">16 → 15 · Federal Operations Agent → Principal Field Agent</option>
+    <option value="15-14">15 → 14 · Principal Field Agent → Executive Agent</option>
+    <option value="14-13">14 → 13 · Executive Agent → Enforcement Agent</option>
+    <option value="13-12">13 → 12 · Enforcement Agent → Senior Agent</option>
+    <option value="12-10">12 → 10 · Senior Agent → Agent First Class</option>
+    <option value="10-9">10 → 9 · Agent First Class → Field Agent</option>
+    <option value="9-8">9 → 8 · Field Agent → Agent</option>
+    <option value="8-7">8 → 7 · Agent → New Agent Trainee</option>
+  </optgroup>
+`;
+
+const uprModeTabs       = document.getElementById('uprModeTabs');
+const uprDot            = document.getElementById('uprDot');
+const uprStatusText      = document.getElementById('uprStatusText');
+const uprRefreshBtn      = document.getElementById('uprRefreshBtn');
+const uprClearMembersBtn = document.getElementById('uprClearMembersBtn');
+const uprSearchMember    = document.getElementById('uprSearchMember');
+const uprSelectMember    = document.getElementById('uprSelectMember');
+const uprRankLabel       = document.getElementById('uprRankLabel');
+const uprRankSelect      = document.getElementById('uprRankSelect');
+const uprRankSelectionArea = document.getElementById('uprRankSelectionArea');
+const uprEmployeeArea    = document.getElementById('uprEmployeeArea');
+const uprEmployeeMessage = document.getElementById('uprEmployeeMessage');
+const uprAddBtn          = document.getElementById('uprAddBtn');
+const uprSetEmployeeBtn  = document.getElementById('uprSetEmployeeBtn');
+const uprQueueDisplay    = document.getElementById('uprQueueDisplay');
+const uprEmployeeDisplay = document.getElementById('uprEmployeeDisplay');
+const uprClearQueueBtn   = document.getElementById('uprClearQueueBtn');
+const uprOutput          = document.getElementById('uprOutput');
+const uprGenRankupBtn    = document.getElementById('uprGenRankupBtn');
+const uprGenDerankBtn    = document.getElementById('uprGenDerankBtn');
+const uprCopyBtn         = document.getElementById('uprCopyBtn');
+const uprDoubleOverlay   = document.getElementById('uprDoubleOverlay');
+const uprOverlayMemberName = document.getElementById('uprOverlayMemberName');
+const uprDoubleFrom      = document.getElementById('uprDoubleFrom');
+const uprDoubleTo        = document.getElementById('uprDoubleTo');
+
+function uprSetMode(mode){
+  uprCurrentMode = mode;
+  uprModeTabs.querySelectorAll('.bt-tab').forEach(b=> b.classList.toggle('active', b.dataset.uprMode === mode));
+
+  if(mode === 'employee'){
+    uprRankSelectionArea.style.display = 'none';
+    uprEmployeeArea.style.display = 'block';
+    uprAddBtn.style.display = 'none';
+    uprSetEmployeeBtn.style.display = 'inline-flex';
+  }else{
+    uprRankSelectionArea.style.display = 'block';
+    uprEmployeeArea.style.display = 'none';
+    uprAddBtn.style.display = 'inline-flex';
+    uprSetEmployeeBtn.style.display = 'none';
+
+    if(mode === 'rankup'){
+      uprRankLabel.textContent = 'Rang auswählen (RankUp)';
+      uprRankSelect.innerHTML = UPR_RANKUP_OPTIONS;
+    }else if(mode === 'sonder'){
+      uprRankLabel.textContent = 'Rang auswählen (Sonder)';
+      uprRankSelect.innerHTML = UPR_SONDER_OPTIONS;
+    }else if(mode === 'dept'){
+      uprRankLabel.textContent = 'Rang auswählen (Abteilung)';
+      uprRankSelect.innerHTML = UPR_DEPT_OPTIONS;
+    }else{
+      uprRankLabel.textContent = 'Rang auswählen (Derank)';
+      uprRankSelect.innerHTML = UPR_DERANK_OPTIONS;
+    }
+  }
+}
+uprModeTabs.querySelectorAll('.bt-tab').forEach(btn=>{
+  btn.addEventListener('click', ()=> uprSetMode(btn.dataset.uprMode));
+});
+uprSetMode('rankup');
+
+const UPR_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwVMS-KDDYVIhtSfd8wPs7ayop_sjAYtei8oRCEa5MlIDw8f3oZFXgZ9dn5Iun5azzX/exec";
+
+async function uprLoadSheetMembers(){
+  uprDot.className = "roster-dot loading";
+  uprRefreshBtn.classList.add('spin'); uprRefreshBtn.disabled = true;
+  uprStatusText.textContent = "Lade Mitarbeiterdaten aus Google Sheets …";
+
+  try{
+    const res = await fetch(UPR_APPS_SCRIPT_URL);
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+
+    uprMembers = {};
+    data.forEach(entry=>{ if(entry.id && entry.name) uprMembers[entry.id] = entry.name; });
+
+    uprUpdateSelect('');
+    uprDot.className = "roster-dot live";
+    uprStatusText.textContent = data.length + " Mitarbeiter geladen · zuletzt aktualisiert " + new Date().toLocaleTimeString('de-DE');
+  }catch(e){
+    uprDot.className = "roster-dot fallback";
+    uprStatusText.textContent = "Fehler beim Laden: " + e.message + " — „Neu laden“ versuchen oder Netzwerk prüfen.";
+  }
+  uprRefreshBtn.classList.remove('spin'); uprRefreshBtn.disabled = false;
+}
+
+function uprUpdateSelect(searchTerm){
+  uprSelectMember.innerHTML = '';
+  Object.entries(uprMembers).forEach(([id, name])=>{
+    if(searchTerm === '' || id.includes(searchTerm) || name.toLowerCase().includes(searchTerm.toLowerCase())){
+      const option = document.createElement('option');
+      option.value = id;
+      option.textContent = id + " · " + name;
+      uprSelectMember.appendChild(option);
+    }
+  });
+}
+
+function uprAddEntry(){
+  const memberId = uprSelectMember.value;
+  const rankValue = uprRankSelect.value;
+  if(!memberId || !rankValue) return;
+  const memberName = uprMembers[memberId];
+
+  if(rankValue === 'double'){
+    uprOverlayMemberName.textContent = memberId + " · " + memberName;
+    uprDoubleOverlay.classList.add('active');
+    uprDoubleOverlay.dataset.memberId = memberId;
+    uprDoubleOverlay.dataset.memberName = memberName;
+    return;
+  }
+
+  uprQueue.push({ id: memberId, name: memberName, rank: rankValue, mode: uprCurrentMode });
+  uprUpdateQueueDisplay();
+}
+
+function uprSetEmployee(){
+  const memberId = uprSelectMember.value;
+  const message = uprEmployeeMessage.value;
+  if(!memberId) return;
+  uprEmployeeOfTheWeek = { id: memberId, name: uprMembers[memberId], message };
+  uprEmployeeDisplay.textContent = "★ Mitarbeiter d. Woche: " + uprEmployeeOfTheWeek.name + " (" + uprEmployeeOfTheWeek.id + ")";
+}
+
+function uprConfirmDouble(){
+  const from = uprDoubleFrom.value;
+  const to = uprDoubleTo.value;
+  const rankValue = "double-" + from + "-" + to;
+  uprQueue.push({
+    id: uprDoubleOverlay.dataset.memberId,
+    name: uprDoubleOverlay.dataset.memberName,
+    rank: rankValue,
+    mode: 'sonder'
+  });
+  uprDoubleOverlay.classList.remove('active');
+  uprUpdateQueueDisplay();
+}
+function uprCloseOverlay(){ uprDoubleOverlay.classList.remove('active'); }
+
+function uprUpdateQueueDisplay(){
+  if(uprQueue.length === 0){
+    uprQueueDisplay.innerHTML = '<div class="bt-empty">Noch keine Einträge.</div>';
+    return;
+  }
+  uprQueueDisplay.innerHTML = uprQueue.map((item, idx)=>{
+    let color = '#34d399';
+    if(item.mode === 'derank') color = '#f87171';
+    if(item.mode === 'sonder') color = '#fb923c';
+    if(item.mode === 'dept') color = '#c084fc';
+    return '<div class="upr-queue-item"><span><span class="upr-queue-tag" style="color:' + color + '">[' + esc(item.mode.toUpperCase()) + ']</span>' +
+      esc(item.name) + ' (' + esc(item.rank) + ')</span>' +
+      '<button class="upr-queue-remove" data-idx="' + idx + '" type="button">×</button></div>';
+  }).join('');
+  uprQueueDisplay.querySelectorAll('.upr-queue-remove').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      uprQueue.splice(parseInt(btn.dataset.idx, 10), 1);
+      uprUpdateQueueDisplay();
+    });
+  });
+}
+
+function uprClearQueue(){
+  uprQueue = [];
+  uprEmployeeOfTheWeek = null;
+  uprEmployeeDisplay.textContent = '';
+  uprUpdateQueueDisplay();
+}
+
+function uprClearMembers(){
+  uprMembers = {};
+  uprDot.className = "roster-dot fallback";
+  uprStatusText.textContent = 'Liste geleert. „Neu laden“ klicken, um die Daten erneut aus Google Sheets zu holen.';
+  uprUpdateSelect('');
+}
+
+function uprFormatGroup(items){
+  let groupStr = "";
+  const grouped = {};
+  items.forEach(item=>{
+    let toRank, fromRank;
+    if(item.rank.startsWith('hc-')){ toRank = item.rank.replace('hc-',''); fromRank = null; }
+    else if(item.rank.startsWith('dept-')){ toRank = item.rank.replace('dept-',''); fromRank = null; }
+    else if(item.rank.startsWith('double-')){
+      const parts = item.rank.replace('double-','').split('-');
+      fromRank = parts[0]; toRank = parts[1];
+    }else{
+      const parts = item.rank.split('-');
+      fromRank = parts[0]; toRank = parts[1];
+    }
+    if(!grouped[toRank]) grouped[toRank] = { from: fromRank, members: [] };
+    grouped[toRank].members.push(item.name + " | " + item.id);
+  });
+  for(const [toRank, data] of Object.entries(grouped)){
+    groupStr += "> **__--> " + toRank + ". " + (uprRankNames[toRank] || 'Unbekannt') + "__**\n";
+    data.members.forEach(m=>{ groupStr += "> " + m + "\n"; });
+    if(data.from) groupStr += "> -# " + data.from + ". " + (uprRankNames[data.from] || 'Unbekannt') + "\n";
+    groupStr += "\n";
+  }
+  return groupStr;
+}
+
+function uprGenerateCombinedOutput(){
+  const hcsNormal = uprQueue.filter(i => i.mode === 'rankup' && (i.rank.startsWith('hc-') || i.rank === '23-24' || i.rank === '24-25'));
+  const hcsSonder = uprQueue.filter(i => i.mode === 'sonder' && (i.rank.startsWith('hc-') || i.rank === '23-24' || i.rank === '24-25'));
+  const rankups = uprQueue.filter(i => i.mode === 'rankup' && !hcsNormal.includes(i));
+  const sonders = uprQueue.filter(i => i.mode === 'sonder' && !hcsSonder.includes(i));
+  const depts = uprQueue.filter(i => i.mode === 'dept');
+
+  if(rankups.length === 0 && sonders.length === 0 && depts.length === 0 && hcsNormal.length === 0 && hcsSonder.length === 0 && !uprEmployeeOfTheWeek) return;
+
+  const today = new Date().toLocaleDateString('de-DE');
+  let out = "**__Weekly Upranks vom " + today + "__**\n\n";
+  if(hcsNormal.length > 0){ out += "**__High Command Upranks__**\n\n" + uprFormatGroup(hcsNormal); }
+  if(rankups.length > 0){ out += uprFormatGroup(rankups); }
+  if(sonders.length > 0 || hcsSonder.length > 0){
+    out += "**__Sonderupranks__**\n\n";
+    if(hcsSonder.length > 0) out += uprFormatGroup(hcsSonder);
+    if(sonders.length > 0) out += uprFormatGroup(sonders);
+  }
+  if(depts.length > 0){ out += "**__Abteilungsupranks__**\n\n" + uprFormatGroup(depts); }
+  if(uprEmployeeOfTheWeek){
+    out += "**__Mitarbeiter der Woche__**\n";
+    out += "> **" + uprEmployeeOfTheWeek.name + " | " + uprEmployeeOfTheWeek.id + "**\n";
+    if(uprEmployeeOfTheWeek.message) out += "> " + uprEmployeeOfTheWeek.message + "\n";
+    out += "\nHerzlichen Glückwunsch! ★\n";
+  }
+  out += "\n**Ich bitte um Herzliche Glückwünsche an alle Beförderten!** || <@&1156202809432227890> ||\n";
+  out += "\nMFG\nHR Leitung";
+  uprOutput.textContent = out;
+}
+
+function uprGenerateDerankOutput(){
+  const items = uprQueue.filter(i => i.mode === 'derank');
+  if(items.length === 0) return;
+  const today = new Date().toLocaleDateString('de-DE');
+  let out = "**__Deranks vom " + today + "__**\n\n" + uprFormatGroup(items) + "\nMFG\nHR Leitung";
+  uprOutput.textContent = out;
+}
+
+uprRefreshBtn.addEventListener('click', uprLoadSheetMembers);
+uprClearMembersBtn.addEventListener('click', uprClearMembers);
+uprSearchMember.addEventListener('input', ()=> uprUpdateSelect(uprSearchMember.value));
+uprAddBtn.addEventListener('click', uprAddEntry);
+uprSetEmployeeBtn.addEventListener('click', uprSetEmployee);
+uprClearQueueBtn.addEventListener('click', uprClearQueue);
+uprGenRankupBtn.addEventListener('click', uprGenerateCombinedOutput);
+uprGenDerankBtn.addEventListener('click', uprGenerateDerankOutput);
+document.getElementById('uprConfirmDoubleBtn').addEventListener('click', uprConfirmDouble);
+document.getElementById('uprCancelDoubleBtn').addEventListener('click', uprCloseOverlay);
+wireCopy(uprCopyBtn, document.getElementById('uprCopyLabel'), ()=> uprOutput.textContent);
+
+uprLoadSheetMembers();
+
+
 /* ---------- Sanktion ---------- */
 const SANKTIONEN = [
   { p:'1.0', text:'Respektloses Verhalten' },
@@ -4225,6 +4295,13 @@ const sankRank       = document.getElementById('sankRank');
 const sankPreview    = document.getElementById('sankPreview');
 
 fillRankSelect(sankRank);
+
+// Vorbelegung aus den zentralen Profil-Einstellungen (Mein Name / Mein Rang)
+if(MyProfile.name) sankName.value = MyProfile.name;
+if(MyProfile.rank){
+  const matchOpt = [...sankRank.options].find(o => o.value === MyProfile.rank);
+  if(matchOpt) sankRank.value = MyProfile.rank;
+}
 
 const sankChecked = new Set();
 
@@ -4752,6 +4829,25 @@ wireCopy(document.getElementById('sankCopyBtn'), document.getElementById('sankCo
       state.bgBlur = parseInt(bgBlur.value, 10);
       applyBgBlur(state.bgBlur);
       saveState(state);
+    });
+  }
+
+  // ===== Mein Profil (Eigener Name & Eigener Rang, zentral) =====
+  const myNameInput = document.getElementById('myNameInput');
+  const myRankInput = document.getElementById('myRankInput');
+  const myProfileClear = document.getElementById('myProfileClear');
+  if(myNameInput && myRankInput){
+    myNameInput.value = MyProfile.name;
+    myRankInput.value = MyProfile.rank;
+    const persistProfile = ()=> MyProfile.set(myNameInput.value, myRankInput.value);
+    myNameInput.addEventListener('input', persistProfile);
+    myRankInput.addEventListener('input', persistProfile);
+  }
+  if(myProfileClear){
+    myProfileClear.addEventListener('click', ()=>{
+      MyProfile.set('', '');
+      if(myNameInput) myNameInput.value = '';
+      if(myRankInput) myRankInput.value = '';
     });
   }
 
