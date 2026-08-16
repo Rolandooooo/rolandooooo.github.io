@@ -204,7 +204,7 @@ function build(){
   const head=[g('name'),g('coid'),g('tatdatum')].filter(Boolean).join(' | ');
   if(head) out.push(head);
 
-  if(g('codename')) out.push('\nCodename: '[+g('codename]'));
+  if(g('codename')) out.push('\nCodename: '+g('codename'));
 
   // Stammdaten Block
   const stamm=[];
