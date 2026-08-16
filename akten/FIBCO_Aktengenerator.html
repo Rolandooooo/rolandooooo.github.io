@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIBCO Aktengenerator</title>
+<style>
+:root{
+  --teal:#1fb5ad;
+  --teal-dim:#158e88;
+  --bg:#0a1414;
+  --bg2:#0f1e1e;
+  --panel:#122424;
+  --panel2:#0d1c1c;
+  --border:#1c3838;
+  --text:#d8e8e6;
+  --muted:#6f918e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Space Grotesk',system-ui,sans-serif;
+  background:radial-gradient(circle at 20% 0%,#0f2020,#070f0f 70%);
+  color:var(--text);
+  min-height:100vh;
+  padding:28px 18px;
+}
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+.wrap{max-width:1400px;margin:0 auto}
+header{
+  display:flex;align-items:center;gap:14px;
+  border-bottom:1px solid var(--border);
+  padding-bottom:18px;margin-bottom:26px;
+}
+.logo{
+  width:44px;height:44px;border-radius:10px;
+  background:linear-gradient(135deg,var(--teal),var(--teal-dim));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:15px;color:#04100f;letter-spacing:.5px;
+  box-shadow:0 0 24px rgba(31,181,173,.35);
+}
+h1{font-size:20px;font-weight:600;letter-spacing:.4px}
+h1 span{color:var(--teal)}
+.sub{color:var(--muted);font-size:12px;font-family:'JetBrains Mono',monospace;margin-top:2px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+@media(max-width:1000px){.grid{grid-template-columns:1fr}}
+.card{
+  background:linear-gradient(180deg,var(--panel),var(--panel2));
+  border:1px solid var(--border);border-radius:14px;
+  padding:20px 20px 22px;
+}
+.card h2{
+  font-size:12px;text-transform:uppercase;letter-spacing:1.5px;
+  color:var(--teal);font-family:'JetBrains Mono',monospace;font-weight:500;
+  margin-bottom:16px;display:flex;align-items:center;gap:8px;
+}
+.card h2::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal)}
+.section-head{
+  font-size:11px;text-transform:uppercase;letter-spacing:1px;
+  color:var(--muted);font-family:'JetBrains Mono',monospace;
+  margin:22px 0 10px;padding-top:16px;border-top:1px dashed var(--border);
+}
+.section-head:first-of-type{border-top:none;padding-top:0;margin-top:0}
+label{display:block;font-size:12px;color:var(--muted);margin:0 0 5px 2px}
+.row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.row.two{grid-template-columns:1fr 1fr}
+.field{margin-bottom:14px}
+input,textarea{
+  width:100%;background:var(--bg2);border:1px solid var(--border);
+  border-radius:8px;color:var(--text);padding:9px 11px;
+  font-family:'JetBrains Mono',monospace;font-size:13px;
+  transition:border .15s,box-shadow .15s;resize:vertical;
+}
+input:focus,textarea:focus{
+  outline:none;border-color:var(--teal);
+  box-shadow:0 0 0 3px rgba(31,181,173,.12);
+}
+input::placeholder,textarea::placeholder{color:#3f5d5a}
+textarea{min-height:88px;line-height:1.5}
+.hint{font-size:10px;color:#4d6d6a;margin-top:4px;font-family:'JetBrains Mono',monospace}
+.output{
+  position:sticky;top:20px;
+}
+#out{
+  background:#050d0d;border:1px solid var(--border);border-radius:10px;
+  padding:18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;
+  line-height:1.65;white-space:pre-wrap;word-break:break-word;
+  min-height:360px;max-height:70vh;overflow:auto;color:#c4dcd9;
+}
+.btnbar{display:flex;gap:10px;margin-top:16px}
+button{
+  flex:1;padding:12px;border:none;border-radius:9px;cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;
+  transition:transform .1s,filter .15s,background .15s;
+}
+button:active{transform:translateY(1px)}
+.copy{background:linear-gradient(135deg,var(--teal),var(--teal-dim));color:#04100f}
+.copy:hover{filter:brightness(1.1)}
+.copy.done{background:#2fbf6a;color:#04100f}
+.clear{background:var(--panel);color:var(--muted);border:1px solid var(--border);flex:0 0 auto;padding:12px 18px}
+.clear:hover{color:var(--text);border-color:var(--teal-dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">FIB<br></div>
+    <div>
+      <h1>FIBCO <span>Aktengenerator</span></h1>
+      <div class="sub">Personalabteilung // Vorfallsdokumentation</div>
+    </div>
+  </header>
+
+  <div class="grid">
+    <!-- INPUT -->
+    <div>
+      <div class="card">
+        <h2>Kopfzeile</h2>
+        <div class="row">
+          <div><label>Name</label><input id="name" placeholder="Max Mustermann"></div>
+          <div><label>CO-ID-1</label><input id="coid" placeholder="12345"></div>
+          <div><label>Datum der Straftat</label><input id="tatdatum" placeholder="XX.XX.XXXX"></div>
+        </div>
+        <div class="field"><label>Codename</label><input id="codename" placeholder="Codename"></div>
+
+        <div class="section-head">Stammdaten</div>
+        <div class="row">
+          <div><label>Telefonnummer</label><input id="telefon" placeholder="000-0000"></div>
+          <div><label>Behörde</label><input id="behoerde" placeholder="—"></div>
+          <div><label>Familie</label><input id="familie" placeholder="—"></div>
+        </div>
+
+        <div class="section-head">Dokumente</div>
+        <div class="field"><label>Reisepass</label><input id="reisepass"></div>
+        <div class="field"><label>Dienstausweis</label><input id="dienstausweis"></div>
+        <div class="field"><label>Personalakte</label><input id="personalakte"></div>
+        <div class="field"><label>PDA Hauptseite</label><input id="pdahaupt"></div>
+        <div class="field"><label>PDA Fahrzeugliste</label><input id="pdafahrzeug"></div>
+      </div>
+
+      <div class="card" style="margin-top:22px">
+        <h2>Inhalt</h2>
+        <div class="field">
+          <label>Vorfall</label>
+          <textarea id="vorfall" placeholder="Am XX.XX.XXXX um XX:XX Uhr..."></textarea>
+        </div>
+        <div class="field">
+          <label>Befragung Tatverdächtiger</label>
+          <textarea id="befragung" placeholder="- Abc"></textarea>
+          <div class="hint">Eine Aussage pro Zeile — Bindestriche optional</div>
+        </div>
+        <div class="field">
+          <label>Zeugen-/aussagen</label>
+          <textarea id="zeugen" placeholder="- Abc"></textarea>
+        </div>
+        <div class="field">
+          <label>Beweissammlung</label>
+          <textarea id="beweise" placeholder="- Abc"></textarea>
+        </div>
+        <div class="field">
+          <label>Tatvorwurf</label>
+          <textarea id="tatvorwurf" placeholder="- Abc"></textarea>
+        </div>
+        <div class="field">
+          <label>Schlussbetrachtung</label>
+          <textarea id="schluss" placeholder="- Abc"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="output">
+      <div class="card">
+        <h2>Vorschau // Endnachricht</h2>
+        <div id="out"></div>
+        <div class="btnbar">
+          <button class="copy" id="copyBtn">Kopieren</button>
+          <button class="clear" id="clearBtn">Leeren</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ids = ['name','coid','tatdatum','codename','telefon','behoerde','familie',
+  'reisepass','dienstausweis','personalakte','pdahaupt','pdafahrzeug',
+  'vorfall','befragung','zeugen','beweise','tatvorwurf','schluss'];
+
+const g = id => document.getElementById(id).value.trim();
+
+// wandelt Mehrzeilen-Text in Bullet-Liste (fügt "- " hinzu wenn nicht vorhanden)
+function bullets(raw){
+  return raw.split('\n')
+    .map(l=>l.trim())
+    .filter(l=>l.length)
+    .map(l=> l.startsWith('-') ? l : '- '+l)
+    .join('\n');
+}
+
+function build(){
+  const out=[];
+
+  // Kopfzeile: Name | CO-ID-1 | Datum
+  const head=[g('name'),g('coid'),g('tatdatum')].filter(Boolean).join(' | ');
+  if(head) out.push(head);
+
+  if(g('codename')) out.push('\nCodename: '+g('codename'));
+
+  // Stammdaten Block
+  const stamm=[];
+  if(g('telefon')) stamm.push('Telefonnummer: '+g('telefon'));
+  if(g('behoerde')) stamm.push('Behörde: '+g('behoerde'));
+  if(g('familie')) stamm.push('Familie: '+g('familie'));
+  if(stamm.length) out.push('\n'+stamm.join('\n'));
+
+  // Dokumente Block
+  const docs=[];
+  if(g('reisepass')) docs.push('Reisepass: '+g('reisepass'));
+  if(g('dienstausweis')) docs.push('Dienstausweis: '+g('dienstausweis'));
+  if(g('personalakte')) docs.push('Personalakte: '+g('personalakte'));
+  if(g('pdahaupt')) docs.push('PDA Hauptseite: '+g('pdahaupt'));
+  if(g('pdafahrzeug')) docs.push('PDA Fahrzeugliste: '+g('pdafahrzeug'));
+  if(docs.length) out.push('\n'+docs.join('\n'));
+
+  // Inhalts-Sektionen
+  const sec=(title,raw,asBullets)=>{
+    if(!raw) return;
+    out.push('\n['+title+']\n');
+    out.push(asBullets ? bullets(raw) : raw);
+  };
+  sec('Vorfall', g('vorfall'), false);
+  sec('Befragung Tatverdächtiger', g('befragung'), true);
+  sec('Zeugen-/aussagen', g('zeugen'), true);
+  sec('Beweissammlung', g('beweise'), true);
+  sec('Tatvorwurf', g('tatvorwurf'), true);
+  sec('Schlussbetrachtung', g('schluss'), true);
+
+  return out.join('\n').trim();
+}
+
+function render(){
+  const txt=build();
+  document.getElementById('out').textContent = txt || 'Fülle Felder aus — leere Felder werden automatisch weggelassen.';
+}
+
+ids.forEach(id=>document.getElementById(id).addEventListener('input',render));
+
+document.getElementById('copyBtn').addEventListener('click',()=>{
+  const txt=build();
+  if(!txt) return;
+  navigator.clipboard.writeText(txt).then(()=>{
+    const b=document.getElementById('copyBtn');
+    b.textContent='Kopiert ✓'; b.classList.add('done');
+    setTimeout(()=>{b.textContent='Kopieren';b.classList.remove('done')},1500);
+  });
+});
+
+document.getElementById('clearBtn').addEventListener('click',()=>{
+  ids.forEach(id=>document.getElementById(id).value='');
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
