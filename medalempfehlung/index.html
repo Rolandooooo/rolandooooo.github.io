@@ -101,7 +101,7 @@
   .nominee{font-family:'Space Grotesk',sans-serif;font-size:24px;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);font-weight:500;margin-top:2px}
 
   .body{margin-top:22px;max-width:700px;position:relative;z-index:2;text-align:left}
-  .body p{font-size:18px;line-height:1.5;color:var(--slate);margin:0 0 10px}
+  .body p{font-size:18px;line-height:var(--body-lh,1.5);color:var(--slate);margin:0 0 var(--body-gap,10px)}
   #pages .page:first-child .body p:first-child{color:var(--teal);font-weight:600}
 
   .sign-area{margin-top:auto;width:100%;display:flex;justify-content:center;padding-top:20px;position:relative;z-index:2}
@@ -135,6 +135,12 @@
   .body strong{font-weight:700}
   .body em{font-style:italic}
   .body u{text-decoration:underline}
+  input[type=range]{-webkit-appearance:none;appearance:none;height:6px;border-radius:4px;background:#0a1413;border:1px solid var(--line);padding:0;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);border:none;cursor:pointer}
+  input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--accent);border:none;cursor:pointer}
+  .slabel{display:flex;justify-content:space-between;align-items:center}
+  .slabel .v{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:12px}
+  .vspace{width:100%}
   .hidden{display:none!important}
 </style>
 </head>
@@ -185,9 +191,20 @@
         <button type="button" id="fmtH1" title="Große Überschrift">Überschrift groß</button>
         <button type="button" id="fmtH2" title="Kleinere Überschrift">Überschrift klein</button>
         <button type="button" id="fmtNormal" title="Überschrift entfernen">Normal</button>
+        <button type="button" id="fmtGap" title="Individuellen Abstand einfügen">Abstand</button>
       </div>
-      <div class="fmthint">Markiere Text und klicke, oder tippe direkt: **fett** · *kursiv* · __unterstrichen__ · vor der Zeile: # große / ## kleine Überschrift</div>
+      <div class="fmthint">Markiere Text und klicke, oder tippe direkt: **fett** · *kursiv* · __unterstrichen__ · vor der Zeile: # große / ## kleine Überschrift · eigene Zeile: [abstand:30] = 30px Zwischenraum</div>
       <textarea id="body"></textarea>
+    </div>
+
+    <div class="sub">Abstände</div>
+    <div class="group">
+      <label class="slabel">Zeilenabstand <span class="v" id="lhVal">1.50</span></label>
+      <input id="lineH" type="range" min="1.1" max="2.2" step="0.05" value="1.5">
+    </div>
+    <div class="group">
+      <label class="slabel">Absatzabstand <span class="v" id="gapVal">10 px</span></label>
+      <input id="paraGap" type="range" min="0" max="48" step="1" value="10">
     </div>
 
     <div class="sub">Empfehlender</div>
@@ -319,6 +336,9 @@ function bodyParaNodes(){
   const arr=[];
   $("body").value.split(/\n+/).forEach(t=>{
     let s=t.trim(); if(!s) return;
+    const sp=s.match(/^\[(?:abstand|gap):\s*(\d+)\s*(?:px)?\]$/i);
+    if(sp){ const h=Math.max(0,Math.min(300,parseInt(sp[1])||0));
+      const d=document.createElement("div"); d.className="vspace"; d.style.height=h+"px"; arr.push(d); return; }
     let cls="";
     const m=s.match(/^(#{1,2})\s+(.*)$/);
     if(m){ cls=m[1].length===1?"pl1":"pl2"; s=m[2]; }
@@ -513,6 +533,17 @@ $("medal").addEventListener("change",()=>applyPreset());
 $("resetBody").addEventListener("click",()=>{$("body").value=buildBody($("medal").value);lastTemplate=$("body").value;render();});
 $("resetAll").addEventListener("click",()=>{setDefaults();fitZoom();});
 
+function applySpacing(){
+  const lh=$("lineH").value, gap=$("paraGap").value;
+  document.documentElement.style.setProperty("--body-lh",lh);
+  document.documentElement.style.setProperty("--body-gap",gap+"px");
+  $("lhVal").textContent=parseFloat(lh).toFixed(2);
+  $("gapVal").textContent=gap+" px";
+  render();
+}
+$("lineH").addEventListener("input",applySpacing);
+$("paraGap").addEventListener("input",applySpacing);
+
 function fmtWrap(a,b){
   const ta=$("body"),v=ta.value,s=ta.selectionStart,e=ta.selectionEnd;
   ta.value=v.slice(0,s)+a+v.slice(s,e)+b+v.slice(e);
@@ -533,9 +564,17 @@ $("fmtU").addEventListener("click",()=>fmtWrap("__","__"));
 $("fmtH1").addEventListener("click",()=>fmtHead("#"));
 $("fmtH2").addEventListener("click",()=>fmtHead("##"));
 $("fmtNormal").addEventListener("click",()=>fmtHead(""));
+function insertSpacer(){
+  const ta=$("body"),v=ta.value,s=ta.selectionStart;
+  const ins="\n[abstand:20]\n";
+  ta.value=v.slice(0,s)+ins+v.slice(s);
+  const pos=s+ins.length;
+  ta.focus(); ta.selectionStart=ta.selectionEnd=pos; render();
+}
+$("fmtGap").addEventListener("click",insertSpacer);
 
 BORDER=buildBorder();
-fillSelect();setDefaults();
+fillSelect();setDefaults();applySpacing();
 try{const saved=localStorage.getItem("fib_medal_logo");setLogo(saved||DEFAULT_LOGO,false);}catch(e){setLogo(DEFAULT_LOGO,false);}
 document.fonts.ready.then(()=>{render();fitZoom();});
 setTimeout(fitZoom,400);
