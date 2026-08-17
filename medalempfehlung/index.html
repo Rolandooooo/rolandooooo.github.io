@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Pinyon+Script&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root{
     --accent:#1fb5ad; --accent-rgb:31,181,173;
@@ -71,13 +72,14 @@
   #certWrap{transform-origin:top center;transition:transform .15s}
 
   /* ---------- Dokument (Hochkant) ---------- */
-  #certificate{width:900px;height:1273px;position:relative;overflow:hidden;color:var(--teal);
+  #pages{display:flex;flex-direction:column;align-items:center;gap:24px}
+  .page{width:900px;height:1273px;position:relative;overflow:hidden;color:var(--teal);
     font-family:'EB Garamond',serif;
     background:radial-gradient(700px 500px at 50% -6%,#ffffff,transparent),linear-gradient(180deg,var(--paper1),var(--paper2));
     box-shadow:0 30px 80px rgba(0,0,0,.5)}
-  #borderSvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  .border-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
   .watermark{position:absolute;inset:0;background-repeat:no-repeat;background-position:center 50%;background-size:460px;opacity:0;filter:grayscale(1)}
-  .doc-inner{position:absolute;inset:62px;display:flex;flex-direction:column;align-items:center;text-align:center;padding:34px 60px}
+  .doc-inner{position:absolute;inset:62px;display:flex;flex-direction:column;align-items:center;text-align:center;padding:34px 60px;overflow:hidden}
 
   .top-logo{width:88px;height:88px;object-fit:contain;filter:drop-shadow(0 3px 8px rgba(0,0,0,.22))}
   .top-logo-ph{width:88px;height:88px;display:grid;place-items:center;border-radius:50%;border:2px solid var(--teal2);font-family:'Playfair Display',serif;font-weight:700;font-size:26px;color:var(--teal2)}
@@ -100,7 +102,7 @@
 
   .body{margin-top:22px;max-width:700px;position:relative;z-index:2;text-align:left}
   .body p{font-size:18px;line-height:1.5;color:var(--slate);margin:0 0 10px}
-  .body p:first-child{color:var(--teal);font-weight:600}
+  #pages .page:first-child .body p:first-child{color:var(--teal);font-weight:600}
 
   .sign-area{margin-top:auto;width:100%;display:flex;justify-content:center;padding-top:20px;position:relative;z-index:2}
   .sign{display:flex;flex-direction:column;align-items:center}
@@ -113,6 +115,14 @@
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   input[type=color]{padding:4px;height:40px;cursor:pointer}
   .spacer{height:34px}
+  .head1{display:flex;flex-direction:column;align-items:center;width:100%}
+  .head2c{display:flex;flex-direction:column;align-items:center;width:100%}
+  .cont{font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--teal2);font-weight:600;margin-top:10px}
+  .cont-rule{height:1.5px;width:190px;background:linear-gradient(90deg,transparent,var(--teal2),transparent);margin:14px 0 2px}
+  .foot{margin-top:auto;width:100%;display:flex;flex-direction:column;align-items:center;padding-top:16px}
+  .pagenum{position:absolute;left:0;right:0;bottom:30px;text-align:center;font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:2px;color:var(--teal);opacity:.5}
+  .top-logo.sm{width:60px;height:60px}
+  .top-logo-ph.sm{width:60px;height:60px;font-size:20px}
   .hidden{display:none!important}
 </style>
 </head>
@@ -171,6 +181,7 @@
 
     <div class="actions">
       <button class="btn primary" id="exportBtn">⬇ Als PNG exportieren</button>
+      <button class="btn ghost" id="pdfBtn">⬇ Als PDF (mehrseitig)</button>
       <button class="btn ghost" id="resetAll">Texte auf Beispiel zurücksetzen</button>
     </div>
   </aside>
@@ -184,41 +195,7 @@
     </div>
     <div class="cert-scroll">
       <div id="certWrap">
-        <div id="certificate">
-          <svg id="borderSvg" viewBox="0 0 900 1273" preserveAspectRatio="none"></svg>
-          <div class="watermark" id="watermark"></div>
-          <div class="doc-inner">
-            <div id="topLogo"></div>
-            <div class="eyebrow"><span class="ln"></span>Federal Investigation Bureau<span class="ln"></span></div>
-            <div class="title" id="cTitle">MEDAILLENEMPFEHLUNG</div>
-            <div class="title-accent"></div>
-            <div class="intro" id="cIntro">Vorschlag zur Verleihung der nachstehenden Auszeichnung.</div>
-
-            <div class="spacer"></div>
-            <div class="kicker">Empfohlene Auszeichnung</div>
-            <div class="medal-script" id="cMedal">Medal of Honor</div>
-            <div class="stars" id="cStars"></div>
-            <div class="tag" id="cTag">Höchste Auszeichnung im Staat San Andreas</div>
-
-            <div class="rule"><span class="l"></span><span class="d"></span><span class="l r"></span></div>
-
-            <div class="kicker">Vorgeschlagene Person</div>
-            <div class="nominee" id="cNominee"> Vorname Nachname | ID</div>
-
-            <div class="body" id="cBody"></div>
-
-            <div class="sign-area" id="signArea">
-              <div class="sign" id="sign1">
-                <div class="cap">Empfehlender</div>
-                <div class="sig" id="cS1Sig">Jason Morgen</div>
-                <div class="sline"></div>
-                <div class="nm" id="cS1Nm">JASON MORGEN | 303798</div>
-                <div class="role" id="cS1Role">Director</div>
-              </div>
-            </div>
-            <div class="datum hidden" id="cDatum"></div>
-          </div>
-        </div>
+        <div id="pages"></div>
       </div>
     </div>
   </main>
@@ -295,34 +272,110 @@ function buildBorder(){
 }
 
 /* ===================== RENDER ===================== */
-function render(){
-  $("cTitle").textContent=$("title").value;
-  $("cIntro").textContent=$("intro").value;
-  $("cMedal").textContent=$("medalName").value;
-  $("cTag").textContent=$("medalTag").value.toUpperCase();
-  const col=$("medalColor").value, ns=Math.max(0,Math.min(5,parseInt($("medalStars").value)||0));
-  $("cStars").innerHTML=Array.from({length:ns}).map(()=>starSmall(col)).join("");
-
-  const nom=$("rName").value.trim()+($("rDN").value.trim()?` | ${$("rDN").value.trim()}`:"");
-  $("cNominee").textContent=(nom||"—").toUpperCase();
-
-  const cb=$("cBody");cb.innerHTML="";
-  $("body").value.split(/\n+/).forEach(t=>{if(t.trim()){const p=document.createElement("p");p.textContent=t.trim();cb.appendChild(p);}});
-
-  // Unterschrift 1
-  $("cS1Sig").textContent=$("s1Name").value;
-  $("cS1Nm").textContent=($("s1Name").value+($("s1DN").value?` | ${$("s1DN").value}`:"")).toUpperCase();
-  $("cS1Role").textContent=$("s1Role").value;
-
+let pageCount=1;
+let BORDER="";
+function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function clampStars(){return Math.max(0,Math.min(5,parseInt($("medalStars").value)||0));}
+function logoHTML(sm){return state.logo?`<img class="top-logo${sm?' sm':''}" src="${state.logo}">`:`<div class="top-logo-ph${sm?' sm':''}">FIB</div>`;}
+function footHTML(){
+  const nm=($("s1Name").value+($("s1DN").value?` | ${$("s1DN").value}`:"")).toUpperCase();
   const d=$("datum").value.trim();
-  $("cDatum").textContent=d;$("cDatum").classList.toggle("hidden",!d);
-
-  // Logo Kopf + Wasserzeichen
-  $("topLogo").innerHTML=state.logo?`<img class="top-logo" src="${state.logo}">`:`<div class="top-logo-ph">FIB</div>`;
-  const wm=$("watermark");
-  if(state.logo){wm.style.backgroundImage=`url(${state.logo})`;wm.style.opacity=".04";}
-  else{wm.style.backgroundImage="none";wm.style.opacity="0";}
+  return `<div class="sign">
+      <div class="cap">Empfehlender</div>
+      <div class="sig">${esc($("s1Name").value)}</div>
+      <div class="sline"></div>
+      <div class="nm">${esc(nm)}</div>
+      <div class="role">${esc($("s1Role").value)}</div>
+    </div>`+(d?`<div class="datum">${esc(d)}</div>`:``);
 }
+function bodyParaNodes(){
+  const arr=[];
+  $("body").value.split(/\n+/).forEach(t=>{if(t.trim()){const p=document.createElement("p");p.textContent=t.trim();arr.push(p);}});
+  return arr;
+}
+function overflowY(el){return el.scrollHeight>el.clientHeight+1;}
+
+function firstHeadHTML(){
+  const col=$("medalColor").value, ns=clampStars();
+  const stars=Array.from({length:ns}).map(()=>starSmall(col)).join("");
+  const nomraw=$("rName").value.trim()+($("rDN").value.trim()?` | ${$("rDN").value.trim()}`:"");
+  const nom=(nomraw||"—").toUpperCase();
+  return `<div class="head1">
+    <div class="tl">${logoHTML(false)}</div>
+    <div class="eyebrow"><span class="ln"></span>Federal Investigation Bureau<span class="ln"></span></div>
+    <div class="title">${esc($("title").value)}</div>
+    <div class="title-accent"></div>
+    <div class="intro">${esc($("intro").value)}</div>
+    <div class="spacer"></div>
+    <div class="kicker">Empfohlene Auszeichnung</div>
+    <div class="medal-script">${esc($("medalName").value)}</div>
+    <div class="stars">${stars}</div>
+    <div class="tag">${esc($("medalTag").value.toUpperCase())}</div>
+    <div class="rule"><span class="l"></span><span class="d"></span><span class="l r"></span></div>
+    <div class="kicker">Vorgeschlagene Person</div>
+    <div class="nominee">${esc(nom)}</div>
+  </div>`;
+}
+function contHeadHTML(){
+  return `<div class="head2c">
+    <div class="tl">${logoHTML(true)}</div>
+    <div class="eyebrow"><span class="ln"></span>Federal Investigation Bureau<span class="ln"></span></div>
+    <div class="cont">${esc(($("title").value||"Medaillenempfehlung")+" · Fortsetzung")}</div>
+    <div class="cont-rule"></div>
+  </div>`;
+}
+function makePage(first){
+  const page=document.createElement("div");
+  page.className="page";
+  page.innerHTML=`<svg class="border-svg" viewBox="0 0 900 1273" preserveAspectRatio="none">${BORDER}</svg>`+
+    `<div class="watermark"></div>`+
+    `<div class="doc-inner">${first?firstHeadHTML():contHeadHTML()}<div class="body"></div><div class="foot"></div></div>`+
+    `<div class="pagenum hidden"></div>`;
+  const wm=page.querySelector(".watermark");
+  if(state.logo){wm.style.backgroundImage=`url(${state.logo})`;wm.style.opacity=".04";}
+  return page;
+}
+
+function paginate(){
+  const pagesEl=$("pages"); pagesEl.innerHTML="";
+  const addPage=first=>{const pg=makePage(first);pagesEl.appendChild(pg);return pg;};
+  let cur=addPage(true);
+  let curBody=cur.querySelector(".body"), curInner=cur.querySelector(".doc-inner");
+  // Absätze über beliebig viele Seiten fließen lassen
+  for(const p of bodyParaNodes()){
+    curBody.appendChild(p);
+    if(overflowY(curInner)){
+      curBody.removeChild(p);
+      cur=addPage(false);
+      curBody=cur.querySelector(".body"); curInner=cur.querySelector(".doc-inner");
+      curBody.appendChild(p); // Absatz größer als eine Seite -> wird geklippt
+    }
+  }
+  // Unterschrift auf die letzte Seite; bei Bedarf neue Seite anlegen
+  let lastPage=cur, guard=0;
+  while(guard++<400){
+    const inner=lastPage.querySelector(".doc-inner");
+    const foot=lastPage.querySelector(".foot");
+    foot.innerHTML=footHTML();
+    if(!overflowY(inner)) break;
+    const body=lastPage.querySelector(".body");
+    if(body.children.length<=1) break; // nichts sinnvoll zu verschieben -> akzeptieren
+    foot.innerHTML="";
+    const last=body.lastElementChild;
+    const np=addPage(false);
+    np.querySelector(".body").appendChild(last);
+    lastPage=np;
+  }
+  // Seitenzahlen
+  const pages=Array.from(pagesEl.children);
+  pageCount=pages.length;
+  pages.forEach((pg,i)=>{const pn=pg.querySelector(".pagenum");
+    if(pageCount>1){pn.textContent=`Seite ${i+1} von ${pageCount}`;pn.classList.remove("hidden");}
+    else pn.classList.add("hidden");});
+  applyZoom();
+}
+
+function render(){ paginate(); }
 
 function applyPreset(keepBody){
   const M=MEDALS[$("medal").value];
@@ -350,27 +403,57 @@ $("logoFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)retu
 $("logoRm").addEventListener("click",()=>{setLogo(null,true);$("logoFile").value="";});
 
 /* ===================== EXPORT ===================== */
+function visiblePages(){return Array.from($("pages").children);}
+function baseName(){const safe=($("rName").value||"Empfaenger").replace(/[^\w]+/g,"_");
+  const med=($("medalName").value||MEDALS[$("medal").value].label).replace(/\s+/g,"_");
+  return `FIB_Empfehlung_${med}_${safe}`;}
+
 $("exportBtn").addEventListener("click",async()=>{
   const btn=$("exportBtn");btn.textContent="Rendere …";btn.disabled=true;
+  const _w=$("certWrap"),_t=_w.style.transform;_w.style.transform="none";
   try{
     await document.fonts.ready;
-    const cv=await html2canvas($("certificate"),{scale:2,backgroundColor:"#f4f8f7",useCORS:true,logging:false});
-    const a=document.createElement("a");
-    const safe=($("rName").value||"Empfaenger").replace(/[^\w]+/g,"_");
-    a.download=`FIB_Empfehlung_${MEDALS[$("medal").value].label.replace(/\s+/g,"_")}_${safe}.png`;
-    a.href=cv.toDataURL("image/png");a.click();
+    const pages=visiblePages(), base=baseName();
+    for(let i=0;i<pages.length;i++){
+      const cv=await html2canvas(pages[i],{scale:2,backgroundColor:"#f4f8f7",useCORS:true,logging:false});
+      const a=document.createElement("a");
+      a.download=base+(pages.length>1?`_Seite${i+1}`:"")+".png";
+      a.href=cv.toDataURL("image/png");a.click();
+      await new Promise(r=>setTimeout(r,180));
+    }
   }catch(e){alert("Export fehlgeschlagen: "+e.message);}
+  finally{_w.style.transform=_t;}
   btn.textContent="⬇ Als PNG exportieren";btn.disabled=false;
+});
+
+$("pdfBtn").addEventListener("click",async()=>{
+  const btn=$("pdfBtn");btn.textContent="Erstelle PDF …";btn.disabled=true;
+  const _w=$("certWrap"),_t=_w.style.transform;_w.style.transform="none";
+  try{
+    await document.fonts.ready;
+    const {jsPDF}=window.jspdf;
+    const pdf=new jsPDF({unit:"pt",format:"a4",orientation:"portrait"});
+    const pw=pdf.internal.pageSize.getWidth(), ph=pdf.internal.pageSize.getHeight();
+    const pages=visiblePages();
+    for(let i=0;i<pages.length;i++){
+      const cv=await html2canvas(pages[i],{scale:2,backgroundColor:"#f4f8f7",useCORS:true,logging:false});
+      if(i>0) pdf.addPage();
+      pdf.addImage(cv.toDataURL("image/png"),"PNG",0,0,pw,ph);
+    }
+    pdf.save(baseName()+".pdf");
+  }catch(e){alert("PDF fehlgeschlagen: "+e.message);}
+  finally{_w.style.transform=_t;}
+  btn.textContent="⬇ Als PDF (mehrseitig)";btn.disabled=false;
 });
 
 /* ===================== ZOOM ===================== */
 let zoom=0.5;
 function applyZoom(){$("certWrap").style.transform=`scale(${zoom})`;
   $("zVal").textContent=Math.round(zoom*100)+"%";
-  $("certWrap").parentElement.style.height=(1273*zoom+10)+"px";}
-function fitZoom(){const availH=document.querySelector(".stage").clientHeight-90;
-  const availW=document.querySelector(".stage").clientWidth-60;
-  zoom=Math.min(availW/900,availH/1273,1);zoom=Math.max(zoom,.3);applyZoom();}
+  const total=pageCount*1273+(pageCount-1)*24;
+  $("certWrap").parentElement.style.height=(total*zoom+10)+"px";}
+function fitZoom(){const availW=document.querySelector(".stage").clientWidth-60;
+  zoom=Math.min(availW/900,1);zoom=Math.max(zoom,.3);applyZoom();}
 $("zIn").onclick=()=>{zoom=Math.min(1.4,zoom+.1);applyZoom();};
 $("zOut").onclick=()=>{zoom=Math.max(.25,zoom-.1);applyZoom();};
 $("zFit").onclick=fitZoom;
@@ -394,7 +477,7 @@ $("medal").addEventListener("change",()=>applyPreset());
 $("resetBody").addEventListener("click",()=>{$("body").value=buildBody($("medal").value);lastTemplate=$("body").value;render();});
 $("resetAll").addEventListener("click",()=>{setDefaults();fitZoom();});
 
-$("borderSvg").innerHTML=buildBorder();
+BORDER=buildBorder();
 fillSelect();setDefaults();
 try{const saved=localStorage.getItem("fib_medal_logo");setLogo(saved||DEFAULT_LOGO,false);}catch(e){setLogo(DEFAULT_LOGO,false);}
 document.fonts.ready.then(()=>{render();fitZoom();});
