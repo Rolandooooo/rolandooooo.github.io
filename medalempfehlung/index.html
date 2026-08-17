@@ -6,7 +6,7 @@
 <title>FIB · Medaillen-Empfehlung</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Pinyon+Script&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Pinyon+Script&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
@@ -123,6 +123,18 @@
   .pagenum{position:absolute;left:0;right:0;bottom:30px;text-align:center;font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:2px;color:var(--teal);opacity:.5}
   .top-logo.sm{width:60px;height:60px}
   .top-logo-ph.sm{width:60px;height:60px;font-size:20px}
+  .fmtbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+  .fmtbar button{background:#0a1413;border:1px solid var(--line);color:var(--txt);border-radius:7px;padding:6px 10px;font-family:inherit;font-size:12px;cursor:pointer}
+  .fmtbar button:hover{border-color:rgba(var(--accent-rgb),.5)}
+  .fmtbar .b{font-weight:700}
+  .fmtbar .i{font-style:italic}
+  .fmtbar .u{text-decoration:underline}
+  .fmthint{font-size:10.5px;color:var(--muted);margin:0 0 8px;font-family:'JetBrains Mono',monospace;line-height:1.5}
+  .body p.pl1{font-size:24px;font-weight:600;color:var(--teal);margin-top:16px}
+  .body p.pl2{font-size:21px;font-weight:600;color:var(--teal2);margin-top:12px}
+  .body strong{font-weight:700}
+  .body em{font-style:italic}
+  .body u{text-decoration:underline}
   .hidden{display:none!important}
 </style>
 </head>
@@ -166,6 +178,15 @@
     <div class="group">
       <button class="templ-btn" id="resetBody" type="button">↻ Vorlage einfügen</button>
       <span class="field-label">Begründungstext (frei editierbar)</span>
+      <div class="fmtbar">
+        <button type="button" id="fmtB" class="b" title="Fett">F</button>
+        <button type="button" id="fmtI" class="i" title="Kursiv">K</button>
+        <button type="button" id="fmtU" class="u" title="Unterstrichen">U</button>
+        <button type="button" id="fmtH1" title="Große Überschrift">Überschrift groß</button>
+        <button type="button" id="fmtH2" title="Kleinere Überschrift">Überschrift klein</button>
+        <button type="button" id="fmtNormal" title="Überschrift entfernen">Normal</button>
+      </div>
+      <div class="fmthint">Markiere Text und klicke, oder tippe direkt: **fett** · *kursiv* · __unterstrichen__ · vor der Zeile: # große / ## kleine Überschrift</div>
       <textarea id="body"></textarea>
     </div>
 
@@ -288,9 +309,24 @@ function footHTML(){
       <div class="role">${esc($("s1Role").value)}</div>
     </div>`+(d?`<div class="datum">${esc(d)}</div>`:``);
 }
+function inlineFmt(s){
+  return s
+    .replace(/\*\*([^*]+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/__([^_]+?)__/g,'<u>$1</u>')
+    .replace(/\*([^*]+?)\*/g,'<em>$1</em>');
+}
 function bodyParaNodes(){
   const arr=[];
-  $("body").value.split(/\n+/).forEach(t=>{if(t.trim()){const p=document.createElement("p");p.textContent=t.trim();arr.push(p);}});
+  $("body").value.split(/\n+/).forEach(t=>{
+    let s=t.trim(); if(!s) return;
+    let cls="";
+    const m=s.match(/^(#{1,2})\s+(.*)$/);
+    if(m){ cls=m[1].length===1?"pl1":"pl2"; s=m[2]; }
+    const p=document.createElement("p");
+    if(cls) p.className=cls;
+    p.innerHTML=inlineFmt(esc(s));
+    arr.push(p);
+  });
   return arr;
 }
 function overflowY(el){return el.scrollHeight>el.clientHeight+1;}
@@ -476,6 +512,27 @@ $("rAnrede").addEventListener("change",()=>{maybeRefreshBody();render();});
 $("medal").addEventListener("change",()=>applyPreset());
 $("resetBody").addEventListener("click",()=>{$("body").value=buildBody($("medal").value);lastTemplate=$("body").value;render();});
 $("resetAll").addEventListener("click",()=>{setDefaults();fitZoom();});
+
+function fmtWrap(a,b){
+  const ta=$("body"),v=ta.value,s=ta.selectionStart,e=ta.selectionEnd;
+  ta.value=v.slice(0,s)+a+v.slice(s,e)+b+v.slice(e);
+  ta.focus(); ta.selectionStart=s+a.length; ta.selectionEnd=e+a.length; render();
+}
+function fmtHead(mark){
+  const ta=$("body"),v=ta.value,s=ta.selectionStart;
+  const ls=v.lastIndexOf("\n",s-1)+1;
+  let le=v.indexOf("\n",ls); if(le===-1) le=v.length;
+  let line=v.slice(ls,le).replace(/^#{1,2}\s+/,"");
+  const nl=mark?mark+" "+line:line;
+  ta.value=v.slice(0,ls)+nl+v.slice(le);
+  ta.focus(); ta.selectionStart=ta.selectionEnd=ls+nl.length; render();
+}
+$("fmtB").addEventListener("click",()=>fmtWrap("**","**"));
+$("fmtI").addEventListener("click",()=>fmtWrap("*","*"));
+$("fmtU").addEventListener("click",()=>fmtWrap("__","__"));
+$("fmtH1").addEventListener("click",()=>fmtHead("#"));
+$("fmtH2").addEventListener("click",()=>fmtHead("##"));
+$("fmtNormal").addEventListener("click",()=>fmtHead(""));
 
 BORDER=buildBorder();
 fillSelect();setDefaults();
