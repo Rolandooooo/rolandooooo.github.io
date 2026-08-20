@@ -126,16 +126,18 @@
   .body p{font-size:19.5px;line-height:1.46;color:var(--slate);margin:0 0 6px}
   .body p:first-child{font-weight:600;color:var(--teal)}
 
-  .sign-area{margin-top:auto;width:100%;display:grid;grid-template-columns:1fr 230px 1fr;
-    align-items:end;gap:20px;padding-bottom:4px;position:relative;z-index:2}
-  .sign{display:flex;flex-direction:column;align-items:center}
+  .sign-area{margin-top:auto;width:100%;position:relative;min-height:190px;
+    padding-bottom:4px;z-index:2}
+  .sign{position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+    display:flex;flex-direction:column;align-items:center}
   .sign .sig{font-family:'Pinyon Script',cursive;font-size:42px;color:var(--teal);line-height:1;margin-bottom:2px}
   .sign .sline{height:1.5px;width:240px;background:var(--teal2);opacity:.7;margin:2px 0 6px}
   .sign .nm{font-family:'Space Grotesk',sans-serif;font-size:14px;letter-spacing:1.5px;
     text-transform:uppercase;color:var(--teal)}
   .sign .role{font-family:'EB Garamond',serif;font-size:21px;font-weight:600;color:var(--teal2);margin-top:2px}
 
-  .seal-col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+  .seal-col{position:absolute;right:20px;bottom:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-end}
   .logo-badge{position:relative;width:150px;height:150px;border-radius:50%;
     background:radial-gradient(circle at 38% 32%,#ffffff,#eef4f3);
     border:3px solid var(--teal2);box-shadow:0 0 0 6px rgba(19,143,136,.12), inset 0 0 0 2px var(--gold);
@@ -208,18 +210,11 @@
       <textarea id="body"></textarea>
     </div>
 
-    <div class="sub">Unterschrift links</div>
+    <div class="sub">Unterschrift</div>
     <div class="row3">
       <div><span class="field-label">Name</span><input id="s1Name" type="text"></div>
       <div><span class="field-label">Dienstnr.</span><input id="s1DN" class="mono" type="text"></div>
       <div><span class="field-label">Amt</span><input id="s1Role" type="text"></div>
-    </div>
-
-    <div class="sub">Unterschrift rechts</div>
-    <div class="row3">
-      <div><span class="field-label">Name</span><input id="s2Name" type="text"></div>
-      <div><span class="field-label">Dienstnr.</span><input id="s2DN" class="mono" type="text"></div>
-      <div><span class="field-label">Amt</span><input id="s2Role" type="text"></div>
     </div>
 
     <div class="sub">Datum</div>
@@ -251,30 +246,24 @@
           <div class="watermark" id="watermark"></div>
           <div class="cert-inner">
             <div class="eyebrow"><span class="ln"></span>Federal Investigation Bureau<span class="ln"></span></div>
-            <div class="title" id="cTitle">MEDAL OF HONOR</div>
+            <div class="title" id="cTitle">SILVER STAR MEDAL</div>
             <div class="title-accent"></div>
             <div class="sub1" id="cSub1">In höchster Wertschätzung.</div>
-            <div class="sub2" id="cSub2">Überreichen wir die Medal of Honor an:</div>
-            <div class="name-script" id="cNameScript">Eko Plaste | 17450</div>
+            <div class="sub2" id="cSub2">Überreichen wir die Silver Star Medal an:</div>
+            <div class="name-script" id="cNameScript">Max Mustermann | XXX</div>
             <div class="rule"><span class="l"></span><span class="d"></span><span class="l r"></span></div>
-            <div class="name-caps" id="cNameCaps">EKO PLASTE | 17450</div>
+            <div class="name-caps" id="cNameCaps">Max Mustermann | XXX</div>
             <div class="body" id="cBody"></div>
             <div class="sign-area">
               <div class="sign">
-                <div class="sig" id="cS1Sig">Jason Morgen</div>
+                <div class="sig" id="cS1Sig">Eko Plaste</div>
                 <div class="sline"></div>
-                <div class="nm" id="cS1Nm">JASON MORGEN | 303798</div>
-                <div class="role" id="cS1Role">Director</div>
+                <div class="nm" id="cS1Nm">Eko Plaste | 17450</div>
+                <div class="role" id="cS1Role">Director of FIB</div>
               </div>
               <div class="seal-col">
                 <div class="logo-badge" id="logoMount"></div>
                 <div class="stars" id="cStars"></div>
-              </div>
-              <div class="sign">
-                <div class="sig" id="cS2Sig">Tobi Lakiri</div>
-                <div class="sline"></div>
-                <div class="nm" id="cS2Nm">TOBI LAKIRI | 244882</div>
-                <div class="role" id="cS2Role">Deputy Director</div>
               </div>
             </div>
             <div class="datum hidden" id="cDatum"></div>
@@ -296,8 +285,7 @@ const MEDALS = {
     body:`{ANREDE} {NAME},
 für großartige Führungs- und Verwaltungsarbeit im Dienst des Federal Investigation Bureau wird {NAME} mit der Silver Star Medal ausgezeichnet.
 Durch umsichtige Leitung, vorbildliche Organisation und nachhaltiges Engagement hat {NAME} maßgeblich zur Struktur, Ordnung und Schlagkraft des Bureau beigetragen.
-Diese Auszeichnung würdigt herausragende administrative und führende Leistungen im Interesse von Recht und Ordnung des Staates San Andreas.
-Im Namen der Leitung des Federal Investigation Bureau wird diese Auszeichnung in Anerkennung außergewöhnlicher Verdienste verliehen.`
+`
   },
   bronze:{
     label:"Bronze Star Medal",
@@ -307,8 +295,7 @@ Im Namen der Leitung des Federal Investigation Bureau wird diese Auszeichnung in
     body:`{ANREDE} {NAME},
 für großartigen Heldentum im aktiven Dienst wird {NAME} mit der Bronze Star Medal ausgezeichnet.
 Mit Mut, Entschlossenheit und vollem persönlichen Einsatz hat {NAME} unter schwierigen Bedingungen vorbildlich gehandelt und damit die Sicherheit von Kollegen und Bürgern gewahrt.
-Das Federal Investigation Bureau erkennt diesen Einsatz als beispielhaft an und verleiht diese Auszeichnung in höchster Wertschätzung.
-Im Namen der Leitung des Federal Investigation Bureau wird diese Auszeichnung in Anerkennung außergewöhnlichen Mutes verliehen.`
+`
   },
   purple:{
     label:"Purple Heart",
@@ -318,8 +305,7 @@ Im Namen der Leitung des Federal Investigation Bureau wird diese Auszeichnung in
     body:`{ANREDE} {NAME},
 für außergewöhnlichen Heldentum im Dienst und für persönlichen Einsatz unter Inkaufnahme erheblicher Gefahr wird {NAME} mit dem Purple Heart ausgezeichnet.
 {NAME} hat unter unmittelbarer Bedrohung pflichtbewusst gehandelt, die eigene Sicherheit hintangestellt und damit Menschenleben sowie die Sicherheit des Staates geschützt.
-Das Federal Investigation Bureau erkennt diesen Einsatz mit größtem Respekt an und verleiht diese Auszeichnung in tiefer Anerkennung.
-Im Namen der Leitung des Federal Investigation Bureau wird diese Auszeichnung in Würdigung außergewöhnlichen Einsatzes verliehen.`
+`
   }
 };
 /* ======================= STATE / HELFER ======================= */
@@ -373,9 +359,6 @@ function render(){
   $("cS1Sig").textContent=$("s1Name").value;
   $("cS1Nm").textContent=($("s1Name").value+($("s1DN").value?` | ${$("s1DN").value}`:"")).toUpperCase();
   $("cS1Role").textContent=$("s1Role").value;
-  $("cS2Sig").textContent=$("s2Name").value;
-  $("cS2Nm").textContent=($("s2Name").value+($("s2DN").value?` | ${$("s2DN").value}`:"")).toUpperCase();
-  $("cS2Role").textContent=$("s2Role").value;
 
   const d=$("datum").value.trim();
   $("cDatum").textContent=d;$("cDatum").classList.toggle("hidden",!d);
@@ -447,13 +430,12 @@ $("zFit").onclick=fitZoom;
 /* ======================= INIT ======================= */
 function fillSelect(){$("medal").innerHTML=Object.entries(MEDALS).map(([k,v])=>`<option value="${k}">${v.label}</option>`).join("");}
 function setDefaults(){
-  $("rName").value="Eko Plaste";$("rDN").value="17450";$("rAnrede").value="m";
+  $("rName").value="Max Mustermann";$("rDN").value="XXX";$("rAnrede").value="m";
   $("sub1").value="In höchster Wertschätzung.";
-  $("s1Name").value="Jason Morgen";$("s1DN").value="303798";$("s1Role").value="Director";
-  $("s2Name").value="Tobi Lakiri";$("s2DN").value="244882";$("s2Role").value="Deputy Director";
+  $("s1Name").value="Eko Plaste";$("s1DN").value="17450";$("s1Role").value="Director of FIB";
   $("datum").value="";$("medal").value="silver";applyMedal();
 }
-["title","sub1","sub2","rDN","s1Name","s1DN","s1Role","s2Name","s2DN","s2Role","datum"].forEach(id=>$(id).addEventListener("input",render));
+["title","sub1","sub2","rDN","s1Name","s1DN","s1Role","datum"].forEach(id=>$(id).addEventListener("input",render));
 $("body").addEventListener("input",render);
 $("rName").addEventListener("input",()=>{maybeRefreshBody();render();});
 $("rAnrede").addEventListener("change",()=>{maybeRefreshBody();render();});
