@@ -401,7 +401,7 @@ function buildMapping(){
   optList($("mPos"),L('D'));
   optList($("mBereich"),L('Q'));
   optList($("mVon"),L('M'));
-  optList($("mExam"),L('T'));
+  optList($("mExam"),L('U'));
   $("shMap").classList.remove("hidden");
   ["mName","mDN","mPass","mPos","mBereich","mVon","mExam"].forEach(id=>$(id).onchange=buildPersonList);
   $("shSearch").oninput=buildPersonList;
@@ -435,8 +435,11 @@ function fillFromRow(idx){
   $("bereich").value = ber || "Wantedjagd";
   if(g("mVon")>=0 && (r[g("mVon")]||"").trim()) $("von").value=(r[g("mVon")]||"").trim();
   // "Dienst bis" bleibt der global eingetragene Wert (nicht aus dem Sheet)
+  // Sheet-Spaltenreihenfolge ab U -> Anzeige-Häkchen:
+  // U Grundausbildung, V Event, W Korruption, X Tactical, Y VHF/EL, Z Jura, AA Undercover, AB Flug
+  const EXAM_ORDER=[0,1,7,2,5,4,3,6];
   const ex=g("mExam");
-  if(ex>=0){ for(let i=0;i<8;i++){ const c=r[ex+i]; if(c!==undefined) $("ck"+i).checked=boolCheck(c); } }
+  if(ex>=0){ for(let i=0;i<8;i++){ const c=r[ex+i]; if(c!==undefined) $("ck"+EXAM_ORDER[i]).checked=boolCheck(c); } }
   render();
 }
 
