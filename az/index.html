@@ -401,7 +401,7 @@ function buildMapping(){
   optList($("mPos"),L('D'));
   optList($("mBereich"),L('Q'));
   optList($("mVon"),L('M'));
-  optList($("mExam"),L('U'));
+  optList($("mExam"),L('T'));
   $("shMap").classList.remove("hidden");
   ["mName","mDN","mPass","mPos","mBereich","mVon","mExam"].forEach(id=>$(id).onchange=buildPersonList);
   $("shSearch").oninput=buildPersonList;
@@ -435,11 +435,12 @@ function fillFromRow(idx){
   $("bereich").value = ber || "Wantedjagd";
   if(g("mVon")>=0 && (r[g("mVon")]||"").trim()) $("von").value=(r[g("mVon")]||"").trim();
   // "Dienst bis" bleibt der global eingetragene Wert (nicht aus dem Sheet)
-  // Sheet-Spaltenreihenfolge ab U -> Anzeige-Häkchen:
-  // U Grundausbildung, V Event, W Korruption, X Tactical, Y VHF/EL, Z Jura, AA Undercover, AB Flug
-  const EXAM_ORDER=[0,1,7,2,5,4,3,6];
+  // Prüfungs-Spalten ab Start (T): T,U,[V übersprungen],W,X,Y,Z,AA,AB
+  const EXAM_OFFSETS=[0,1,3,4,5,6,7,8]; // Spaltenversatz ab Startspalte
+  const EXAM_TARGET =[0,1,7,2,5,4,3,6]; // zugehöriges Anzeige-Häkchen
+  //   T->Grund, U->Event, W->Korruption, X->Tactical, Y->VHF/EL, Z->Jura, AA->Undercover, AB->Flug
   const ex=g("mExam");
-  if(ex>=0){ for(let i=0;i<8;i++){ const c=r[ex+i]; if(c!==undefined) $("ck"+EXAM_ORDER[i]).checked=boolCheck(c); } }
+  if(ex>=0){ for(let i=0;i<8;i++){ const c=r[ex+EXAM_OFFSETS[i]]; if(c!==undefined) $("ck"+EXAM_TARGET[i]).checked=boolCheck(c); } }
   render();
 }
 
