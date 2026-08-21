@@ -171,6 +171,12 @@
     <div class="sub">Unterschrift rechts</div>
     <div class="row2"><div><span class="field-label">Name</span><input id="sRname" type="text"></div><div><span class="field-label">Funktion</span><input id="sRrole" type="text"></div></div>
 
+    <div class="sub">Discord-Nachricht</div>
+    <div class="group">
+      <textarea id="dcMsg" readonly rows="7" style="width:100%;background:#0a1413;border:1px solid var(--line);color:var(--txt);border-radius:9px;padding:8px;font-size:12px;font-family:'JetBrains Mono',monospace;resize:vertical;line-height:1.5"></textarea>
+      <button class="btn ghost" id="dcCopy" style="margin-top:6px">📋 Discord-Text kopieren</button>
+    </div>
+
     <div class="actions">
       <button class="btn primary" id="pngBtn">⬇ Als PNG exportieren</button>
       <button class="btn ghost" id="pdfBtn">⬇ Als PDF exportieren</button>
@@ -211,6 +217,20 @@ function title2HTML(){
   const parts=$("t2").value.trim().split(/\s+/);
   const dark=parts.slice(0,2).join(" "), grey=parts.slice(2).join(" ");
   return `<span class="d2dark">${esc(dark)}</span>${grey?` <span class="d2grey">${esc(grey)}</span>`:""}`;
+}
+
+function buildDiscord(){
+  const el=$("dcMsg"); if(!el) return;
+  const name=$("name").value.trim(), pass=$("pass").value.trim(), rang=$("pos").value.trim(), kdg=$("bis").value.trim();
+  el.value=
+`Das Federal Investigation Bureau (FIB),
+übermittelt hiermit das Arbeitszeugnis von:
+> **Vor- u. Nachname:** ${name}
+> **Reisepassnr.:** ${pass}
+> **Rang:** ${rang}
+> **Datum der Kündigung:** ${kdg}
+
+(Arbeitszeugnis wird als Anhang beigefügt)`;
 }
 
 function render(){
@@ -269,6 +289,7 @@ function render(){
       </div>
     </div>`;
   $("page").innerHTML=html;
+  buildDiscord();
 }
 
 /* Logo */
@@ -331,6 +352,12 @@ function wireEvents(){
   $("anrede").addEventListener("change",render);
   EX_DEF.forEach((_,i)=>{$("ex"+i).addEventListener("input",render);$("ck"+i).addEventListener("change",render);});
   $("resetAll").addEventListener("click",()=>{setDefaults();fitZoom();});
+  $("dcCopy").addEventListener("click",async()=>{
+    const b=$("dcCopy"), orig=b.textContent;
+    try{ await navigator.clipboard.writeText($("dcMsg").value); }
+    catch(e){ $("dcMsg").removeAttribute("readonly"); $("dcMsg").select(); document.execCommand("copy"); $("dcMsg").setAttribute("readonly",""); }
+    b.textContent="✓ kopiert"; setTimeout(()=>b.textContent=orig,1500);
+  });
 }
 
 buildExamsPanel();
