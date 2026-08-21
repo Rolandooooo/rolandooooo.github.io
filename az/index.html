@@ -394,19 +394,14 @@ function optList(sel,guess){
 const isDate=v=>/^\d{1,2}\.\d{1,2}\.\d{2,4}/.test(v);
 const isBool=v=>/^(true|false|✓|✗|x|ja|nein|1|0)$/i.test(v);
 function buildMapping(){
-  const isName=v=>/^[A-Za-zÄÖÜäöüß.'-]+\s+[A-Za-zÄÖÜäöüß.'-]/.test(v)&&!/\d/.test(v)&&!/agent|director|chief|commander|inspector|specialist|operator|suspended/i.test(v);
-  const isDN=v=>/^\d{2,6}$/.test(v);
-  const isPass=v=>/^\d{2,3}-\d{2,3}-\d{2,4}$/.test(v);
-  const isPos=v=>/^\d+\.\s|agent|director|chief|commander|inspector|specialist|operator/i.test(v);
-  const isBer=v=>/^(CID|HR|CIRG|FIBCO|TD|PR|LAW|IA)\b/i.test(v);
-  optList($("mName"),guessCol(isName));
-  optList($("mDN"),guessCol(isDN));
-  optList($("mPass"),guessCol(isPass));
-  optList($("mPos"),guessCol(isPos));
-  optList($("mBereich"),guessCol(isBer));
-  const d1=guessCol(isDate);
-  optList($("mVon"),d1);
-  optList($("mExam"),guessCol(isBool));
+  const L=ch=>ch.charCodeAt(0)-65;   // A=0, B=1, ...
+  optList($("mName"),L('C'));
+  optList($("mDN"),L('F'));
+  optList($("mPass"),L('B'));
+  optList($("mPos"),L('D'));
+  optList($("mBereich"),L('Q'));
+  optList($("mVon"),L('M'));
+  optList($("mExam"),L('T'));
   $("shMap").classList.remove("hidden");
   ["mName","mDN","mPass","mPos","mBereich","mVon","mExam"].forEach(id=>$(id).onchange=buildPersonList);
   $("shSearch").oninput=buildPersonList;
@@ -417,8 +412,7 @@ function personRows(){
   const ni=+$("mName").value, di=+$("mDN").value, q=$("shSearch").value.toLowerCase();
   return SHEET.rows.map((r,idx)=>({r,idx})).filter(({r})=>{
     const nm=ni>=0?(r[ni]||"").trim():""; if(!nm) return false;
-    if(!/[A-Za-zÄÖÜäöüß]{2,}/.test(nm)) return false;
-    if(di>=0){const dn=(r[di]||"").trim(); if(!/^\d{2,6}$/.test(dn)) return false;}
+    if(!/^[A-Za-zÄÖÜäöüß.'-]+\s+[A-Za-zÄÖÜäöüß]/.test(nm)) return false;
     if(q && !((r[ni]||"")+" "+(di>=0?r[di]:"")).toLowerCase().includes(q)) return false;
     return true;
   });
