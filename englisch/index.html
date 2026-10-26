@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vokabeltrainer</title>
+<style>
+:root{--bg:#f3f5f1;--card:#fff;--ink:#1c2a24;--mute:#66746c;--line:#d6dcd5;--accent:#1f6f5c;--accent-ink:#fff;--ok:#1b7f4b;--okbg:#dff3e7;--bad:#b3322b;--badbg:#f8e1df}
+@media(prefers-color-scheme:dark){:root{--bg:#121a16;--card:#1b2620;--ink:#e8efe9;--mute:#98a89e;--line:#2e3d35;--accent:#4fb89c;--accent-ink:#0c1612;--ok:#6fd49b;--okbg:#17382a;--bad:#f08a82;--badbg:#3d1f1d}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:17px/1.5 Georgia,"Iowan Old Style",serif;min-height:100vh}
+.wrap{max-width:640px;margin:0 auto;padding:16px 14px 40px}
+h1{font-size:1.5rem;margin:6px 0 14px;letter-spacing:-.01em}
+button,select,input{font:inherit;color:inherit}
+nav{display:flex;gap:6px;margin-bottom:12px}
+nav button{flex:1;padding:10px 4px;border:1px solid var(--line);background:var(--card);border-radius:10px;cursor:pointer;font-size:.92rem}
+nav button[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.opts{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-bottom:14px;font-size:.92rem;color:var(--mute)}
+.opts select{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 18px}
+.meta{display:flex;justify-content:space-between;font-size:.85rem;color:var(--mute);margin-bottom:12px}
+.q{font-size:1.7rem;font-weight:700;line-height:1.25;margin:4px 0 6px;overflow-wrap:anywhere}
+.q.def{font-size:1.15rem;font-weight:400}
+.hint{color:var(--mute);font-size:.9rem}
+input[type=text]{width:100%;padding:12px;border:2px solid var(--line);border-radius:10px;background:var(--bg);margin:14px 0 10px;font-size:1.1rem}
+input[type=text]:focus,button:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
+.btn{width:100%;padding:13px;border:0;border-radius:10px;background:var(--accent);color:var(--accent-ink);cursor:pointer;font-weight:700}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.row{display:flex;gap:10px;margin-top:12px}
+.choices{display:grid;gap:10px;margin-top:14px}
+.choice{text-align:left;padding:13px 14px;border:2px solid var(--line);background:var(--bg);border-radius:10px;cursor:pointer}
+.choice.ok{border-color:var(--ok);background:var(--okbg)}
+.choice.bad{border-color:var(--bad);background:var(--badbg)}
+.fb{margin-top:12px;padding:12px;border-radius:10px;font-size:.95rem}
+.fb.ok{background:var(--okbg);color:var(--ok)}.fb.bad{background:var(--badbg);color:var(--bad)}
+.fb em,.back em{display:block;color:var(--ink);margin-top:6px;opacity:.85}
+.flip{min-height:250px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;text-align:center;user-select:none}
+.back p{margin:.5rem 0}.back .de{font-size:1.3rem;font-weight:700}
+.bar{height:6px;background:var(--line);border-radius:3px;margin-bottom:14px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.big{font-size:2.4rem;font-weight:700;margin:6px 0}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Vokabeltrainer</h1>
+<nav id="nav"></nav>
+<div class="opts">
+  <label>Richtung <select id="dir">
+    <option value="en-de">Englisch → Deutsch</option>
+    <option value="de-en">Deutsch → Englisch</option>
+    <option value="def-en">Definition → Englisch</option>
+  </select></label>
+  <label><input type="checkbox" id="hard"> nur schwierige Wörter (<span id="hc">0</span>)</label>
+</div>
+<div id="app"></div>
+</div>
+
+<script>
+// [Englisch, Definition, Beispielsatz, Deutsch]  (Deutsch: Alternativen mit ; trennen)
+const V=[
+["rubbish-strewn","covered with rubbish in many places.","The beach was rubbish-strewn after the storm.","mit Müll übersät"],
+["shrouded in","covered or hidden by something, especially in a way that makes it difficult to see.","The valley was shrouded in mist.","in etwas gehüllt; verhüllt"],
+["intoxicating","producing a strong and exciting effect on the mind or emotions.","The freedom of travel felt intoxicating.","berauschend"],
+["insurmountable","so great or difficult that it cannot be dealt with successfully.","They faced what seemed an insurmountable obstacle.","unüberwindbar"],
+["to campaign","to take part in a planned series of activities intended to achieve a particular social or political change.","Students campaigned for cleaner streets.","Kampagne führen; sich einsetzen"],
+["numbness","an inability to feel or react normally, especially because of shock or emotional overload.","News of the disaster left her in numbness.","Gefühlstaubheit; Benommenheit"],
+["psychic numbing","reduced emotional responsiveness when confronted with suffering on a very large scale.","Psychic numbing can make tragic statistics feel distant.","psychische Abstumpfung"],
+["dire","extremely serious or urgent.","The report warned of dire consequences.","äußerst ernst; katastrophal"],
+["to mourn","to feel or show great sadness because someone has died or something has ended.","Communities mourned the loss of the forest.","trauern"],
+["infuriating","extremely annoying and making you very angry.","The delay was infuriating.","zum Ausrasten bringend; extrem ärgerlich"],
+["paradox","a situation or statement that seems impossible or wrong because it contains two opposite facts or characteristics.","It is a paradox that waste rises as efficiency improves.","Paradox(ie)"],
+["to intervene","to become involved in a situation in order to improve it or prevent it from getting worse.","Governments intervened to curb emissions.","eingreifen"],
+["precipitously","suddenly and very quickly.","Temperatures fell precipitously overnight.","schlagartig; abrupt"],
+["efficacy","the ability of something to produce the intended result.","We tested the efficacy of the new filter.","Wirksamkeit"],
+["reusable","able to be used again, often instead of being thrown away after one use.","Bring a reusable bottle to reduce waste.","wiederverwendbar"],
+["poster child","a person or thing that is a typical or highly visible example of a particular issue.","This city became the poster child for recycling.","Aushängeschild"],
+["profound","very great or intense; having an important effect.","The policy had a profound impact on consumption.","tiefgreifend"],
+["geological epoch","a long period of time in Earth's history that has particular natural characteristics.","Scientists debate whether a new geological epoch has begun.","geologische Epoche"],
+["to declare","to announce something officially or publicly.","Leaders declared a climate emergency.","verkünden; erklären"],
+["disposable","intended to be used once or for a short time and then thrown away.","Disposable cutlery creates mountains of waste.","wegwerfbar; Einweg-"],
+["durable","able to last a long time without becoming damaged.","We need more durable goods, not throwaway ones.","haltbar; langlebig"],
+["imperishable","able to exist for a very long time without being destroyed or decaying.","Plastic bags seem almost imperishable.","unvergänglich; unzerstörbar"],
+["inevitable","certain to happen and impossible to avoid.","Without change, a crisis is inevitable.","unvermeidlich"],
+["to decompose","to decay or break down into simpler substances as a natural process.","Organic scraps decompose quickly in compost.","sich zersetzen; verrotten"],
+["to lurk","to exist or wait somewhere, often secretly or unnoticed.","Toxins may lurk in old landfills.","lauern; im Verborgenen existieren"],
+["terrestrial","relating to the land or the Earth rather than the sea or the air.","Terrestrial habitats are under pressure.","terrestrisch; landbezogen"],
+["to lodge itself in","to become fixed in a particular place and be difficult to remove.","Microplastics can lodge themselves in tissues.","sich festsetzen"],
+["wrongdoing","an illegal or dishonest action.","The inquiry uncovered corporate wrongdoing.","Fehlverhalten; Unrecht"],
+["ravenous","extremely hungry or wanting something very strongly.","A ravenous demand for novelty drives purchases.","gefräßig; gierig"],
+["insatiable","impossible to satisfy because it is always wanting more.","Our insatiable appetite for convenience fuels waste.","unersättlich"]
+];
+
+const STOP=new Set("to the a an der die das ein eine sich itself oneself".split(" "));
+const norm=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/ß/g,"ss")
+  .replace(/[^a-z0-9\s]/g," ").split(/\s+/).filter(w=>w&&!STOP.has(w)).join(" ");
+function variants(s){
+  const out=new Set();
+  s.split(/[;\/]/).forEach(p=>{
+    p=p.trim();
+    out.add(norm(p.replace(/\(.*?\)/g,"")));
+    out.add(norm(p.replace(/[()]/g,"")));
+  });
+  out.delete("");return [...out];
+}
+function lev(a,b){
+  const d=Array.from({length:a.length+1},(_,i)=>[i]);
+  for(let j=1;j<=b.length;j++)d[0][j]=j;
+  for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)
+    d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return d[a.length][b.length];
+}
+// 2 = richtig, 1 = fast richtig (Tippfehler), 0 = falsch
+function check(input,answer){
+  const u=norm(input);if(!u)return 0;
+  const vs=variants(answer);
+  if(vs.includes(u))return 2;
+  return vs.some(v=>v.length>=6&&lev(u,v)<=1)?1:0;
+}
+
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+
+let hardSet=new Set();
+try{hardSet=new Set(JSON.parse(localStorage.getItem("vocab-hard")||"[]"))}catch(e){}
+const saveHard=()=>{try{localStorage.setItem("vocab-hard",JSON.stringify([...hardSet]))}catch(e){}$("hc").textContent=hardSet.size};
+
+const MODES=[["cards","Karteikarten"],["write","Schreiben"],["choice","Auswahl"]];
+let mode="cards",queue=[],total=0,firstTry=0,cur=null,seen=new Set(),flipped=false,answered=false;
+
+const dir=()=>$("dir").value;
+const prompt_=(v)=>{const d=dir();return d==="en-de"?{t:v[0],cls:"",h:"Übersetze ins Deutsche"}:d==="de-en"?{t:v[3],cls:"",h:"Übersetze ins Englische"}:{t:v[1],cls:"def",h:"Welches englische Wort ist gemeint?"}};
+const answer_=v=>dir()==="en-de"?v[3]:v[0];
+
+function start(){
+  let idx=V.map((_,i)=>i);
+  if($("hard").checked){idx=idx.filter(i=>hardSet.has(i));}
+  queue=shuffle(idx);total=queue.length;firstTry=0;seen=new Set();flipped=false;answered=false;
+  next();
+}
+function next(){
+  cur=queue.shift();flipped=false;answered=false;render();
+}
+function header(){
+  const done=total-queue.length-(cur===undefined?0:1);
+  return `<div class="bar"><i style="width:${total?Math.max(0,done)/total*100:0}%"></i></div>
+  <div class="meta"><span>Noch ${queue.length+(cur===undefined?0:1)} offen</span><span>${firstTry} auf Anhieb richtig</span></div>`;
+}
+function mark(ok){
+  if(ok&&!seen.has(cur)){firstTry++;hardSet.delete(cur)}
+  if(!ok){hardSet.add(cur);queue.splice(Math.min(queue.length,3),0,cur)}
+  seen.add(cur);saveHard();
+}
+function finish(){
+  $("app").innerHTML=`<div class="card" style="text-align:center">
+    <p class="hint">Runde geschafft</p><div class="big">${firstTry} / ${total}</div>
+    <p class="hint">auf Anhieb richtig${hardSet.size?` · ${hardSet.size} schwierige Wörter gespeichert`:""}</p>
+    <button class="btn" id="again">Neue Runde</button></div>`;
+  $("again").onclick=start;
+}
+
+function render(){
+  if(cur===undefined){finish();return}
+  const v=V[cur],p=prompt_(v),app=$("app");
+  if(mode==="cards"){
+    const back=`<div class="back"><p class="de">${esc(v[3])}</p><p><b>${esc(v[0])}</b></p><p>${esc(v[1])}</p><em>${esc(v[2])}</em></div>`;
+    app.innerHTML=header()+`<div class="card flip" id="fc" tabindex="0" role="button" aria-label="Karte umdrehen">
+      ${flipped?back:`<div class="q ${p.cls}">${esc(p.t)}</div><div class="hint">Tippen zum Umdrehen</div>`}</div>
+      ${flipped?`<div class="row"><button class="btn alt" id="no">Nochmal</button><button class="btn" id="yes">Gewusst</button></div>`:""}`;
+    $("fc").onclick=()=>{if(!flipped){flipped=true;render()}};
+    if(flipped){$("yes").onclick=()=>{mark(true);next()};$("no").onclick=()=>{mark(false);next()}}
+    else $("fc").focus();
+  }else if(mode==="write"){
+    app.innerHTML=header()+`<div class="card"><div class="hint">${p.h}</div><div class="q ${p.cls}">${esc(p.t)}</div>
+      <input type="text" id="in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Antwort eingeben">
+      <div id="fb"></div><button class="btn" id="go">Prüfen</button></div>`;
+    const inp=$("in");inp.focus();
+    const go=()=>{
+      if(answered){next();return}
+      const r=check(inp.value,answer_(v));answered=true;inp.disabled=true;
+      mark(r>0);
+      $("fb").innerHTML=`<div class="fb ${r?"ok":"bad"}">${r===2?"Richtig!":r===1?"Fast richtig – kleiner Tippfehler.":"Leider falsch."}
+        <br>Lösung: <b>${esc(answer_(v))}</b><em>${esc(v[2])}</em></div>`;
+      $("go").textContent="Weiter";$("go").focus();
+    };
+    $("go").onclick=go;
+    inp.onkeydown=e=>{if(e.key==="Enter")go()};
+  }else{
+    const right=answer_(v);
+    const others=shuffle(V.map((_,i)=>i).filter(i=>i!==cur)).slice(0,3).map(i=>dir()==="en-de"?V[i][3]:V[i][0]);
+    const opts=shuffle([right,...others]);
+    app.innerHTML=header()+`<div class="card"><div class="hint">${p.h}</div><div class="q ${p.cls}">${esc(p.t)}</div>
+      <div class="choices">${opts.map((o,i)=>`<button class="choice" data-i="${i}">${esc(o)}</button>`).join("")}</div>
+      <div id="fb"></div></div>`;
+    document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{
+      if(answered)return;answered=true;
+      const ok=opts[b.dataset.i]===right;mark(ok);
+      document.querySelectorAll(".choice").forEach(c=>{
+        if(opts[c.dataset.i]===right)c.classList.add("ok");
+        c.disabled=true});
+      if(!ok)b.classList.add("bad");
+      $("fb").innerHTML=`<div class="fb ${ok?"ok":"bad"}">${ok?"Richtig!":"Leider falsch."}<em>${esc(v[2])}</em></div>
+        <button class="btn" id="nx" style="margin-top:12px">Weiter</button>`;
+      $("nx").onclick=next;$("nx").focus();
+    });
+  }
+}
+
+$("nav").innerHTML=MODES.map(([k,l])=>`<button data-m="${k}" aria-pressed="${k===mode}">${l}</button>`).join("");
+$("nav").onclick=e=>{const b=e.target.closest("button");if(!b)return;mode=b.dataset.m;
+  document.querySelectorAll("#nav button").forEach(x=>x.setAttribute("aria-pressed",x===b));start()};
+$("dir").onchange=start;
+$("hard").onchange=()=>{if($("hard").checked&&!hardSet.size){$("hard").checked=false;alert("Noch keine schwierigen Wörter gespeichert.")}start()};
+$("hc").textContent=hardSet.size;
+start();
+</script>
+</body>
+</html>
