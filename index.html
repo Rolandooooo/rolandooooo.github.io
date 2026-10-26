@@ -97,7 +97,8 @@ const acc=(x,d)=>d==="e"?x.da:x.ea;
 /* ---------- VOKABELN (nur fettgedruckte Wörter) ---------- */
 function alts(s){const o=new Set();s.split(";").forEach(p=>{o.add(p);p.split(/[\/,]/).filter(x=>x.trim().length>2).forEach(x=>o.add(x));o.add(p.replace(/\b(etw|jdn)\.?\/?/g,""));
   const m=p.match(/^el\/la (\S+)/);if(m){o.add("el "+m[1]);o.add("la "+m[1])}});return[...o].filter(x=>nm(x))}
-function vocab(c,t){t.trim().split("\n").forEach(l=>{const[e,d]=l.split("|").map(x=>x.trim());D.push({c,es:e,de:d,ea:alts(e),da:alts(d)})})}
+const noArt=a=>[...new Set(a.flatMap(x=>[x,x.replace(/(^|\/)\s*(der|die|das)\s+/gi,"$1").trim()]))];
+function vocab(c,t){t.trim().split("\n").forEach(l=>{const[e,d]=l.split("|").map(x=>x.trim());D.push({c,es:e,de:d,ea:alts(e),da:noArt(alts(d))})})}
 vocab("u1a",`¡Hola!|Hallo!
 ¿Qué tal?|Wie geht's?
 ¡Buenos días!|Guten Morgen!; Guten Tag!
